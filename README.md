@@ -6,4 +6,5 @@ brew services start mongodb
 
 cd into collective-action folder
 npm install
-node index.js```
+node index.js
+```

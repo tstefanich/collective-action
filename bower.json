@@ -1,0 +1,20 @@
+{
+  "name": "mongo",
+  "description": "simple test",
+  "main": "index.js",
+  "license": "ISC",
+  "homepage": "https://github.com/tstefanich/collective-action",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "requirejs": "^2.2.0"
+  }
+}

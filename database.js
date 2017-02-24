@@ -241,41 +241,17 @@ database.fakeData = function(){
 
 
 
+/************************************
 
+ Mostly Unused but maybe useful later
 
-
-
-
-
-
-
-
-
-
+************************************/
 
 
 database.searchDocs = function (keyword, callback)
 {
   console.time('searchTime');
   var items = [];
-  // var r = new RegExp(keyword,'');
- //  
-  // DocModel.find({ 'text': {$regex:r}}, function(err, results){
-  //  if (err) return console.error(err);
-    
- //    // returns results array
-  //  if(results.length > 0) {
-  //    for (var nextResult of results){
-  //      //console.log('page '+nextResult);
- //        items.push(nextResult);
-  //    }
-  //  } else {
-  //    console.log('no results');
-  //  }
-  //  console.timeEnd('searchTime');
- //    //console.log(items);
- //    callback(items);
-  // });
 
   this.Users.find(
         { $text : { $search : keyword } }, 
@@ -300,18 +276,9 @@ database.searchDocs = function (keyword, callback)
 
 database.searchDocsTitle = function (title, callback)
 {
-//  console.log('searchDocsTrash');
-//    //['NS2016-titles-2015-06-08_1PM.pdf','OCR-mediumBook-English.pdf']
-//    this.Document.find( { pdf: { $in: ['NS2016-titles-2015-06-08_1PM.pdf','OCR-mediumBook-English.pdf'] } } ,
-//    function (err, results) {
-//      console.log(err);
-//      if (err) return console.error(err);
-//      console.log(results);
-//      callback(results);
-//    } )
-//
 
-this.Document.aggregate(
+
+this.Users.aggregate(
     { $group: 
       { _id: '$title',
         totalPages: { $sum: 1 },
@@ -344,7 +311,7 @@ this.Document.aggregate(
 
 
 database.saveTitle = function (searchTerm, newTitle){
-  this.Document.update(
+  this.Users.update(
     { _id: searchTerm },
     { $set:
       {
@@ -359,7 +326,11 @@ database.saveTitle = function (searchTerm, newTitle){
 
 
 
+/************************************
 
+ Misc
+
+************************************/
 
 
 database.dbInfo = function (callback) {

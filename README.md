@@ -9,3 +9,5 @@ cd into collective-action folder
 npm install
 node index.js
 ```
+
+** Test Geolocation in Firefox 

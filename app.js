@@ -39,9 +39,48 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 //app.engine('html', require('ejs').renderFile);
 
+
+var hbs = exphbs.create( {
+  extname: '.hbs',
+  helpers: {
+    compare: function(lvalue, rvalue, options) {
+
+        if (arguments.length < 3)
+            throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+        var operator = options.hash.operator || "==";
+
+        var operators = {
+            '==':       function(l,r) { return l == r; },
+            '===':      function(l,r) { return l === r; },
+            '!=':       function(l,r) { return l != r; },
+            '<':        function(l,r) { return l < r; },
+            '>':        function(l,r) { return l > r; },
+            '<=':       function(l,r) { return l <= r; },
+            '>=':       function(l,r) { return l >= r; },
+            'typeof':   function(l,r) { return typeof l == r; }
+        }
+
+        if (!operators[operator])
+            throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+
+        var result = operators[operator](lvalue,rvalue);
+
+        if( result ) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
+
+    }
+  }
+ } )
+
+
 // Create `ExpressHandlebars` instance with a default layout.
-app.engine( '.hbs', exphbs( { extname: '.hbs' } ) );
+app.engine( '.hbs', hbs.engine );
 app.set('view engine', '.hbs');
+
 
 /************************************
 
@@ -51,7 +90,7 @@ app.set('view engine', '.hbs');
 
 app.get( '/', function( req, res, next ){
 	database.dbInfo(function(results){
-		return res.render('index');
+		return res.render('index',{templateName:'index'});
 	});
 });
 
@@ -60,19 +99,22 @@ app.get( '/game-projection-1', function( req, res, next ){
   database.dbInfo(function(results){
     return res.render('game-projection-1', {'users' : results});
   });
+
+
 });
 
 app.get( '/admin-1', function( req, res, next ){
   database.dbInfo(function(results){
     return res.render('admin-1', {'users' : results});
   });
+
 });
 
 
 
-/************** 
+/**************
 
-Sample how to link url with page temple 
+Sample how to link url with page temple
 
 ***************/
 //app.get( '/page-name', function( req, res, next ){
@@ -81,8 +123,8 @@ Sample how to link url with page temple
 
 /**************
 
-Sample how to search a query and render search 
-We may not use this ... probably some sort of ajax thing instead. 
+Sample how to search a query and render search
+We may not use this ... probably some sort of ajax thing instead.
 
 ***************/
 //app.get("/search", function(req, res, next) {
@@ -120,14 +162,14 @@ app.post( '/restore', function( req, res ) {
   // This was need for successful callback for ajax
   // This should probably be in a callback maybe inside the restoreFile request.... maybe....
   res.send(req.body);
-}); 
+});
 
 app.post( '/delete', function( req, res ) {
   database.removeFileFromServer(req);
     // This was need for successful callback for ajax
   // This should probably be in a callback maybe inside the deleteFile request.... maybe....
   res.send(req.body);
-}); 
+});
 
 app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
 
@@ -141,8 +183,31 @@ app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
 	  	} else {
 	  		return res.status( 200 ).send( response );
 	  	}
-	});  
+	});
 });
+
+/*************************************
+socket.io
+**************************************/
+
+//some of this might need to be moved or maybe even put into its own module?
+var server = require('http').createServer();
+var io = require('socket.io')(server);
+io.on('connection', function(client){
+  console.log('client connected: ' + client.id);
+
+
+  client.on('clientInfo', function(data){
+    console.log('clientInfo message: ' + data);
+  });
+
+  client.on('disconnect', function(){
+    console.log('client disconnected: ' + client.id);
+  });
+
+});
+server.listen(3000, function(){ console.log('socket.io server started on 3000') });
+
 
 
 /************************************
@@ -153,7 +218,7 @@ MISC
 
 
 module.exports = {
-  app: function(db){ 
+  app: function(db){
     database = db;
     return app;
   }

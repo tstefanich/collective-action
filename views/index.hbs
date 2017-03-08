@@ -1,8 +1,183 @@
 {{> header}}
+<!--////////////
+Loading Page
+///////////--->
+<div class="page loading hidden">
+     <div class="text-container" style="position: relative;top: 50%;transform: translateY(-50%);">
+	       <div class="loading-container"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+	            <br>Loading...<span class="this-forces-font-to-load" style="position:absolute;opacity:0;width:0;overflow:hidden"><strong><i>l</i></strong></span>
+	       </div>
+	  </div>
+</div>
 
-<h1>index.hbs</h1>
+<!--////////////
+Intro Page
+///////////--->
+<div class="page intro slideUp">
+
+     <!-- Content -->
+     <div id="carousel-intro" class="carousel slide" data-ride="carousel" data-interval="false">
+
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+               <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+               <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+               <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+               <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+               <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+               <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+               <div class="item active">
+                    <div class="container">
+                         <img src="assets/images/intro/avatar_68.png" alt="...">
+                         <div class="carousel-caption">Welcome to Collective Action!<br><br><span style="opacity:.5">Swipe to learn more.</span></div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <img src="assets/images/intro/space2.png" alt="...">
+                         <div class="carousel-caption"><strong><i>Collective Action!</i></strong> is a performance based game project which uses a mobile website and large scale projection to invite groups of players to perform simple collective actions thematically related to the causes of, and solutions for climate change.</div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <img src="assets/images/intro/space.png" alt="...">
+                         <div class="carousel-caption">Go to one of the 7 Northern Spark locations; name, name, name, name, name, name, and name.</div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <img src="assets/images/intro/space.png" alt="...">
+                         <div class="carousel-caption"> With your mobile phone, open up your browser and go to <strong>something.info</strong> and check in to your location to queue/play.</div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <img src="assets/images/intro/space.png" alt="...">
+                         <div class="carousel-caption">When its your turn your, phone will blink, and ask you to come to the stage to perform your task to score points!</div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <img src="assets/images/intro/space.png" alt="...">
+                         <div class="carousel-caption">Stay at a location to score more points or go to another!</div>
+                    </div>
+               </div>
 
 
+          </div>
+     </div>
+
+     <!-- Footer -->
+     <div class="intro-footer">
+          <div class="row">
+               <div class="col-xs-6">
+                    <a class="btn btn-default more-details" style="width:100%;" href="#login">Login</a>
+               </div>
+               <div class="col-xs-6">
+                    <a class="btn btn-default more-details" style="width:100%;" href="#sign-up" >Sign Up</a>
+               </div>
+          </div>
+     </div>
+</div>
+
+
+
+<!--////////////
+Login Page
+///////////--->
+<div class="page login">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Login in to your account</div></div>
+     <!-- Content -->
+     <div class="container">
+     	<div class="form-group">
+         	     <input type="text" class="form-control" placeholder="Username">
+       	</div>
+       	<div class="form-group">
+       	   	<input type="text" class="form-control" placeholder="Password">
+       	</div>
+     </div>
+
+     <!-- Footer -->
+     <div class="intro-footer">
+          <div class="row">
+               <div style="text-align:center"><a href="#forgot-password">Forgot your password?</a><br><br></div>
+               <button type="submit" style="width:100%;" class="btn btn-default btn-primary">Login</button>
+          </div>
+     </div>
+</div>
+
+
+<!--////////////
+Signup Page
+///////////--->
+<div class="page sign-up">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Let's get started </div></div>
+     <!-- Content -->
+
+     <!-- Content -->
+     <div id="carousel-sign-up" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+               <div class="item active">
+                    <div class="container">
+                         <p>What's your email address?</p>
+                         <div class="form-group">
+                              <input type="text" class="form-control" placeholder="email">
+                         </div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <p>Create your profile (username and password (validate whether that name is aviable???))</p>
+                         <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Username">
+                         </div>
+                         <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Password">
+                         </div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <p>Generate your character.</p>
+                         <img class="regenerate-avatar-image" src="assets/images/intro/avatar_68.png" alt="...">
+                         <div class="row">
+                              <div class="col-xs-2">&nbsp;</div>
+                              <div class="col-xs-8">
+                                   <a class="btn btn-default regenerate-avatar-btn"> <div class="glyphicon glyphicon-repeat"></div> Regenerate your avatar</a>
+                              </div>
+                              <div class="col-xs-2">&nbsp;</div>
+                         </div>
+                    </div>
+               </div>
+               <div class="item">
+                    <div class="container">
+                         <div class="carousel-caption">Your character is named blank and you are on team. Click save to create your account.</div>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <!-- Footer -->
+     <div class="intro-footer">
+          <div class="row">
+               <div class="col-xs-6">
+                    <a class="btn btn-default sign-up-back-btn carousel-sign-up-btn" style="width:100%;" href="#prev" onclick="signUpCarouselDirection = 'left'; $('#carousel-sign-up').carousel('prev');">Back</a>
+               </div>
+               <div class="col-xs-6">
+                    <a class="btn btn-default sign-up-continue-btn carousel-sign-up-btn" style="width:100%;" href="#sign-up" onclick="signUpCarouselDirection = 'right'; $('#carousel-sign-up').carousel('next'); ">Continue</a>
+               </div>
+          </div>
+     </div>
+</div>
 
 
 {{> footer}}

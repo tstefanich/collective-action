@@ -8,10 +8,15 @@
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script type="text/javascript" src="js/velocity.js"></script>
+    <script type="text/javascript" src="assets/javascript/googleMapStyles.js"></script>
+
 
     {{#compare templateName 'index' operator="=="}}
       <script src="js/index.js" charset="utf-8"></script>
     {{/compare}}
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlxpx6stMHjq8ZNPpa5M_py5zd7jJ_ao&callback="></script>
+    <script type="text/javascript" src="assets/javascript/infobubble.js"></script>
 
   </body>
 </html>

@@ -425,7 +425,7 @@ Global page styling
      top:1024px;
      left:0;
      right:0;
-     z-index: 10001;
+     z-index: 1000;
      height: 100%;
      opacity: 1;
      -webkit-transition: transform 500ms cubic-bezier(0.23,1,0.32,1);
@@ -437,6 +437,8 @@ Global page styling
      background: #f8f8f8;
 }
 
+.page.intro{z-index: 9999;}
+.page.sign-up{z-index: 9999;}
 .page.slideUp{
      -webkit-transform: translate(0,-1024px);
      -moz-transform: translate(0,-1024px);
@@ -489,7 +491,7 @@ Global page styling
     font-weight: 800;
 }
 
-
+.page.map .nav{margin-bottom: 0;}
 .page.hidden{
      display:none;
 }
@@ -501,7 +503,7 @@ Global page styling
 }
 .carousel-caption {
     position: initial;
-    min-height: 400px; /* this is here to avoid weird cropping which happens when swipping. This may cause problems in the future */
+    min-height: 200px; /* this is here to avoid weird cropping which happens when swipping. This may cause problems in the future */
     right: 15%;
     bottom: 20px;
     left: 15%;
@@ -561,6 +563,56 @@ Loading page
 
 /*******************************
 
+        BOOTSTAP OVERIDES
+
+        ********************************/
+        .btn-default,.btn:focus {
+            margin-bottom: 3px;
+            color: white;
+            border: 0;
+            width: 100%;
+            text-shadow: 0 0 0 transparent;
+            margin-top: 9px;
+            border: 4px solid white;
+            background: black;
+            background-color: black;
+        }
+
+        .btn-default:active {
+            color: white;
+             opacity:1;
+            text-shadow: 0 0 0 transparent;
+        }
+        .btn-default:active .col-sm-9{
+          opacity:1;
+        }
+        .btn-default:hover {
+          color:black;
+          opacity: 1;
+          background:white;
+          background-color:white;
+          border-color:white;
+          text-shadow: 0 0 0 transparent;
+        }
+        .btn.btn-default.sign-up-continue-btn.carousel-sign-up-btn.btn-primary{
+             background:green;
+        }
+
+        /**** Mobile Touch Fixes****/
+        .btn:hover {
+             background: black;
+   background-color: black;
+   color:white;
+}
+.btn-default:hover {
+     background: black;
+background-color: black;
+color:white;
+}
+
+
+/*******************************
+
 Intro page
 
 *******************************/
@@ -576,3 +628,300 @@ Intro page
 Sign up page
 
 *******************************/
+
+
+
+/*******************************
+
+Map
+
+*******************************/
+#map {height:100%}
+.info-window {
+    font-size: 12px;
+    color: white;
+    width: 151px;
+}
+.info-window-image{
+     width:151px;height:100px;margin-bottom: 10px;margin-top: 0px;
+}
+
+
+
+/*********************************
+
+STYLE TO REMOVE GOOGLE INFO
+
+*********************************/
+.gm-style .gm-style-iw {
+   margin-left: 12px;
+}
+.gmnoprint:not(.gm-bundled-control) {
+   display: none;
+}
+.gm-bundled-control .gmnoprint {
+   display: block;
+}
+#map a[href^="http://maps.google.com/maps"]{display:none !important}
+#map a[href^="https://maps.google.com/maps"]{display:none !important}
+#map a[href^="https://www.google.com/maps"]{display:none !important}
+
+img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
+   height:0;
+   width:0;
+   display: none;
+}
+
+
+
+.gm-style-iw .btn-default {
+   background:black;
+}
+
+/**********************************
+
+   Custom Icon Animation
+
+   **********************************/
+   @keyframes pulsate {
+       0% {
+       transform: scale(0.1);
+       opacity: 0;
+       }
+       50% {
+       opacity: 1;
+       }
+       100% {
+       transform: scale(1.2);
+       opacity: 0;
+       }
+   }
+
+   /* get the container that's just outside the marker image,
+     which just happens to have our Marker title in it */
+   #map div.gmnoprint[title="I might be here"] {
+     background: rgba(5, 124, 255, 0.6); /*rgba(5, 124, 255, 0.6);*/
+     border-radius: 50%;
+     opacity: 0;
+     animation: pulsate 2400ms ease-out infinite;
+     /* set the ring's new dimension and re-center it */
+     height:51px!important;
+     margin:-17px 0 0 -17px;
+     width:51px!important;
+     display:block;
+   }
+
+
+   /* hide the superfluous marker image since it would expand and shrink with its containing element */
+    /*  #map_canvas div[style*="987654"][title] img {*/
+   #map div.gmnoprint[title="I might be here"] img {
+     display:none;
+   }
+   /* compensate for iPhone and Android devices with high DPI, add iPad media query */
+   @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (device-width: 768px) {
+     #map div.gmnoprint[title="I might be here"] {
+       margin:-9px 0 0 -9px;
+     }
+   }
+
+   
+/************************
+   Modal
+   ************************/
+   .modal{z-index: 99991;}
+   .modal .modal-header .close{
+     color:white;
+     text-shadow: none;
+     opacity: 1;
+     margin-top: 0px;
+   }
+
+   .modal .btn-default{
+   margin-top: 0;margin-bottom: 3px;
+   color: white;
+   width: 100%;
+   text-shadow: 0 0 0 transparent;
+   border: 4px solid white;
+   background: black;}
+   .modal.in .modal-dialog{position: relative;/*margin-top: 50%;transform: perspective(1px) translateY(-50%); */}
+   .modal-header {border:0 solid;}
+   .modal-footer {border:0 solid;}
+   .modal-body{padding-top: 0;padding-bottom: 0;}
+   .modal-content {
+
+       background-color: #000;
+       -webkit-background-clip: padding-box;
+       background-clip: padding-box;
+       border: 2px solid white;
+       border-radius: 6px;
+       outline: 0;
+       color:white;
+       -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+       box-shadow: 0 3px 9px rgba(0,0,0,.5);
+       z-index: 999;
+   }
+   .modal-content .project-name{
+     font-style: italic;
+     font-weight: 700;
+   }
+   .modal-content .artist-name{
+     font-style: italic;
+     font-weight: 700;
+   }
+
+   .modal-content .location-name{
+     font-style: italic;
+     font-weight: 700;
+   }
+
+   #vimeoVideo{
+     position: relative;
+     width:100%;
+     top: 50%;
+     transform: perspective(1px) translateY(-50%);
+   }
+
+
+   /*********************************
+
+         Slide Panel CSS
+
+         *********************************/
+         .project-slide-panel{
+             //display: none;
+             isolation: isolate;
+             background-color:white;
+             background-image: url(https://i.stack.imgur.com/9GmrL.jpg);
+             background-size: cover;
+             background-repeat: no-repeat;
+             background-position: center;
+             position: fixed;
+             color:white;
+             top:1024px;
+             left:0;
+             right:0;
+             z-index: 10001;
+             height: 100%;
+             opacity: 1;
+             -webkit-transition: transform 500ms cubic-bezier(0.23,1,0.32,1);
+             -moz-transition: transform 500ms cubic-bezier(0.23,1,0.32,1);
+             -o-transition: transform 500ms cubic-bezier(0.23,1,0.32,1);
+             transition: transform 500ms cubic-bezier(0.23,1,0.32,1);
+             -webkit-transform: translate3d(0, 0, 0);
+             /*-webkit-backface-visibility: hidden;*/
+             background: black;
+
+           }
+
+
+
+           .project-slide-panel.outside-fence .outside-fence-text{
+             display:block;
+           }
+           .project-slide-panel.outside-fence .inside-fence-text{
+             display:none;
+           }
+           .project-slide-panel.inside-fence .outside-fence-text{
+             display: none;
+           }
+           .project-slide-panel.inside-fence .inside-fence-text{
+             display: block;
+           }
+
+           .project-slide-panel .btn-default{
+             margin-bottom: 3px;
+             color: white;
+             border: 0;
+             width: 100%;
+             text-shadow: 0 0 0 transparent;
+             margin-top: 9px;
+             border: 4px solid white;
+             background: black;
+             font-family: 'Maple' sans-serif;
+           }
+
+           .project-container{
+             border-top: 0px solid;
+             margin-top: 21px;
+           }
+
+           .bio-container {
+             padding: 0;
+             border-top: 1px dashed;
+             padding-top: 16px;
+             padding-bottom: 0;
+           }
+
+           h2{
+             font-size:18px;
+           }
+
+           h2.project-title{
+             font-size:24px;
+           }
+
+
+           .project-slide-panel.bio{
+             z-index: 10002;
+           }
+           .important-text{
+             color:red;
+           }
+           .project-slide-panel .text-container {
+              padding: 25px;
+           }
+           .project-slide-panel .nav{
+             height:50px;
+             background-image: url(https://i.stack.imgur.com/9GmrL.jpg);
+             background-size: cover;
+             background-repeat: no-repeat;
+             background-position: center;
+             position: relative;
+             background: black;
+             border-bottom:2px solid white;
+           }
+            .project-slide-panel .nav .close{
+             position:absolute;
+             padding-left: 16px;
+             padding-top: 14px;
+             padding-right: 68px;
+             z-index: 9;
+             padding-bottom: 10px;
+             color:white;
+             opacity: 1;
+            }
+
+            .project-slide-panel .nav .title{
+               margin-top: 14px;
+               margin-left: 51px;
+               font-weight: 800;
+            }
+
+
+           .project-slide-panel.slideUp{
+             -webkit-transform: translate(0,-1024px);
+             -moz-transform: translate(0,-1024px);
+             transform: translate(0,-1024px);
+             overflow: hidden;
+           }
+           /* Scrollable Divs */
+           .project-slide-panel.slideUp.scrollable {
+               overflow: auto;
+               overflow-x: hidden;
+               -webkit-overflow-scrolling: touch;
+           }
+           .location-image{
+     height:300px;
+     width:100%;
+     position: relative;
+     background-size: cover;
+     background-repeat: no-repeat;
+     background-position: center;
+   }
+           .scrollable * {
+               -webkit-transform: translate3d(0,0,0);
+           }
+           * {
+              -webkit-touch-callout: none;
+              -webkit-user-select: none; /* Disable selection/copy in UIWebView */
+           }

@@ -14,7 +14,8 @@ Loading Page
 Intro Page
 ///////////--->
 <div class="page intro slideUp">
-
+     <!-- Top Nav Bar  // Hidden because the close button is required for my code to close panel-->
+     <div class="nav" style="display:none;"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Intro</div></div>
      <!-- Content -->
      <div id="carousel-intro" class="carousel slide" data-ride="carousel" data-interval="false">
 
@@ -170,14 +171,104 @@ Signup Page
      <div class="intro-footer">
           <div class="row">
                <div class="col-xs-6">
-                    <a class="btn btn-default sign-up-back-btn carousel-sign-up-btn" style="width:100%;" href="#prev" onclick="signUpCarouselDirection = 'left'; $('#carousel-sign-up').carousel('prev');">Back</a>
+                    <a class="btn btn-default sign-up-back-btn carousel-sign-up-btn" style="width:100%;" href="#back" onclick="signUpCarouselDirection = 'left'; $('#carousel-sign-up').carousel('prev');">Back</a>
                </div>
                <div class="col-xs-6">
-                    <a class="btn btn-default sign-up-continue-btn carousel-sign-up-btn" style="width:100%;" href="#sign-up" onclick="signUpCarouselDirection = 'right'; $('#carousel-sign-up').carousel('next'); ">Continue</a>
+                    <a class="btn btn-default sign-up-continue-btn carousel-sign-up-btn" style="width:100%;" href="#continue" onclick="signUpCarouselDirection = 'right'; $('#carousel-sign-up').carousel('next'); ">Continue</a>
                </div>
           </div>
      </div>
 </div>
+
+
+<!--////////////
+Homescreen Page
+///////////--->
+<div class="page homescreen slideUp">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left" style="display:none;"></div><div class="title" style="margin-left: 0;text-align: center;">Collective Action!</div></div>
+
+     <!-- Content -->
+     <div class="container">
+
+     </div>
+
+     <!-- Footer -->
+     <div class="intro-footer">
+          <div class="row">
+               <div class="col-xs-3">
+                    <a class="btn btn-default more-details" style="width:100%;" href="#help" ><span class="glyphicon glyphicon-question-sign"></span></a>
+               </div>
+               <div class="col-xs-3">
+                    <a class="btn btn-default more-details" style="width:100%;" href="#scoreboard"><span class="glyphicon glyphicon-th-list"></span></a>
+               </div>
+               <div class="col-xs-3">
+                    <a class="btn btn-default more-details" style="width:100%;" href="#map" ><span class="glyphicon glyphicon-map-marker"></span></a>
+               </div>
+               <div class="col-xs-3">
+                    <a class="btn btn-default more-details" style="width:100%;" href="#log-out"><span class="glyphicon glyphicon-log-out"></span></a>
+               </div>
+          </div>
+     </div>
+</div>
+
+<!--////////////
+Map Page
+///////////--->
+<div class="page help">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Help</div></div>
+
+     <!-- Content -->
+     <div class="container">
+          Help Page
+     </div>
+
+</div>
+
+<!--////////////
+Scoreboard
+///////////--->
+<div class="page scoreboard">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Scoreboard</div></div>
+
+     <!-- Content -->
+     <div class="container">
+          Scoreboard Scoreboard Scoreboard
+     </div>
+</div>
+
+
+<!--////////////
+Map Page
+///////////--->
+<div class="page map">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Map</div></div>
+
+     <!-- Content -->
+     <div id="map" ></div>
+
+</div>
+
+
+<!--////////////
+Log out Page
+///////////--->
+<div class="page log-out">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Logout!</div></div>
+
+     <!-- Content -->
+     <div class="container">
+          Log out This should not be a page but, logout and reload index.hbs
+     </div>
+</div>
+
+
+
+
 
 
 {{> footer}}

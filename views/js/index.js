@@ -242,7 +242,18 @@ var allLocations = [
   }
 ]
 
+function showArtworkClose(){
+   var closeButton = $('.close.artwork');
+   closeButton.css('display','block');
+   closeButton.velocity({opacity: 1}, 500);
+  }
 
+  function hideArtworkClose(){
+   var closeButton = $('.close.artwork');
+   closeButton.velocity({opacity: 0}, 200, function(){
+      closeButton.css('display','none');
+   });
+  }
 
 /******************************************
 
@@ -469,30 +480,90 @@ function moreDetails(click){
      var href = $this.attr("href");
      var hash = href.substr(1);
 
-     //Set Panel from display none to display block
-     $('.page.'+hash).css('display','block');
+     if($this.hasClass('artwork')){
+          showArtworkClose();
 
-     //If we don't set a slight timeout the css animation won't work.
-     setTimeout(function(){
-          $('.page.'+hash).addClass('slideUp');
-     },100);
+          console.log('artwork');
 
-     var currentPageImage = $('.project-slide-panel.'+hash).find('.location-image-large');
-     var currentPage = $('.project-slide-panel.'+hash);
-     var currentImage = currentPage.attr('data-image')
-    if(currentPageImage.length){
-      $('<img/>').attr('src', '/assets/images/locations/'+currentImage+'-large.jpg').load(function() {
-       $(this).remove(); // prevent memory leaks as @benweet suggested
-       currentPageImage.css('background-image', 'url(/assets/images/locations/'+currentImage+'-large.jpg)');
-       currentPageImage.delay(700).velocity({opacity: 1},600);
-      });
-    }
+          // Get project desc panel and send it to marker as visited function
+          var $thisProject = $this.parents('.project-slide-panel');
+          //setMarkerAsVisited($thisProject);
+
+
+          //console.log($this.attr('data-project-url'));
+          var projectUrl = $this.attr('data-project-url');
+          var $iframe = $('.iframe.project-slide-panel');
+          //customProblemsAndFixesArtwork($('.slideUp.project-slide-panel'));
+
+          //Set Panel from display none to display block
+          $iframe.css('display','block');
+
+          //Set Panel src
+          $iframe.attr('src',projectUrl);
+
+          //If we don't set a slight timeout the css animation won't work.
+          setTimeout(function(){
+            $iframe.addClass('slideUp');
+          },100);
+
+          setTimeout(function(){
+          //document.getElementById('vimeoVideo').play();
+            $iframe.contents().find("video").get(0).play();
+          },700);
+
+        }  else {
+
+                    //Set Panel from display none to display block
+                    $('.page.'+hash).css('display','block');
+
+                    //If we don't set a slight timeout the css animation won't work.
+                    setTimeout(function(){
+                         $('.page.'+hash).addClass('slideUp');
+                    },100);
+
+                    var currentPageImage = $('.project-slide-panel.'+hash).find('.location-image-large');
+                    var currentPage = $('.project-slide-panel.'+hash);
+                    var currentImage = currentPage.attr('data-image')
+                   if(currentPageImage.length){
+                     $('<img/>').attr('src', '/assets/images/locations/'+currentImage+'-large.jpg').load(function() {
+                      $(this).remove(); // prevent memory leaks as @benweet suggested
+                      currentPageImage.css('background-image', 'url(/assets/images/locations/'+currentImage+'-large.jpg)');
+                      currentPageImage.delay(700).velocity({opacity: 1},600);
+                     });
+                   }
+
+           }
 }
 
 
 function slideDownPanel(link){
      var $this = link;
 
+     if($this.hasClass('artwork')){
+          var $iframe = $('.iframe.project-slide-panel');
+          hideArtworkClose();
+
+          $iframe.velocity({opacity: 0}, 150, function(){
+
+            setTimeout(function(){
+              $iframe.css('display','none');
+              $iframe.attr('src', $iframe.attr('data-fake-src'));
+              $iframe.removeClass('slideUp');
+
+              setTimeout(function(){
+                $iframe.removeClass('white'); // This is a fix for some of the projects
+                $('.close.artwork').removeClass('black'); // This is a fix for some of the projects
+                $iframe.css('opacity','1');
+              },250);
+
+            }, 750);
+
+
+
+          });
+
+
+        } else {
      if($this.parent('.nav').parent('.page').hasClass('sign-up')){
           $('#carousel-sign-up').carousel(0);
      }
@@ -500,6 +571,8 @@ function slideDownPanel(link){
      setTimeout(function(){
        $this.parent('.nav').parent('.page').css('display','none');
      }, 750);
+
+     }
 }
 
 
@@ -838,8 +911,8 @@ function createModalsForEachLocation(){
                                 '<h4 class="modal-title" id="myModalLabel">You have made it!</h4>'+
                               '</div>'+
                               '<div class="modal-body">'+
-                                '<div class="project-image" style="background-image:url(./assets/images/project-thumbnails/'+allProjects[i].projectImage+');margin-bottom: 16px;height:200px;"></div>'+
-                                'You are near <span class="project-name"><i>'+allProjects[i].projectTitle+'</i></span> by artist <span class="artist-name">'+allProjects[i].name+'</span>.'+
+                                '<div class="project-image" style="background-image:url(./assets/images/locations/'+allProjects[i].locationImage+');margin-bottom: 16px;height:200px;"></div>'+
+                                'You are near <span class="project-name"><i>'+allProjects[i].locationName+'</i>.</span> Click more details to play!'+
                               '</div>'+
                               '<div class="modal-footer">'+
                                 '<div class="row">'+

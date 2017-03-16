@@ -494,6 +494,18 @@ Global page styling
     display: block;
     margin: 0 auto;
 }
+.carousel .item .alert {    -webkit-transition: 0.25s ease-in-out all;
+    transition: 0.25s ease-in-out all;
+    -webkit-transition: 0.25s, ease-in-out, all;
+    -moz-transition: .25s, ease-in-out, all;
+    -o-transition: .25s, ease-in-out, all;
+    transition: .25s, ease-in-out, all;
+    margin-top:16px;
+}
+.carousel .item .alert {opacity:0}
+.carousel .item.show-error .alert-regular {opacity:1}
+.carousel .item.show-error-profane .alert-profane {opacity:1}
+
 .carousel-caption {
     position: initial;
     min-height: 200px;
@@ -601,6 +613,18 @@ Loading page
 .btn.btn-default.sign-up-continue-btn.carousel-sign-up-btn.btn-primary {
     background: green;
 }
+
+.sign-up-button-container.disable .btn.btn-default.sign-up-continue-btn.carousel-sign-up-btn {
+     opacity: .5;
+     pointer-events: none;
+}
+
+.login-in-button-container.disable .btn.btn-default.login-continue-btn.carousel-login-btn {
+     opacity: .5;
+     pointer-events: none;
+}
+
+
 /**** Mobile Touch Fixes****/
 
 .btn:hover {
@@ -910,7 +934,7 @@ h2.project-title {
 }
 /* Scrollable Divs */
 
-.project-slide-panel.slideUp.scrollable {
+.page.slideUp.scrollable {
     overflow: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;

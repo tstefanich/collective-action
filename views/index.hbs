@@ -88,30 +88,7 @@ Intro Page
 
 
 
-<!--////////////
-Login Page
-///////////--->
-<div class="page login">
-     <!-- Top Nav Bar -->
-     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Login in to your account</div></div>
-     <!-- Content -->
-     <div class="container">
-     	<div class="form-group">
-         	     <input type="text" class="form-control" placeholder="Username">
-       	</div>
-       	<div class="form-group">
-       	   	<input type="text" class="form-control" placeholder="Password">
-       	</div>
-     </div>
 
-     <!-- Footer -->
-     <div class="intro-footer">
-          <div class="row">
-               <div style="text-align:center"><a href="#forgot-password">Forgot your password?</a><br><br></div>
-               <button type="submit" style="width:100%;" class="btn btn-default btn-primary">Login</button>
-          </div>
-     </div>
-</div>
 
 
 <!--////////////
@@ -127,39 +104,39 @@ Signup Page
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
-               <div class="item active">
+               <div class="item email-sign-up active">
                     <div class="container">
                          <p>What's your email address?</p>
                          <div class="form-group">
-                              <input type="text" class="form-control" placeholder="email">
+                              <input type="text" class="form-control email-address" placeholder="Email">
+                              <div class="alert alert-danger alert-regular" style="text-align:center">A user with this email already exists.</div>
                          </div>
                     </div>
                </div>
-               <div class="item">
+               <div class="item username-sign-up">
                     <div class="container">
-                         <p>Create your profile (username and password (validate whether that name is aviable???))</p>
+                         <p>What would you like your username to be?</p>
                          <div class="form-group">
-                              <input type="text" class="form-control" placeholder="Username">
-                         </div>
-                         <div class="form-group">
-                              <input type="text" class="form-control" placeholder="Password">
+                              <input type="text" class="form-control username" placeholder="Username">
+                              <div class="alert alert-danger alert-profane" style="text-align:center">This username looks to contain profanity. Please try a new one.</div>
+                              <div class="alert alert-danger alert-regular" style="text-align:center">Username is unavailable.</div>
                          </div>
                     </div>
                </div>
-               <div class="item">
+               <div class="item avatar-sign-up">
                     <div class="container">
                          <p>Generate your character.</p>
                          <img class="regenerate-avatar-image" src="assets/images/intro/avatar_68.png" alt="...">
                          <div class="row">
-                              <div class="col-xs-2">&nbsp;</div>
-                              <div class="col-xs-8">
+                              <div class="col-xs-1">&nbsp;</div>
+                              <div class="col-xs-10">
                                    <a class="btn btn-default regenerate-avatar-btn"> <div class="glyphicon glyphicon-repeat"></div> Regenerate your avatar</a>
                               </div>
-                              <div class="col-xs-2">&nbsp;</div>
+                              <div class="col-xs-1">&nbsp;</div>
                          </div>
                     </div>
                </div>
-               <div class="item">
+               <div class="item confirmation-sign-up">
                     <div class="container">
                          <div class="carousel-caption">Your character is named blank and you are on team. Click save to create your account.</div>
                     </div>
@@ -169,12 +146,12 @@ Signup Page
 
      <!-- Footer -->
      <div class="intro-footer">
-          <div class="row">
+          <div class="row sign-up-button-container disable">
                <div class="col-xs-6">
                     <a class="btn btn-default sign-up-back-btn carousel-sign-up-btn" style="width:100%;" href="#back" onclick="signUpCarouselDirection = 'left'; $('#carousel-sign-up').carousel('prev');">Back</a>
                </div>
                <div class="col-xs-6">
-                    <a class="btn btn-default sign-up-continue-btn carousel-sign-up-btn" style="width:100%;" href="#continue" onclick="signUpCarouselDirection = 'right'; $('#carousel-sign-up').carousel('next'); ">Continue</a>
+                    <a class="btn btn-default sign-up-continue-btn carousel-sign-up-btn" style="width:100%;" href="#continue" >Continue</a>
                </div>
           </div>
      </div>
@@ -210,22 +187,50 @@ Homescreen Page
                     <a class="btn btn-default more-details" style="width:100%;" href="#map" ><span class="glyphicon glyphicon-map-marker"></span></a>
                </div>
                <div class="col-xs-3">
-                    <a class="btn btn-default more-details" style="width:100%;" href="#log-out"><span class="glyphicon glyphicon-log-out"></span></a>
+                    <a class="btn btn-default more-details logout" style="width:100%;" href="#log-out"><span class="glyphicon glyphicon-log-out"></span></a>
                </div>
           </div>
      </div>
 </div>
 
+
+<!--////////////
+Login Page
+///////////--->
+<div class="page login" style="z-index:9999;">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Login in to your account</div></div>
+     <!-- Content -->
+     <div class="container">
+          <p>Use your email to login and retrieve your avatar!</p>
+     	<div class="form-group">
+         	     <input type="text" class="form-control email-address login" placeholder="Email">
+       	</div>
+     </div>
+
+     <!-- Footer -->
+     <div class="intro-footer">
+          <div class="row login-in-button-container disable">
+               <a class="btn btn-default btn-primary login-continue-btn carousel-login-btn" style="width:100%;" href="#login" >Login</a>
+          </div>
+     </div>
+</div>
+
+
 <!--////////////
 Map Page
 ///////////--->
-<div class="page help">
+<div class="page scrollable help">
      <!-- Top Nav Bar -->
      <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Help</div></div>
 
      <!-- Content -->
      <div class="container">
-          Help Page
+          <p><i>Collective Action!</i> invites you to work together with other participants to perform creative, collective actions responding to climate change issues. Start by using your phone to explore the Collective Action! mobile website, create a unique avatar, join a team, navigate to our physical game sites (located at multiple Northern Spark hubs), and prepare to perform! For every action you perform over the course of the night, you’ll earn a point for yourself and your team, which you can track on the website’s game leaderboard.</p>
+
+          <p>Each <i>Collective Action!</i> game site will activate the climate change theme for its given Northern Spark location, making each instance of Collective Action! a completely unique experience in performance and play. At the Collective Action! site in the water-themed location Little Mekong, you might work together with the entire audience to perform a rainstorm, or with two or three other players to envision a futuristic water-filtration system! </p>
+
+          <p></i>Collective Action!</i> draws inspiration from the expansive history of non-competitive group games ranging from the New Games Foundation, to fluxus experiments and performances, and earth day activities. Explore: how can your actions as an individual have a larger impact when they are performed in collaboration with others?</p>
      </div>
 
 </div>
@@ -262,7 +267,7 @@ Log out Page
 ///////////--->
 <div class="page log-out">
      <!-- Top Nav Bar -->
-     <div class="nav"><div class="close glyphicon glyphicon-menu-left"></div><div class="title">Logout!</div></div>
+     <div class="nav"><div class="close glyphicon glyphicon-menu-left "></div><div class="title">Logout!</div></div>
 
      <!-- Content -->
      <div class="container">

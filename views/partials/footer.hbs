@@ -14,6 +14,13 @@
     {{#compare templateName 'index' operator="=="}}
       <script src="js/index.js" charset="utf-8"></script>
     {{/compare}}
+    <script src="assets/javascript/store.legacy.min.js"></script>
+     <script>
+     //store.set('user', { name:'Marcus' })
+     //store.get('user').name == 'Marcus'
+     var user = store.get('user');
+     console.log(user);
+     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlxpx6stMHjq8ZNPpa5M_py5zd7jJ_ao&callback="></script>
     <script type="text/javascript" src="assets/javascript/infobubble.js"></script>

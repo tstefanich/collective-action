@@ -24,6 +24,7 @@
     "requirejs": "^2.2.0",
     "shelljs": "^0.6.0",
     "socket.io": "^1.7.3",
-    "string.prototype.startswith": "^0.2.0"
+    "string.prototype.startswith": "^0.2.0",
+    "swearjar": "^0.1.3"
   }
 }

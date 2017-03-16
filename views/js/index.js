@@ -44,6 +44,7 @@
   }
 
   CarouselSwipe.prototype.touchstart = function(e) {
+    if (e.currentTarget.id == 'carousel-sign-up') return;
     if (this.sliding || !this.options.swipe) return;
     var touch = e.originalEvent.touches ? e.originalEvent.touches[0] : e
     this.dx = 0
@@ -55,6 +56,7 @@
   }
 
   CarouselSwipe.prototype.touchmove = function(e) {
+    if (e.currentTarget.id == 'carousel-sign-up') return;
     if (this.sliding || !this.options.swipe) return;
     var touch = e.originalEvent.touches ? e.originalEvent.touches[0] : e
     var dx = touch.pageX - this.startX
@@ -72,6 +74,7 @@
   }
 
   CarouselSwipe.prototype.touchend = function(e) {
+    if (e.currentTarget.id == 'carousel-sign-up') return;
     if (this.sliding || !this.options.swipe) return;
     if (!this.$active) return; // nothing moved
     var all = $()
@@ -387,42 +390,256 @@ $(window).load(function(){
 
 });
 
+
+
+/*************************
+
+Login Functions
+
+**************************/
+
+var login = {
+     emailTextFieldIsFilled:false,
+     init:function(){
+          $("#carousel-intro").carousel();
+          login.eventListeners();
+          login.checkIfFieldsAreFilled();
+     },
+     enableContinueButton:function(){
+          $('.login-in-button-container').removeClass('disable')
+     },
+     disableContinueButton:function(){
+          $('.login-in-button-container').addClass('disable')
+     },
+     checkIfLoggedIn:function(){
+          if(store.get('user')){
+               slideDownPanel($('.page.login .close'));
+               slideDownPanel($('.page.intro .close'));
+          } else {
+
+          }
+     },
+     checkIfFieldsAreFilled(){
+          $('.form-control.email-address.login').on('keyup blur', function(event) {
+               if($.trim($(this).val()) != ''){
+                    login.emailTextFieldIsFilled = true;
+                    console.log('Input Email Filled');
+                    login.enableContinueButton();
+                    //
+               } else {
+                    login.emailTextFieldIsFilled = false;
+                    login.disableContinueButton();
+                    console.log('Input Email Empty');
+               }
+          });
+          $('.more-details.logout').on('click tap', function(event) {
+               login.logout();
+          });
+     },
+     eventListeners:function(){
+          $('body').on('click tap', '.login-continue-btn', function(e){
+               switch(true){
+                    case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
+                         // Break
+                         login.retrieveFromDatabase();
+                         break;
+               }
+          });
+     },
+     retrieveFromDatabase:function(button){
+          store.set('user',
+               {
+                    userName:'Marcus',
+                    email: 'email',
+                    avatar: 'Array', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+                    team: 'Number',
+                    tasksPlayed: 'Array',
+
+                    // PING
+                    loggedIn: 'Boolean',
+                    currentLocation: 'String',
+
+                    // METRICS
+                    score: 'Number',
+                    locationsVisited: 'Array', // location + timespent
+                    totalTasks: 'Number', // this may not be needed scores = totalPlays
+                    totalTaskTime: 'Number',
+                    totalWaitTime: 'Number',
+               }
+          );
+          setTimeout(function(){
+               slideDownPanel($('.page.login .close'));
+               slideDownPanel($('.page.intro .close'));
+          },500);
+
+     },
+     logout:function(){
+          store.clearAll();
+          location.reload();
+     },
+}
+/*************************
+
+Sign up Functions
+
+**************************/
 var signUpCarouselDirection = 'null';
-$("#carousel-intro").carousel();
-$("#carousel-sign-up").carousel();
-$(".carousel-sign-up-btn").on('click tap', function () {
-  // do something…
-  var signUpButton = $('.sign-up-continue-btn');
-  var index = $('#carousel-sign-up .active').index('#carousel-sign-up .item');
-  index = index + 1;
-  var totalLength = $('#carousel-sign-up .item').length;
-  if(signUpButton.text() == 'Save' && signUpCarouselDirection == 'right'){
-       //You clicked Save button
-       // Slide up Main menu / Home
-       moreDetails($(this));
-       //Slide Down Signup page
-       setTimeout(function(){
-            slideDownPanel($('.page.sign-up .close'));
-            slideDownPanel($('.page.intro .close'));
-       },500);
 
-  } if(index == totalLength - 1 && signUpCarouselDirection == 'right'){
-       // Reached the end
-       signUpButton.text('Save');
-       signUpButton.attr('href', '#homescreen');
-       signUpButton.addClass('btn-primary');
-  } else if(index == totalLength && signUpCarouselDirection == 'left') {
-      // Going back from the last slide
-      signUpButton.text('Continue');
-      signUpButton.attr('href', 'continue');
-      signUpButton.removeClass('btn-primary');
-  } else if(index == 1 && signUpCarouselDirection == 'left') {
-     // Close Sign up
-     slideDownPanel($('.page.sign-up .close'));
-  }
 
-});
+var signUp = {
+     index:0,
+     carousel:$('#carousel-sign-up'),
+     button:$('.sign-up-continue-btn'),
+     pages:$('#carousel-sign-up .item').length,
+     emailTextFieldIsFilled:false,
+     usernameTextFieldIsFilled:false,
+     init:function(){
+          $("#carousel-sign-up").carousel();
+          signUp.eventListeners();
+          signUp.checkIfFieldsAreFilled();
+     },
+     goToNextSlide:function(){
+          signUp.hideErrorMessages();
+          signUp.carousel.carousel('next');
+     },
+     getCurrentPageIndex:function(){
+          $('#carousel-sign-up .active').index('#carousel-sign-up .item');
+     },
+     enableContinueButton:function(){
+          $('.sign-up-button-container').removeClass('disable')
+     },
+     disableContinueButton:function(){
+          $('.sign-up-button-container').addClass('disable')
+     },
+     checkIfFieldsAreFilled(){
+          $('.form-control.email-address').on('keyup blur', function(event) {
+               if($.trim($(this).val()) != ''){
+                    signUp.emailTextFieldIsFilled = true;
+                    console.log('Input Email Filled');
+                    signUp.enableContinueButton();
+                    //
+               } else {
+                    signUp.emailTextFieldIsFilled = false;
+                    signUp.disableContinueButton();
+                    console.log('Input Email Empty');
+               }
+          });
+          $('.form-control.username').on('keyup blur', function(event) {
+               if($.trim($(this).val()) != ''){
+                    signUp.usernameTextFieldIsFilled = true;
+                    signUp.enableContinueButton();
+                    console.log('Input username Filled');
+               } else {
+                    signUp.usernameTextFieldIsFilled = false;
+                    signUp.disableContinueButton();
 
+                    console.log('Input username empty');
+
+               }
+          });
+     },
+     databaseHasEmail:function(){
+          //put your cases here
+          var email_address = $('input.email-address').val();
+          $.post("http://localhost:8080/check-email",{email: email_address.toLowerCase()}, function(data){
+               if(data == true){ // Email is in the database already
+                    $('#carousel-sign-up .item.email-sign-up').addClass('show-error');
+               } else if(data == false){
+                    signUp.goToNextSlide();
+               }
+          });
+     },
+     hideErrorMessages:function(){
+          $('#carousel-sign-up .item.email-sign-up').removeClass('show-error');
+          $('#carousel-sign-up .item.username-sign-up').removeClass('show-error-profane');
+          $('#carousel-sign-up .item.username-sign-up').removeClass('show-error');
+     },
+     databaseHasUser:function(){
+          //put your cases here
+          var user_name = $('input.username').val();
+          $.post("http://localhost:8080/check-user",{userName: user_name}, function(data){
+               console.log(data);
+               if(data === 'blank'){ // Email is in the database already
+                    //$('#carousel-sign-up .item.username-sign-up').addClass('show-error-profane');
+               } else if(data === 'profane'){ // Email is in the database already
+                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error-profane');
+               } else if(data == true){ // Email is in the database already
+                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error');
+               } else if(data == false){
+                    signUp.goToNextSlide();
+               }
+          });
+     },
+     styleButtonToSave:function(){
+          //somethingb
+          this.button.text('Save');
+          this.button.attr('href', '#homescreen');
+          this.button.addClass('btn-primary');
+     },
+     styleButtonToContinue:function(){
+          // Going back from the last slide
+          this.button.text('Continue');
+          this.button.attr('href', 'continue');
+          this.button.removeClass('btn-primary');
+     },
+     saveToDatabase:function(button){
+          //You clicked Save button
+          // Slide up Main menu / Home
+          moreDetails(button);
+          //Slide Down Signup page
+          setTimeout(function(){
+               slideDownPanel($('.page.sign-up .close'));
+               slideDownPanel($('.page.intro .close'));
+          },500);
+     },
+     eventListeners:function(){
+          $('body').on('click tap', '.sign-up-continue-btn', function(e){
+               switch(true){
+                    case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
+                         signUp.databaseHasEmail();
+                         if(!signUp.usernameTextFieldIsFilled){
+                              signUp.disableContinueButton();
+                         }
+                         break;
+                    case $('#carousel-sign-up .item.username-sign-up').hasClass('active'):
+                         //put your cases here
+                         signUp.databaseHasUser();
+                         break;
+                    case $('#carousel-sign-up .item.avatar-sign-up').hasClass('active'):
+                         //put your cases here
+                         signUp.goToNextSlide();
+                         signUp.styleButtonToSave();
+                         break;
+                    case $('#carousel-sign-up .item.confirmation-sign-up').hasClass('active'):
+                         //put your cases here
+                         signUp.saveToDatabase($(this));
+                         break;
+               }
+          });
+
+          $('body').on('click tap', '.sign-up-back-btn', function (e) {
+            // do something…
+            switch(true){
+                 case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
+                      slideDownPanel($('.page.sign-up .close'));
+                      break;
+                 case $('#carousel-sign-up .item.username-sign-up').hasClass('active'):
+                      //put your cases here
+                      break;
+                 case $('#carousel-sign-up .item.avatar-sign-up.active').hasClass('active'):
+                      //put your cases here
+                      break;
+                 case $('#carousel-sign-up .item.confirmation-sign-up').hasClass('active'):
+                      //put your cases here
+                      signUp.styleButtonToContinue();
+                      break;
+            }
+          });
+     }
+
+
+
+}
 
 $(document).ready(function(){
 
@@ -449,6 +666,17 @@ $(document).ready(function(){
      $('body').on('click tap', '.close', function(e){
         slideDownPanel($(this));
      });
+
+
+     //**********/
+     /*  Login  */
+     /***********/
+     login.init();
+     login.checkIfLoggedIn();
+     //**********/
+     /* Sign up */
+     /***********/
+     signUp.init();
 
      // Fixes problem where button stays in active styles when pressed
      $('.btn').mouseup(function(e){
@@ -995,6 +1223,7 @@ function zoomInOnMyLocation(){
 socket.io communication
 *******************************************/
 
+/*
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 socket.on('connect', function(){
 console.log('connected to the server as: ' + socket.id);
@@ -1021,4 +1250,4 @@ socket.emit('clientInfo', clientInfo);
 socket.on('disconnect', function(){
 console.log('disconnected from the server as: ' + socket.id);
 
-});
+}); */

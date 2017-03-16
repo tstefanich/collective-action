@@ -14,6 +14,16 @@ require('shelljs/global');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var mime = require('mime');
+var swearjar = require('swearjar');
+
+
+
+// This is needed for email schema ... definitly a better way to do this...
+function toLower (str) {
+    return str.toLowerCase();
+}
+
+
 var database = {
 
   Users : null,
@@ -31,7 +41,7 @@ var database = {
 
       var db = mongoose.connection;
 
-      db.on('error', function(){reject({message: "db connection error"})}); 
+      db.on('error', function(){reject({message: "db connection error"})});
 
       // once connected, do stuff
       db.once('open', function(){
@@ -39,17 +49,18 @@ var database = {
         console.log('database connection successful');
 
         self.userSchema = mongoose.Schema({
-          
+
           // STATIC
-          //uid: Number, // may not need this, autoIndex is true by default.. 
+          //uid: Number, // may not need this, autoIndex is true by default..
           userName: String,
+          email: { type: String, set: toLower },
           avatar: Array, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
           team: Number,
           tasksPlayed: Array,
-          
+
           // PING
           loggedIn: Boolean,
-          currentLocation: String, 
+          currentLocation: String,
 
           // METRICS
           score: Number,
@@ -74,7 +85,7 @@ var database = {
         // define document model
         self.Users = mongoose.model('Users', self.userSchema);
 
-        self.deleteAllUsers();
+        //self.deleteAllUsers();
         self.fakeData();
         self.getUsers(self.Users);
         //searchDocs(Document, 'blade runner', function(results){
@@ -102,16 +113,57 @@ DATABASE FUNCTIONS
 
 database.getUsers = function ()
 {
-  this.Users.find(function (err, docs) 
+
+  this.Users.find(function (err, docs)
   {
     if (err) return console.error(err);
     console.log(docs);
   });
 }
 
+database.checkIfEmailExists = function (req,callback)
+{
+  var email = req.body.email;
+  this.Users.find({email : email}, function (err, docs) {
+       if(email == ''){
+        console.error('blank');
+        return callback(null, 'blank');
+   } else if (docs.length){
+        console.error('Name exists already');
+        return callback(null, true);
+     }else{
+        console.error('Go ahead!! No Name Found. ');
+        return callback(null, false);
+     }
+  })
+}
+
+database.checkIfUserExists = function (req,callback)
+{
+  var userName = req.body.userName;
+  this.Users.find({userName : userName}, function (err, docs) {
+       if(userName == ''){
+         console.error('blank');
+         return callback(null, 'blank');
+    } else if(swearjar.profane(userName)){
+        console.error('Name exists already');
+        return callback(null, 'profane');
+     } else if (docs.length){
+        console.error('Name exists already');
+        return callback(null, true);
+     }else{
+        console.error('Go ahead!! No Name Found. ');
+        return callback(null, false);
+     }
+  })
+}
+
+
+
+
 /************************************
 
- DATABASE Getters / Setters 
+ DATABASE Getters / Setters
 
 ************************************/
 
@@ -119,25 +171,25 @@ database.getUsers = function ()
 
 database.getUserName = function ()
 {
-  
+
 }
 
 database.setUserName = function ()
 {
-  
+
 }
 
-/// LOCATION 
+/// LOCATION
 
 
 database.getLocation = function ()
 {
-  
+
 }
 
 database.setLocation = function ()
 {
-  
+
 }
 
 
@@ -148,7 +200,7 @@ database.setLocation = function ()
 ************************************/
 
 database.saveUser = function (doc){
-  
+
   doc.save(function (err, doc) {
     if (err) return console.error(err);
     // doc.test(); // maybe run the function if you feel like it
@@ -181,7 +233,7 @@ database.deleteAllUsers = function (db, callback) {
 
 /************************************
 
- DATABASE Backups 
+ DATABASE Backups
 
 ************************************/
 
@@ -197,7 +249,9 @@ database.backup = function (searchTerm, newTitle){
  DATABASE FAKE DATA (mongodb)
 
 ************************************/
-var userNames = ['Ben', 'Tyler', 'Sara'] 
+var userNames = ['Ben', 'Tyler', 'Sara']
+var emails = ['Ben@benmoren.com', 'Tyler@tylerstefanich.com', 'sara@sara.com']
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -213,16 +267,17 @@ function rand(max) {
 database.fakeData = function(){
 
   for (var i = 3 - 1; i >= 0; i--) {
-    
+
     var data = new this.Users({
       userName: userNames[i],
+      email: emails[i],
       avatar: [1,2,3,4], // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
       team: 1,
       tasksPlayed: [rand(30),rand(30),rand(30)],
-      
+
       // PING
       loggedIn: true,
-      currentLocation: 'River', 
+      currentLocation: 'River',
 
       // METRICS
       score: 200,
@@ -235,7 +290,7 @@ database.fakeData = function(){
     // SAVE USER
     this.saveUser(data, function(){})
   }
- 
+
 }
 
 
@@ -254,7 +309,7 @@ database.searchDocs = function (keyword, callback)
   var items = [];
 
   this.Users.find(
-        { $text : { $search : keyword } }, 
+        { $text : { $search : keyword } },
         { score : { $meta: "textScore" } }
     )
     .sort({ score : { $meta : 'textScore' } })
@@ -279,24 +334,24 @@ database.searchDocsTitle = function (title, callback)
 
 
 this.Users.aggregate(
-    { $group: 
+    { $group:
       { _id: '$title',
         totalPages: { $sum: 1 },
         pdf: { $addToSet: "$pdf"  },
         title: { $addToSet: "$title"  },
         author: { $addToSet: "$author"  },
         year: { $addToSet: "$year"  }
-      } 
+      }
     },{
-        $match: {  
+        $match: {
           $or: [
-          { title: 
-            { 
+          { title:
+            {
               $in: title
-            } 
+            }
           }
           ]
-        }  
+        }
     },
     function (err, results) {
       if (err) return console.log(err);
@@ -335,7 +390,7 @@ database.saveTitle = function (searchTerm, newTitle){
 
 database.dbInfo = function (callback) {
  database.Users.aggregate(
-   { $group: 
+   { $group:
      { _id: '$userName',
       userName: { $addToSet: "$userName"  },
       avatar: { $addToSet: "$avatar"  },
@@ -347,8 +402,8 @@ database.dbInfo = function (callback) {
       locationsVisited: { $addToSet: "$locationsVisited"  },
       totalTasks: { $addToSet: "$totalTasks"  },
       totalTaskTime: { $addToSet: "$totalTaskTime"  },
-      totalWaitTime: { $addToSet: "$totalWaitTime"  },          
-     } 
+      totalWaitTime: { $addToSet: "$totalWaitTime"  },
+     }
    },
    function (err, results) {
      if (err) return handleError(err);

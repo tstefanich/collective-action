@@ -511,9 +511,19 @@ var signUp = {
      disableContinueButton:function(){
           $('.sign-up-button-container').addClass('disable')
      },
+     validateEmail(mail)
+     {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+       {
+         return (true)
+       }
+         //alert("You have entered an invalid email address!")
+         return (false)
+     },
      checkIfFieldsAreFilled(){
           $('.form-control.email-address').on('keyup blur', function(event) {
-               if($.trim($(this).val()) != ''){
+               var emailText = signUp.validateEmail($.trim($(this).val()))
+               if(emailText){
                     signUp.emailTextFieldIsFilled = true;
                     console.log('Input Email Filled');
                     signUp.enableContinueButton();

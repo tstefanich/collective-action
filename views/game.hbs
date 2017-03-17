@@ -1,7 +1,18 @@
 {{> header-game}}
-
+<style>
+body, html{
+     background:black;
+     color:white;
+}
+.page {
+     background: black;
+}
+.page .nav {
+     background: black;
+}
+</style>
 <!--////////////
-Queue Page
+Queue/waiting-room Page
 ///////////--->
 <div class="page queue waiting-room slideUp">
      <!-- Top Nav Bar -->
@@ -12,6 +23,7 @@ Queue Page
          Log out This should not be a page but, logout and reload index.hbs
      </div>
 </div>
+<a class="btn btn-default more-details waiting-room" href="#waiting-room">Login</a>
 
 <!--////////////
 Game/Prompt Page
@@ -25,6 +37,7 @@ Game/Prompt Page
          Log out This should not be a page but, logout and reload index.hbs
      </div>
 </div>
+<a class="btn btn-default more-details game" href="#game">Login</a>
 
 
 {{> footer}}

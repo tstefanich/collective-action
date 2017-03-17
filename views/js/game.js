@@ -26,9 +26,9 @@ socket.on('disconnect', function(){
 
 /*****
 
-slideDownPanel($('.page.login .close'));
+slideDownPanel($('.page.waiting-room .close'));
 This function needs the jQuery Object to work you need to target the close button
 
-moreDetails($(this));
+moreDetails($('.more-details.game.btn');
 This needs to be an anchor tag with a href like this
 <a class="btn btn-default more-details" href="#login">Login</a>

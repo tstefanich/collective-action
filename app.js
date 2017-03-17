@@ -94,6 +94,13 @@ app.get( '/', function( req, res, next ){
 	});
 });
 
+app.get( '/game', function( req, res, next ){
+  database.dbInfo(function(results){
+    return res.render('game', {'users' : results, templateName:'game'});
+  });
+
+
+});
 
 app.get( '/game-projection-1', function( req, res, next ){
   database.dbInfo(function(results){

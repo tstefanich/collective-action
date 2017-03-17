@@ -1227,37 +1227,3 @@ function zoomInOnMyLocation(){
   googleMap.setZoom(18);
   //googleMap.setCenter( new google.maps.LatLng(currentPosition.lat, currentPosition.lng );
 }
-
-
-/******************************************
-socket.io communication
-*******************************************/
-
-/*
-var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
-socket.on('connect', function(){
-console.log('connected to the server as: ' + socket.id);
-});
-
-
-socket.on('next', function(data){
-console.log(data);
-
-});
-
-socket.on('myTurn', function(data){
-console.log(data);
-
-});
-
-
-$(window).click(function(){
-var clientInfo = { 'hi':'there', 'ho' :'here' }
-socket.emit('clientInfo', clientInfo);
-})
-
-
-socket.on('disconnect', function(){
-console.log('disconnected from the server as: ' + socket.id);
-
-}); */

@@ -34,10 +34,15 @@ var database = {
     var self = this;
     return new Promise(function(resolve, reject){
 
+      mongoose.connect('mongodb://localhost/test',function(){
+        /* Drop the DB at start to clear for testing, was getting flooded with fake data and I couldnt find where it was getting logged out... */
+        mongoose.connection.db.dropDatabase();
+      });
+
       console.log("connecting to database...");
 
       // connect to database
-      mongoose.connect('mongodb://localhost/test');
+      // mongoose.connect('mongodb://localhost/test');
 
       var db = mongoose.connection;
 
@@ -47,6 +52,7 @@ var database = {
       db.once('open', function(){
         // we're connected!
         console.log('database connection successful');
+
 
         self.userSchema = mongoose.Schema({
 
@@ -61,6 +67,8 @@ var database = {
           // PING
           loggedIn: Boolean,
           currentLocation: String,
+          // priority: Number,
+          // connectionTimeStamp: Number,
 
           // METRICS
           score: Number,
@@ -87,7 +95,8 @@ var database = {
 
         //self.deleteAllUsers();
         self.fakeData();
-        self.getUsers(self.Users);
+        // self.getUsers(self.Users);
+        // self.findUser('sara@sara.com')
         //searchDocs(Document, 'blade runner', function(results){
         //  console.log('first search')
         //});
@@ -169,15 +178,44 @@ database.checkIfUserExists = function (req,callback)
 
 /// USERS
 
-database.getUserName = function ()
-{
-
+//post // login & socket stuff
+database.retrieveUserData = function(email){
+  //return the users object via email lookup
 }
 
-database.setUserName = function ()
-{
+//dont really need this if we are using local storage.
+// //accessible via app.js
+// database.retrieveConnectionTimeStamp = function(email){
+//   //look up a users timestamp by email
+// }
+//
+// //these are not in the schema yet, need to add above.
+// database.updatePriority = function(){
+//
+// }
+//
+// database.updateConnectionTimeStamp = function(){
+//
+// }
+//
+// database.updateTasksPlayed = function(){
+//
+// }
 
-}
+
+// database.findUser = function(req,callback){
+//   // var email = req.body.email;
+//   // var thing = {email : findByEmail}
+//   this.Users.find({email:email}, function (err, user) {
+//
+//     console.log(user);
+//
+//
+//     if(err) console.error(err);
+//   })
+//
+//
+// }
 
 /// LOCATION
 

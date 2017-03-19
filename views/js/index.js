@@ -447,6 +447,7 @@ var login = {
           });
      },
      retrieveFromDatabase:function(button){
+       //make this real!
           store.set('user',
                {
                     userName:'Marcus',
@@ -465,6 +466,7 @@ var login = {
                     totalTasks: 'Number', // this may not be needed scores = totalPlays
                     totalTaskTime: 'Number',
                     totalWaitTime: 'Number',
+                    priority: 1, // 1-5, lower is lower for the queueing system (MIGHT NEED THIS IN THE DB TOO?)
                }
           );
           setTimeout(function(){
@@ -744,11 +746,6 @@ function moreDetails(click){
             $iframe.addClass('slideUp');
           },100);
 
-          setTimeout(function(){
-          //document.getElementById('vimeoVideo').play();
-            $iframe.contents().find("video").get(0).play();
-          },700);
-
         }  else {
 
                     //Set Panel from display none to display block
@@ -873,7 +870,7 @@ function updateMarkerDistances(currentPos) {
 
       allMarkers[i].setVisible(true);
       allCircles[i].setOptions({fillOpacity:1, strokeOpacity:1});
-      console.log(allMarkers[i].slug);
+      // console.log(allMarkers[i].slug);
 
       if(allMarkers[i].distance <= allMarkers[i].radius){
             $slug.removeClass('outside-fence');

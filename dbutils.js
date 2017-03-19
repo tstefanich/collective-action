@@ -73,7 +73,7 @@ function connectToDatabase(){
 function clearDatabase(callback){
 	var model = connectToDatabase();
 	model.remove({},function(err){
-		
+
 		if(err) done(err);
 
 		mongoose.disconnect();
@@ -85,7 +85,7 @@ function clearDatabase(callback){
 function countCollection(callback){
 	var model = connectToDatabase();
 	model.count({},function(err, result){
-		
+
 		if(err) done(err);
 
 		mongoose.disconnect();

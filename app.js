@@ -228,18 +228,22 @@ app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
 });
 
 /*************************************
-socket.io
+socket.io && Queue
 **************************************/
-
-//some of this might need to be moved or maybe even put into its own module?
 var server = require('http').createServer();
 var io = require('socket.io')(server);
+
+// var connectedUsers =
+
 io.on('connection', function(client){
   console.log('client connected: ' + client.id);
 
 
-  client.on('clientInfo', function(data){
-    console.log('clientInfo message: ' + data);
+  client.on('calcPriority', function(data,callback){
+    var newPriority;
+    
+
+    callback(newPriority)
   });
 
   client.on('disconnect', function(){
@@ -247,8 +251,12 @@ io.on('connection', function(client){
   });
 
 });
-server.listen(3000, function(){ console.log('socket.io server started on 3000') });
+server.listen(3000, function(){ console.log('socket.io server started on  port 3000') });
 
+// setTimeout(function(){
+//   var clients = io.sockets.clients().connected;
+//   console.log(clients);
+// },2000)
 
 
 /************************************

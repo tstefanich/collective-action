@@ -397,6 +397,33 @@ $(window).load(function(){
 Login Functions
 
 **************************/
+var userManager = {
+  set:function(data){
+    store.set('user',
+       {
+            userName: data.userName,
+            email: data.email,
+            avatar:  data.avatar, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+            team: data.team,
+            tasksPlayed: data.tasksPlayed,
+
+            // PING
+            loggedIn: data.loggedIn,
+            currentLocation: data.currentLocation,
+            priority: data.priority, // 1-5, lower is lower for the queueing system (MIGHT NEED THIS IN THE DB TOO?)
+            waitTime: data.waitTime,
+
+            // METRICS
+            score: data.score,
+            locationsVisited: data.locationsVisited, // location + timespent
+            totalTasks: data.totalTasks, // this may not be needed scores = totalPlays
+            totalTaskTime: data.totalTaskTime,
+            totalWaitTime: data.totalWaitTime,
+       }
+    );
+  }, 
+}
+
 
 var login = {
      emailTextFieldIsFilled:false,
@@ -441,34 +468,17 @@ var login = {
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                          // Break
-                         login.retrieveFromDatabase();
+                         var email_address = $.trim($('.form-control.email-address.login').val());
+                         login.retrieveFromDatabase(email_address);
                          break;
                }
           });
      },
-     retrieveFromDatabase:function(button){
-       //make this real!
-          store.set('user',
-               {
-                    userName:'Marcus',
-                    email: 'email',
-                    avatar: 'Array', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: 'Number',
-                    tasksPlayed: 'Array',
-
-                    // PING
-                    loggedIn: 'Boolean',
-                    currentLocation: 'String',
-
-                    // METRICS
-                    score: 'Number',
-                    locationsVisited: 'Array', // location + timespent
-                    totalTasks: 'Number', // this may not be needed scores = totalPlays
-                    totalTaskTime: 'Number',
-                    totalWaitTime: 'Number',
-                    priority: 1, // 1-5, lower is lower for the queueing system (MIGHT NEED THIS IN THE DB TOO?)
-               }
-          );
+     retrieveFromDatabase:function(email_address){
+        $.post("http://localhost:8080/get-user",{email: email_address.toLowerCase()}, function(data){
+              userManager.set(data);
+        });
+          
           setTimeout(function(){
                slideDownPanel($('.page.login .close'));
                slideDownPanel($('.page.intro .close'));
@@ -702,6 +712,28 @@ $(document).ready(function(){
      });
 
 
+
+     ///
+    //$.post("http://localhost:8080/update-fields",
+    //  {
+    //    email: 'sara@sara.com',
+    //    userName: "userName",
+    //    avatar: "avatar",
+    //    team: 69,
+    //    tasksPlayed:  69,
+    //    loggedIn:  "loggedIn"  ,
+    //    currentLocation:  "currentLocation" ,
+    //    priority: 69  ,
+    //    waitTime: 69  ,
+    //    score:  69  ,
+    //    locationsVisited: "locationsVisited"  ,
+    //    totalTasks: 69 ,
+    //    totalTaskTime: 69  ,
+    //    totalWaitTime: 69  
+    //  }
+    //  , function(data){
+    //    userManager.set(data);
+    //  });
 });
 
 

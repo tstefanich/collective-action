@@ -94,17 +94,17 @@ app.get( '/', function( req, res, next ){
 	});
 });
 
-app.get( '/game', function( req, res, next ){
+app.get( '/game-client', function( req, res, next ){
   database.dbInfo(function(results){
-    return res.render('game', {'users' : results, templateName:'game'});
+    return res.render('game-client', {'users' : results, templateName:'game-client'});
   });
 
 
 });
 
-app.get( '/game-projection-1', function( req, res, next ){
+app.get( '/game-projection', function( req, res, next ){
   database.dbInfo(function(results){
-    return res.render('game-projection-1', {'users' : results});
+    return res.render('game-projection', {'users' : results, templateName:'game-projection'});
   });
 
 
@@ -198,34 +198,45 @@ app.post( '/check-email', function( req, res ) {
   //res.send(req.body);
 });
 
-app.post( '/restore', function( req, res ) {
-  database.restoreFile(req);
+app.post( '/get-user', function( req, res ) {
+  //database.restoreFile(req);
+  console.log(req.body.email)
+
+
+  database.getUserByEmail(req, function(err, response){
+       if(err){
+           return res.status( 422 ).json( {
+            error : err.message
+         } );
+      } else {
+           return res.status( 200 ).send( response );
+      }
+  });
   // This was need for successful callback for ajax
   // This should probably be in a callback maybe inside the restoreFile request.... maybe....
-  res.send(req.body);
+  //res.send(req.body);
 });
 
-app.post( '/delete', function( req, res ) {
-  database.removeFileFromServer(req);
-    // This was need for successful callback for ajax
-  // This should probably be in a callback maybe inside the deleteFile request.... maybe....
-  res.send(req.body);
+app.post( '/update-fields', function( req, res ) {
+  //database.restoreFile(req);
+  console.log(req.body.email)
+
+
+  database.updateFields(req, function(err, response){
+       if(err){
+           return res.status( 422 ).json( {
+            error : err.message
+         } );
+      } else {
+           return res.status( 200 ).send( response );
+      }
+  });
+  // This was need for successful callback for ajax
+  // This should probably be in a callback maybe inside the restoreFile request.... maybe....
+  //res.send(req.body);
 });
 
-app.post( '/upload', upload.single( 'file' ), function( req, res, next ) {
 
-	console.log("got a post from: " + req.file.filename);
-
-	database.addFile(req.file, function(err, response){
-	  	if(err){
-	  		return res.status( 422 ).json( {
-		      error : err.message
-		    } );
-	  	} else {
-	  		return res.status( 200 ).send( response );
-	  	}
-	});
-});
 
 /*************************************
 socket.io && Queue
@@ -241,7 +252,7 @@ io.on('connection', function(client){
 
   client.on('calcPriority', function(data,callback){
     var newPriority;
-    
+
 
     callback(newPriority)
   });

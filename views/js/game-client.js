@@ -1,3 +1,6 @@
+//http://stackoverflow.com/questions/6563885/socket-io-how-do-i-get-a-list-of-connected-sockets-clients/24145381
+
+
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
 function setPriority(){ // do we need to keep track of this in the DB? I think likely not...
@@ -59,8 +62,10 @@ socket.on('connect', function(){
      getUser.connectionTimestamp = Date.now()
      store.set('user', getUser)
 
-     setPriority()
+     //setPriority()
 });
+
+Object.keys(io.sockets.sockets);
 
 socket.on('setPriority', setPriority())
 

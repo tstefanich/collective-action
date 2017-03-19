@@ -67,8 +67,8 @@ var database = {
           // PING
           loggedIn: Boolean,
           currentLocation: String,
-          // priority: Number,
-          // connectionTimeStamp: Number,
+          priority: Number,
+          waitTime: Number,
 
           // METRICS
           score: Number,
@@ -95,6 +95,7 @@ var database = {
 
         //self.deleteAllUsers();
         self.fakeData();
+        //self.updateFields();
         // self.getUsers(self.Users);
         // self.findUser('sara@sara.com')
         //searchDocs(Document, 'blade runner', function(results){
@@ -127,6 +128,15 @@ database.getUsers = function ()
   {
     if (err) return console.error(err);
     console.log(docs);
+  });
+}
+
+database.getUserByEmail = function(req, callback){
+  var email = req.body.email;
+  console.log(email)
+  this.Users.findOne({ email : email }, function(error, docs) {
+    console.error('getUserByEmail');
+    return callback(null, docs);
   });
 }
 
@@ -316,6 +326,8 @@ database.fakeData = function(){
       // PING
       loggedIn: true,
       currentLocation: 'River',
+      priority: rand(30),
+      waitTime: rand(1000),
 
       // METRICS
       score: 200,
@@ -426,16 +438,68 @@ database.saveTitle = function (searchTerm, newTitle){
 ************************************/
 
 
+/**
+userName:'Marcus',
+email: 'email',
+avatar: 'Array', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+team: 'Number',
+tasksPlayed: 'Array',
+
+// PING
+loggedIn: 'Boolean',
+currentLocation: 'String',
+
+// METRICS
+score: 'Number',
+locationsVisited: 'Array', // location + timespent
+totalTasks: 'Number', // this may not be needed scores = totalPlays
+totalTaskTime: 'Number',
+totalWaitTime: 'Number',
+priority: 1, // 1-5, lower is lower for the queueing system (MIGHT NEED THIS IN THE DB TOO?)
+**/
+
+database.updateFields = function(req, callback){
+  var email = req.body.email;
+  var data = req.body;
+  database.Users.findOneAndUpdate({ email: email },{ "$set": 
+      { 
+      userName: data.userName,
+      avatar: data.avatar,
+      team: data.team ,
+      tasksPlayed: data.tasksPlayed,
+      loggedIn:  data.loggedIn ,
+      currentLocation:  data.currentLocation,
+      priority: data.priority  ,
+      waitTime: data.waitTime  ,
+      score:  data.score  ,
+      locationsVisited: data.locationsVisited  ,
+      totalTasks: data.totalTasks ,
+      totalTaskTime: data.totalTaskTime  ,
+      totalWaitTime: data.totalWaitTime  
+     }
+   }, function(err, user) {
+    if (err) throw err;
+    return callback(null, user);
+    // we have the updated user returned to us
+  });
+
+};
+
+
+
 database.dbInfo = function (callback) {
  database.Users.aggregate(
    { $group:
      { _id: '$userName',
       userName: { $addToSet: "$userName"  },
+      email: { $addToSet: "$email"  },
       avatar: { $addToSet: "$avatar"  },
       team: { $addToSet: "$team"  },
       tasksPlayed: { $addToSet: "$tasksPlayed"  },
       loggedIn: { $addToSet: "$loggedIn"  },
       currentLocation: { $addToSet: "$currentLocation"  },
+      priority: { $addToSet: "$priority"  },
+      waitTime: { $addToSet: "$waitTime"  },
       score: { $addToSet: "$score"  },
       locationsVisited: { $addToSet: "$locationsVisited"  },
       totalTasks: { $addToSet: "$totalTasks"  },

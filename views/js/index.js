@@ -421,7 +421,7 @@ var userManager = {
             totalWaitTime: data.totalWaitTime,
        }
     );
-  }, 
+  },
 }
 
 
@@ -478,7 +478,7 @@ var login = {
         $.post("http://localhost:8080/get-user",{email: email_address.toLowerCase()}, function(data){
               userManager.set(data);
         });
-          
+
           setTimeout(function(){
                slideDownPanel($('.page.login .close'));
                slideDownPanel($('.page.intro .close'));
@@ -729,7 +729,7 @@ $(document).ready(function(){
     //    locationsVisited: "locationsVisited"  ,
     //    totalTasks: 69 ,
     //    totalTaskTime: 69  ,
-    //    totalWaitTime: 69  
+    //    totalWaitTime: 69
     //  }
     //  , function(data){
     //    userManager.set(data);

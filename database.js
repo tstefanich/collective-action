@@ -461,8 +461,8 @@ priority: 1, // 1-5, lower is lower for the queueing system (MIGHT NEED THIS IN 
 database.updateFields = function(req, callback){
   var email = req.body.email;
   var data = req.body;
-  database.Users.findOneAndUpdate({ email: email },{ "$set": 
-      { 
+  database.Users.findOneAndUpdate({ email: email },{ "$set":
+      {
       userName: data.userName,
       avatar: data.avatar,
       team: data.team ,
@@ -475,7 +475,7 @@ database.updateFields = function(req, callback){
       locationsVisited: data.locationsVisited  ,
       totalTasks: data.totalTasks ,
       totalTaskTime: data.totalTaskTime  ,
-      totalWaitTime: data.totalWaitTime  
+      totalWaitTime: data.totalWaitTime
      }
    }, function(err, user) {
     if (err) throw err;
@@ -509,7 +509,7 @@ database.dbInfo = function (callback) {
    },
    function (err, results) {
      if (err) return handleError(err);
-     console.log(results);
+    //  console.log(results);
      callback(results);
    }
  );

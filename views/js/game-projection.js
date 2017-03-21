@@ -50,36 +50,7 @@ var gameProjection = {
 
           socket.on('connect', function(){
                console.log('connected to the server as: ' + socket.id);
-
-               //setup the user with time and play data when connecting to a new location
-               var getUser =  store.get('user')
-               getUser.locationPlays = 0
-               getUser.connectionTimestamp = Date.now()
-               store.set('user', getUser)
-
-               //setPriority()
           });
-
-          //socket.on('setPriority', setPriority())
-
-          socket.on('next', function(data){
-               console.log(data);
-               //if im a next user, change my status to reflect.
-               $('.waitingNext').html('Get ready to act! <br> you are next!')
-
-          });
-
-          socket.on('myTurn', function(data){
-
-              var getUser =  store.get('user')
-              getUser.locationPlays++
-              store.set('user', getUser)
-
-               console.log(data);
-               slideDownPanel($('.page.waiting-room .close'));
-
-          });
-
 
           socket.on('disconnect', function(){
                console.log('disconnected from the server as: ' + socket.id);
@@ -101,18 +72,32 @@ var gameProjection = {
           this.wait = currentTask.time;
           $('.currentTask').html(currentTask.task);
      },
-     getPriority:function(){
-
+     getPriorityUsers:function(numberUsers,callback){
+       socket.emit('getPriorityUsers', numberUsers, callback )
      }
+
+
+
 }
 
 
-//http://stackoverflow.com/questions/6563885/socket-io-how-do-i-get-a-list-of-connected-sockets-clients/24145381
 
 /*******************
      Setup
 ********************/
 gameProjection.init();
+gameProjection.getPriorityUsers(2, function(data){
+  console.log('returned users: ');
+  console.log(data);
+})
+
+
+
+socket.on('forwardUserData',function(data){
+
+  console.log(data);
+})
+
 /*******************
      Draw
 ********************/

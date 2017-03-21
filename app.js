@@ -244,25 +244,100 @@ socket.io && Queue
 var server = require('http').createServer();
 var io = require('socket.io')(server);
 
-// var connectedUsers =
 
 io.on('connection', function(client){
   console.log('client connected: ' + client.id);
 
 
-  client.on('calcPriority', function(data,callback){
-    var newPriority;
+  	client.on('updateUser', function(userObject){
+  		// store the username in the socket session for this client
+  		client.userObject = userObject;
+      client.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
+  	});
+
+    // console.log(io.sockets.sockets); //list of all sockets
 
 
-    callback(newPriority)
+    //not working yet
+    // //~+~+~+~+~+~+~+~+
+    // // This version is random, if we did 'last to connect, it would always give the same users.'
+    // // +~+~+~+~+~+~+~+
+    // client.on('getPriorityUsers', function(numberUsers,callback){
+    //   var connections = io.sockets.sockets
+    //   console.log(connections);
+    //   var users = []
+    //   // rand = Math.trunc(Math.random() * numberUsers)
+    //
+    //   // for(var socketID in connections){ //loop over all the user ovjects
+    //   //   if(connections[socketID].userObject != null){
+    //   //     users.push(connections[socketID])
+    //   //   }
+    //   // }
+    //   // console.log(users);
+    //
+    //   var cons = Object.values(connections)
+    //
+    //
+    //   // var priorityUsers = users.slice(0, numberUsers);
+    //   callback(cons)
+    //
+    // });
+
+
+ // ~+~+~+~+~+~+~+~+
+ // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above.
+ // +~+~+~+~+~+~+~+
+  client.on('getPriorityUsers', function(numberUsers,callback){
+    var connections = io.sockets.sockets
+    console.log(connections);
+    var priorityUsers = []
+
+    for(var socketID in connections){ //loop over all the user ovjects
+      if(connections[socketID].userObject != null){
+
+        // console.log(socketID,connections[socketID].userObject);
+        var user = {
+          id: socketID,
+          locationWaitTime: Date.now() - connections[socketID].userObject.locationWaitTime ,
+          userObject: connections[socketID].userObject
+        }
+        priorityUsers.push(user)
+      }
+
+    }
+
+    //sort
+    console.log(priorityUsers);
+    priorityUsers.sort(function(a, b){
+        return b.locationWaitTime - a.locationWaitTime
+    })
+    console.log(priorityUsers);
+
+    // choose some
+    var returnPriorityUsers = priorityUsers.slice(0, numberUsers);
+
+    //reset the waittime to 0 if we were chosen.
+      for(var socketID in connections){
+        // console.log(connections[socketID].id);
+        returnPriorityUsers.forEach(function(element){
+          if(connections[socketID].id == element.id){
+            connections[socketID].userObject.locationWaitTime = Date.now();
+          }
+        })
+      }
+
+    callback(returnPriorityUsers)
   });
+
+
 
   client.on('disconnect', function(){
     console.log('client disconnected: ' + client.id);
+
   });
 
 });
-server.listen(3000, function(){ console.log('socket.io server started on  port 3000') });
+server.listen(3000, function(){ console.log('socket.io server listening on port 3000') });
 
 // setTimeout(function(){
 //   var clients = io.sockets.clients().connected;

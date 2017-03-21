@@ -11,7 +11,7 @@ database.init()
 
         var app = require('./app.js').app(db);
 
-        app.listen( 8080, function() {  
+        app.listen( 8080, function() {
           console.log( 'Express server listening on port 8080' );
         });
 

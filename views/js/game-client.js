@@ -4,6 +4,14 @@
 
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
+function currentUserInfo(){
+  var ui = {
+    userObject: store.get('user'),
+    room: 'location1'
+   }
+   return ui;
+}
+
 //reload the view when the app boots up & this page connects
 socket.on('reload',function(){
   location.reload();
@@ -14,11 +22,11 @@ socket.on('connect', function(){
    console.log('connected to the server as: ' + socket.id);
   //  console.log(socket);
 
-   socket.emit('updateUser', store.get('user') )
+   socket.emit('updateUser', currentUserInfo() )
 });
 
 socket.on('reconnect',function(){
-  socket.emit('updateUser', store.get('user') )
+  socket.emit('updateUser', currentUserInfo() )
 })
 
 // socket.on('next', function(data){
@@ -45,6 +53,9 @@ socket.on('myTurn', function(data){
     store.set('user', getUser)
 
      $('.waitingNext').html('Its your turn!')
+
+     //maybe turn this off, but its helpful to see who got chose in the tabs.
+     $('.myTurnAudio').get(0).play()
     //  slideDownPanel($('.page.waiting-room .close'));
 
 });

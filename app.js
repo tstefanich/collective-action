@@ -243,6 +243,7 @@ socket.io && Queue
 **************************************/
 var server = require('http').createServer();
 var io = require('socket.io')(server);
+// var location1= io.of('/location1');
 
 //liveReload views on nodemon auto server reboot
 setTimeout(function(){
@@ -256,10 +257,11 @@ io.on('connection', function(socket){
 
     // socket.emit('reload','reload');
 
-
-  	socket.on('updateUser', function(userObject){
+  	socket.on('updateUser', function(userInfo){
+      // console.log(userInfo);
+      socket.join(userInfo.room)
   		// store the username in the socket session for this client socket
-  		socket.userObject = userObject;
+  		socket.userObject = userInfo.userObject;
       socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
   	});
 
@@ -273,12 +275,14 @@ io.on('connection', function(socket){
  // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
  // +~+~+~+~+~+~+~+
   socket.on('getPriorityUsers', function(numberUsers,callback){
-    var connections = io.sockets.sockets
+    console.log(io);
+    var connections = io.sockets.sockets //all connections
+
     console.log(connections);
     var priorityUsers = []
 
     for(var socketID in connections){ //loop over all the user ovjects
-      if(connections[socketID].userObject != null){
+      if(connections[socketID].userObject != null && connections[socketID].rooms.location1){
 
         // console.log(socketID,connections[socketID].userObject);
         var user = {

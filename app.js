@@ -9,7 +9,6 @@ var exphbs   =  require( 'express-handlebars' );
 var multer   =  require( 'multer' );
 var bodyParser = require('body-parser');
 var util = require('util');
-
 var fs = require('fs');
 
 var app = express();
@@ -23,6 +22,7 @@ var storage = multer.diskStorage({
 
 var upload = multer( { storage: storage } );
 require( 'string.prototype.startswith' );
+
 
 /************************************
 
@@ -244,50 +244,35 @@ socket.io && Queue
 var server = require('http').createServer();
 var io = require('socket.io')(server);
 
+//liveReload views on nodemon auto server reboot
+setTimeout(function(){
+  io.emit('reload','reload');
+  console.log('Reload Views');
+},2000)
 
-io.on('connection', function(client){
-  console.log('client connected: ' + client.id);
+io.on('connection', function(socket){
+  console.log('socket connected: ' + socket.id);
 
 
-  	client.on('updateUser', function(userObject){
-  		// store the username in the socket session for this client
-  		client.userObject = userObject;
-      client.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
+    // socket.emit('reload','reload');
+
+
+  	socket.on('updateUser', function(userObject){
+  		// store the username in the socket session for this client socket
+  		socket.userObject = userObject;
+      socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
   	});
 
     // console.log(io.sockets.sockets); //list of all sockets
 
 
-    //not working yet
-    // //~+~+~+~+~+~+~+~+
-    // // This version is random, if we did 'last to connect, it would always give the same users.'
-    // // +~+~+~+~+~+~+~+
-    // client.on('getPriorityUsers', function(numberUsers,callback){
-    //   var connections = io.sockets.sockets
-    //   console.log(connections);
-    //   var users = []
-    //   // rand = Math.trunc(Math.random() * numberUsers)
-    //
-    //   // for(var socketID in connections){ //loop over all the user ovjects
-    //   //   if(connections[socketID].userObject != null){
-    //   //     users.push(connections[socketID])
-    //   //   }
-    //   // }
-    //   // console.log(users);
-    //
-    //   var cons = Object.values(connections)
-    //
-    //
-    //   // var priorityUsers = users.slice(0, numberUsers);
-    //   callback(cons)
-    //
-    // });
+
 
 
  // ~+~+~+~+~+~+~+~+
- // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above.
+ // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
  // +~+~+~+~+~+~+~+
-  client.on('getPriorityUsers', function(numberUsers,callback){
+  socket.on('getPriorityUsers', function(numberUsers,callback){
     var connections = io.sockets.sockets
     console.log(connections);
     var priorityUsers = []
@@ -307,6 +292,7 @@ io.on('connection', function(client){
     }
 
     //sort
+    console.log('sort');
     console.log(priorityUsers);
     priorityUsers.sort(function(a, b){
         return b.locationWaitTime - a.locationWaitTime
@@ -315,7 +301,8 @@ io.on('connection', function(client){
 
     // choose some
     var returnPriorityUsers = priorityUsers.slice(0, numberUsers);
-
+    console.log('selections');
+    console.log(returnPriorityUsers);
     //reset the waittime to 0 if we were chosen.
       for(var socketID in connections){
         // console.log(connections[socketID].id);
@@ -326,23 +313,26 @@ io.on('connection', function(client){
         })
       }
 
+    //notify users that it's their turn!
+    returnPriorityUsers.forEach(function(element){
+      // console.log(element.id);
+      socket.to(element.id).emit('myTurn', 'its Your Turn!');
+    });
+
+    //send the users back to the game-projection
     callback(returnPriorityUsers)
   });
 
 
 
-  client.on('disconnect', function(){
-    console.log('client disconnected: ' + client.id);
+  socket.on('disconnect', function(){
+    console.log('client disconnected: ' + socket.id);
 
   });
 
 });
 server.listen(3000, function(){ console.log('socket.io server listening on port 3000') });
 
-// setTimeout(function(){
-//   var clients = io.sockets.clients().connected;
-//   console.log(clients);
-// },2000)
 
 
 /************************************

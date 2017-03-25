@@ -4,9 +4,15 @@
 
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
+//reload the view when the app boots up & this page connects
+socket.on('reload',function(){
+  location.reload();
+  console.log('~+~+~+~ RELOADED PAGE');
+})
+
 socket.on('connect', function(){
    console.log('connected to the server as: ' + socket.id);
-   console.log(socket);
+  //  console.log(socket);
 
    socket.emit('updateUser', store.get('user') )
 });
@@ -15,20 +21,6 @@ socket.on('reconnect',function(){
   socket.emit('updateUser', store.get('user') )
 })
 
-
-
-
-
-
-// socket.on('getMyWaitTime', function(callback){
-//   var myWaitTime = "myWaitTime";
-//   var getUser =  store.get('user')
-//   console.log(getUser);
-//
-//
-//   callback(myWaitTime)
-// })
-
 // socket.on('next', function(data){
 //      console.log(data);
 //      //if im a next user, change my status to reflect.
@@ -36,16 +28,26 @@ socket.on('reconnect',function(){
 //
 // });
 //
-// socket.on('myTurn', function(data){
-//
-//     var getUser =  store.get('user')
-//     getUser.locationPlays++
-//     store.set('user', getUser)
-//
-//      console.log(data);
-//      slideDownPanel($('.page.waiting-room .close'));
-//
-// });
+
+socket.on('newGame', function(){
+  $('.waitingNext').html('Waiting At Location XXX')
+  //upload user local storage to the database (dont overwrite the user, only update the values incase something goes wrong)
+  var getUser =  store.get('user')
+
+
+})
+
+socket.on('myTurn', function(data){
+  //  console.log(data);
+
+    var getUser =  store.get('user')
+    getUser.totalTasks++
+    store.set('user', getUser)
+
+     $('.waitingNext').html('Its your turn!')
+    //  slideDownPanel($('.page.waiting-room .close'));
+
+});
 
 
 socket.on('disconnect', function(){

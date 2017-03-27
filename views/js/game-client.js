@@ -4,67 +4,77 @@
 
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
-function currentUserInfo(){
-  var ui = {
-    userObject: store.get('user'),
-    room: 'location1'
-   }
-   return ui;
+function currentUserInfo() {
+    var ui = {
+        userObject: store.get('user'),
+        room: 'location1'
+    }
+    return ui;
 }
 
 //reload the view when the app boots up & this page connects
-socket.on('reload',function(){
-  location.reload();
-  console.log('~+~+~+~ RELOADED PAGE');
+socket.on('reload', function() {
+    location.reload();
+    console.log('~+~+~+~ RELOADED PAGE');
 })
 
-socket.on('connect', function(){
-   console.log('connected to the server as: ' + socket.id);
-  //  console.log(socket);
+socket.on('connect', function() {
+    console.log('connected to the server as: ' + socket.id);
+    //  console.log(socket);
 
-   socket.emit('updateUser', currentUserInfo() )
+    socket.emit('updateUser', currentUserInfo())
 });
 
-socket.on('reconnect',function(){
-  socket.emit('updateUser', currentUserInfo() )
+socket.on('reconnect', function() {
+    socket.emit('updateUser', currentUserInfo())
 })
 
-// socket.on('next', function(data){
-//      console.log(data);
-//      //if im a next user, change my status to reflect.
-//      $('.waitingNext').html('Get ready to act! <br> you are next!')
-//
-// });
-//
+socket.on('newGame', function() {
+    $('.waitingNext').html('Waiting At Location XXX')
+    //upload user local storage to the database (dont overwrite the user, only update the values incase something goes wrong)
+    // var getUser =  store.get('user')
+    var getUser = store.get('user')
+        getUser.playing = false;
+      store.set('user', getUser)
+    // console.log('newGame:', store.get('user'));
 
-socket.on('newGame', function(){
-  $('.waitingNext').html('Waiting At Location XXX')
-  //upload user local storage to the database (dont overwrite the user, only update the values incase something goes wrong)
-  var getUser =  store.get('user')
-
-
+    window.parent.document.title = '🚫 wait'
 })
 
-socket.on('myTurn', function(data){
-  //  console.log(data);
+socket.on('mySoon', function(data) {
+    //if im a next user, change my status to reflect.
+    var getUser = store.get('user')
 
-    var getUser =  store.get('user')
-    getUser.totalTasks++
-    store.set('user', getUser)
+    if(!getUser.playing){
+      $('.waitingNext').html('Get ready to act! <br> Its soon your turn to play!')
+      window.parent.document.title = '⚠️ soon'
+    }
+});
 
-     $('.waitingNext').html('Its your turn!')
+socket.on('myTurn', function(data) {
+    //  console.log(data);
 
-     //maybe turn this off, but its helpful to see who got chose in the tabs.
-     $('.myTurnAudio').get(0).play()
+    var getUser = store.get('user')
+        getUser.totalTasks++ //these are the same thing...
+        getUser.score++ //these are the same thing...
+        getUser.playing = true;
+      store.set('user', getUser)
+
+    $('.waitingNext').html('Its your turn to act!')
+    window.parent.document.title = '✅ play'
+
+    //maybe turn this off, but its helpful to see who got chose in the tabs.
+    //  $('.myTurnAudio').get(0).play()
     //  slideDownPanel($('.page.waiting-room .close'));
 
 });
 
 
-socket.on('disconnect', function(){
-     console.log('disconnected from the server as: ' + socket.id);
+socket.on('disconnect', function() {
+    console.log('disconnected from the server as: ' + socket.id);
 
 });
+
 
 
 /*****

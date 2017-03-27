@@ -2,7 +2,7 @@ var allTasks = [
  {
    task:"Perform a flood",
    time: 3000,
-   players: 5,
+   players: 4,
    type: 'largeGroup'
  },
  {
@@ -60,12 +60,6 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
-/*
-var namespace = '/';
-var roomName = 'my_room_name';
-for (var socketId in io.nsps[namespace].adapter.rooms[roomName]) {
-    console.log(socketId);
-}*/
 
 
 var gameProjection = {
@@ -74,7 +68,7 @@ var gameProjection = {
      init: function(){
           time = new Date().getTime();//store the current time
           // this.getNewTask();
-          this.newGame()
+          // this.newGame()
 
           socket.on('connect', function(){
                console.log('connected to the server as: ' + socket.id);
@@ -83,6 +77,7 @@ var gameProjection = {
           socket.on('disconnect', function(){
                console.log('disconnected from the server as: ' + socket.id);
           });
+
      },
      draw:function(){
           //this.checkTimer();
@@ -106,7 +101,7 @@ var gameProjection = {
     //    socket.emit('getPriorityUsers', numberUsers, callback )
     //  }
     newGame:function(){
-        if(new Date().getTime() - time >= this.wait){
+        // if(new Date().getTime() - time >= this.wait){
            console.log("tick");//if it is, do something
            time = new Date().getTime();//also update the stored time
 
@@ -114,8 +109,12 @@ var gameProjection = {
            this.wait = currentTask.time;
 
            console.log(currentTask.players);
-           socket.emit('newGame', 'newGame') //reset all users mobile views
-           socket.emit('getPriorityUsers', currentTask.players , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do. 
+          //  socket.emit('newGame', 'newGame') //reset all users mobile views && push to the database
+           socket.emit('getPriorityUsers', currentTask.players , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
+
+             if(chosenPlayers == false){ //there are not enough users for this game connected to the server, try again.
+               gameProjection.newGame()
+             }
 
              console.log(chosenPlayers)
 
@@ -134,7 +133,9 @@ var gameProjection = {
 
            }) // close getPriorityUsers
 
-        }
+           socket.emit('getSoonUsers', 'soon') //notify the people who are coming up soon. was thinking that we could do this to avoid having to calculate and store who is actually next and just notify maybe 10 or so people that they will be soon and should be on alert, this way they will be in the next 1-2 rounds... I can only see this being a problem for  all crowd games.
+
+        // }
     }
 }
 
@@ -142,24 +143,17 @@ var gameProjection = {
      Setup
 ********************/
 gameProjection.init();
-// gameProjection.getPriorityUsers(2, function(data){
-//   console.log('returned users: ');
-//   console.log(data);
-// })
 
-
-
-socket.on('forwardUserData',function(data){
-
-  console.log(data);
+$(document).click(function(){
+  gameProjection.newGame()
 })
-
 /*******************
      Draw
 ********************/
 function draw(){
     //  gameProjection.checkTimer();
-    gameProjection.newGame()
+
+    // gameProjection.newGame()
 
      window.requestAnimationFrame(draw);
 

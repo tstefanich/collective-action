@@ -4,9 +4,9 @@
 
 ************************************/
 
-var express  =  require( 'express' );
-var exphbs   =  require( 'express-handlebars' );
-var multer   =  require( 'multer' );
+var express = require('express');
+var exphbs = require('express-handlebars');
+var multer = require('multer');
 var bodyParser = require('body-parser');
 var util = require('util');
 var fs = require('fs');
@@ -15,13 +15,15 @@ var app = express();
 var database;
 
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, __dirname + '/data/uploads/');
-  }
+    destination: function(req, file, cb) {
+        cb(null, __dirname + '/data/uploads/');
+    }
 });
 
-var upload = multer( { storage: storage } );
-require( 'string.prototype.startswith' );
+var upload = multer({
+    storage: storage
+});
+require('string.prototype.startswith');
 
 
 /************************************
@@ -30,55 +32,71 @@ require( 'string.prototype.startswith' );
 
 ************************************/
 
-app.use(express.static(__dirname + '/bower_components' ) );
+app.use(express.static(__dirname + '/bower_components'));
 app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/data'));
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }))
-app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.json()); // to support JSON-encoded bodies
 //app.engine('html', require('ejs').renderFile);
 
 
-var hbs = exphbs.create( {
-  extname: '.hbs',
-  helpers: {
-    compare: function(lvalue, rvalue, options) {
+var hbs = exphbs.create({
+    extname: '.hbs',
+    helpers: {
+        compare: function(lvalue, rvalue, options) {
 
-        if (arguments.length < 3)
-            throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+            if (arguments.length < 3)
+                throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
 
-        var operator = options.hash.operator || "==";
+            var operator = options.hash.operator || "==";
 
-        var operators = {
-            '==':       function(l,r) { return l == r; },
-            '===':      function(l,r) { return l === r; },
-            '!=':       function(l,r) { return l != r; },
-            '<':        function(l,r) { return l < r; },
-            '>':        function(l,r) { return l > r; },
-            '<=':       function(l,r) { return l <= r; },
-            '>=':       function(l,r) { return l >= r; },
-            'typeof':   function(l,r) { return typeof l == r; }
+            var operators = {
+                '==': function(l, r) {
+                    return l == r;
+                },
+                '===': function(l, r) {
+                    return l === r;
+                },
+                '!=': function(l, r) {
+                    return l != r;
+                },
+                '<': function(l, r) {
+                    return l < r;
+                },
+                '>': function(l, r) {
+                    return l > r;
+                },
+                '<=': function(l, r) {
+                    return l <= r;
+                },
+                '>=': function(l, r) {
+                    return l >= r;
+                },
+                'typeof': function(l, r) {
+                    return typeof l == r;
+                }
+            }
+
+            if (!operators[operator])
+                throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+
+            var result = operators[operator](lvalue, rvalue);
+
+            if (result) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+
         }
-
-        if (!operators[operator])
-            throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
-
-        var result = operators[operator](lvalue,rvalue);
-
-        if( result ) {
-            return options.fn(this);
-        } else {
-            return options.inverse(this);
-        }
-
     }
-  }
- } )
+})
 
 
 // Create `ExpressHandlebars` instance with a default layout.
-app.engine( '.hbs', hbs.engine );
+app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
 
@@ -88,32 +106,42 @@ app.set('view engine', '.hbs');
 
 ************************************/
 
-app.get( '/', function( req, res, next ){
-	database.dbInfo(function(results){
-		return res.render('index',{templateName:'index'});
-	});
+app.get('/', function(req, res, next) {
+    database.dbInfo(function(results) {
+        return res.render('index', {
+            templateName: 'index'
+        });
+    });
 });
 
-app.get( '/game-client', function( req, res, next ){
-  database.dbInfo(function(results){
-    return res.render('game-client', {'users' : results, templateName:'game-client'});
-  });
-
-
-});
-
-app.get( '/game-projection', function( req, res, next ){
-  database.dbInfo(function(results){
-    return res.render('game-projection', {'users' : results, templateName:'game-projection'});
-  });
+app.get('/game-client', function(req, res, next) {
+    database.dbInfo(function(results) {
+        return res.render('game-client', {
+            'users': results,
+            templateName: 'game-client'
+        });
+    });
 
 
 });
 
-app.get( '/admin-1', function( req, res, next ){
-  database.dbInfo(function(results){
-    return res.render('admin-1', {'users' : results});
-  });
+app.get('/game-projection', function(req, res, next) {
+    database.dbInfo(function(results) {
+        return res.render('game-projection', {
+            'users': results,
+            templateName: 'game-projection'
+        });
+    });
+
+
+});
+
+app.get('/admin-1', function(req, res, next) {
+    database.dbInfo(function(results) {
+        return res.render('admin-1', {
+            'users': results
+        });
+    });
 
 });
 
@@ -164,76 +192,76 @@ app.get('*', function(req, res) {
  EXPRESS POST
 
 ************************************/
-app.post( '/check-user', function( req, res ) {
-  //database.restoreFile(req);
-  console.log(req.body.userName)
-  database.checkIfUserExists(req, function(err, response){
-       if(err){
-           return res.status( 422 ).json( {
-            error : err.message
-         } );
-      } else {
-           return res.status( 200 ).send( response );
-      }
-  });
-  // This was need for successful callback for ajax
-  // This should probably be in a callback maybe inside the restoreFile request.... maybe....
-  //res.send(req.body);
+app.post('/check-user', function(req, res) {
+    //database.restoreFile(req);
+    console.log(req.body.userName)
+    database.checkIfUserExists(req, function(err, response) {
+        if (err) {
+            return res.status(422).json({
+                error: err.message
+            });
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+    // This was need for successful callback for ajax
+    // This should probably be in a callback maybe inside the restoreFile request.... maybe....
+    //res.send(req.body);
 });
 
-app.post( '/check-email', function( req, res ) {
-  //database.restoreFile(req);
-  console.log(req.body.email)
-  database.checkIfEmailExists(req, function(err, response){
-       if(err){
-           return res.status( 422 ).json( {
-            error : err.message
-         } );
-      } else {
-           return res.status( 200 ).send( response );
-      }
-  });
-  // This was need for successful callback for ajax
-  // This should probably be in a callback maybe inside the restoreFile request.... maybe....
-  //res.send(req.body);
+app.post('/check-email', function(req, res) {
+    //database.restoreFile(req);
+    console.log(req.body.email)
+    database.checkIfEmailExists(req, function(err, response) {
+        if (err) {
+            return res.status(422).json({
+                error: err.message
+            });
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+    // This was need for successful callback for ajax
+    // This should probably be in a callback maybe inside the restoreFile request.... maybe....
+    //res.send(req.body);
 });
 
-app.post( '/get-user', function( req, res ) {
-  //database.restoreFile(req);
-  console.log(req.body.email)
+app.post('/get-user', function(req, res) {
+    //database.restoreFile(req);
+    console.log(req.body.email)
 
 
-  database.getUserByEmail(req, function(err, response){
-       if(err){
-           return res.status( 422 ).json( {
-            error : err.message
-         } );
-      } else {
-           return res.status( 200 ).send( response );
-      }
-  });
-  // This was need for successful callback for ajax
-  // This should probably be in a callback maybe inside the restoreFile request.... maybe....
-  //res.send(req.body);
+    database.getUserByEmail(req, function(err, response) {
+        if (err) {
+            return res.status(422).json({
+                error: err.message
+            });
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+    // This was need for successful callback for ajax
+    // This should probably be in a callback maybe inside the restoreFile request.... maybe....
+    //res.send(req.body);
 });
 
-app.post( '/update-fields', function( req, res ) {
-  //database.restoreFile(req);
-  console.log(req.body.email)
+app.post('/update-fields', function(req, res) {
+    //database.restoreFile(req);
+    console.log(req.body.email)
 
 
-  database.updateFields(req, function(err, response){
-       if(err){
-           return res.status( 422 ).json( {
-            error : err.message
-         } );
-      } else {
-           return res.status( 200 ).send( response );
-      }
-  });
-  // This was need for successful callback for ajax
-  // This should probably be in a callback maybe inside the restoreFile request.... maybe....
-  //res.send(req.body);
+    database.updateFields(req, function(err, response) {
+        if (err) {
+            return res.status(422).json({
+                error: err.message
+            });
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+    // This was need for successful callback for ajax
+    // This should probably be in a callback maybe inside the restoreFile request.... maybe....
+    //res.send(req.body);
 });
 
 
@@ -246,96 +274,117 @@ var io = require('socket.io')(server);
 // var location1= io.of('/location1');
 
 //liveReload views on nodemon auto server reboot
-setTimeout(function(){
-  io.emit('reload','reload');
-  console.log('Reload Views');
-},2000)
+setTimeout(function() {
+    io.emit('reload', 'reload');
+    console.log('Reload Views');
+}, 2000)
 
-io.on('connection', function(socket){
-  console.log('socket connected: ' + socket.id);
+io.on('connection', function(socket) {
+    console.log('socket connected: ' + socket.id);
 
 
     // socket.emit('reload','reload');
 
-  	socket.on('updateUser', function(userInfo){
-      // console.log(userInfo);
-      socket.join(userInfo.room)
-  		// store the username in the socket session for this client socket
-  		socket.userObject = userInfo.userObject;
-      socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
-  	});
+    socket.on('updateUser', function(userInfo) {
+        // console.log(userInfo);
+        socket.join(userInfo.room)
+        // store the username in the socket session for this client socket
+        socket.userObject = userInfo.userObject;
+        socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
+    });
 
     // console.log(io.sockets.sockets); //list of all sockets
 
 
+    // ~+~+~+~+~+~+~+~+
+    // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
+    // +~+~+~+~+~+~+~+
+    var connections = io.sockets.sockets //all connections 'global'
 
+    function organizeUsersByWaitTime() { //create a list of all connected users in decending order (lowest wait time at the bottom of the returned array)
 
+        // console.log(connections);
+        var decendingUsers = []
 
- // ~+~+~+~+~+~+~+~+
- // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
- // +~+~+~+~+~+~+~+
-  socket.on('getPriorityUsers', function(numberUsers,callback){
-    console.log(io);
-    var connections = io.sockets.sockets //all connections
+        for (var socketID in connections) { //loop over all the user ovjects
+            if (connections[socketID].userObject != null && connections[socketID].rooms.location1) { //make sure were not looking at the projection and make sure we are looking at users logged into location1
+                // console.log(connections[socketID]);
 
-    console.log(connections);
-    var priorityUsers = []
-
-    for(var socketID in connections){ //loop over all the user ovjects
-      if(connections[socketID].userObject != null && connections[socketID].rooms.location1){
-
-        // console.log(socketID,connections[socketID].userObject);
-        var user = {
-          id: socketID,
-          locationWaitTime: Date.now() - connections[socketID].userObject.locationWaitTime ,
-          userObject: connections[socketID].userObject
+                var user = {
+                    id: socketID,
+                    calculatedWaitTime: Date.now() - connections[socketID].userObject.locationWaitTime,
+                    userObject: connections[socketID].userObject
+                }
+                decendingUsers.push(user)
+            }
         }
-        priorityUsers.push(user)
-      }
 
+        //sort
+        console.log('before sort', decendingUsers);
+        decendingUsers.sort(function(a, b) {
+            return b.calculatedWaitTime - a.calculatedWaitTime
+        })
+        console.log('after sort', decendingUsers);
+
+        return decendingUsers;
     }
 
-    //sort
-    console.log('sort');
-    console.log(priorityUsers);
-    priorityUsers.sort(function(a, b){
-        return b.locationWaitTime - a.locationWaitTime
-    })
-    console.log(priorityUsers);
 
-    // choose some
-    var returnPriorityUsers = priorityUsers.slice(0, numberUsers);
-    console.log('selections');
-    console.log(returnPriorityUsers);
-    //reset the waittime to 0 if we were chosen.
-      for(var socketID in connections){
-        // console.log(connections[socketID].id);
-        returnPriorityUsers.forEach(function(element){
-          if(connections[socketID].id == element.id){
-            connections[socketID].userObject.locationWaitTime = Date.now();
-          }
-        })
-      }
+    socket.on('getPriorityUsers', function(numberUsers, callback) {
+        io.emit('newGame', 'newGame')
 
-    //notify users that it's their turn!
-    returnPriorityUsers.forEach(function(element){
-      // console.log(element.id);
-      socket.to(element.id).emit('myTurn', 'its Your Turn!');
+        var priorityUsers = organizeUsersByWaitTime()
+
+        // choose some
+        var returnPriorityUsers = priorityUsers.slice(0, numberUsers);
+        console.log('selections:', returnPriorityUsers);
+        //reset the waittime to Date.now() if we were chosen.
+        for (var socketID in connections) {
+            // console.log(connections[socketID].id);
+            returnPriorityUsers.forEach(function(element) { //this could be more efficent.
+                if (connections[socketID].id == element.id) {
+                    connections[socketID].userObject.locationWaitTime = Date.now();
+                }
+            })
+        }
+
+        //notify users that it's their turn!
+        returnPriorityUsers.forEach(function(element) {
+            // console.log(element.id);
+            socket.to(element.id).emit('myTurn', 'its your turn');
+        });
+
+        if(priorityUsers.length < numberUsers){
+          returnPriorityUsers = false;
+        }
+        //send the selected users back to the game-projection
+        callback(returnPriorityUsers)
     });
 
-    //send the users back to the game-projection
-    callback(returnPriorityUsers)
-  });
+    //never call this before getPriorityUsers
+    socket.on('getSoonUsers', function() {
+      var soonUsers = organizeUsersByWaitTime()
+
+      var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
+
+      returnSoonUsers.forEach(function(element) {
+          // console.log(element.id);
+          socket.to(element.id).emit('mySoon', 'youre up soon');
+      });
 
 
+    })
 
-  socket.on('disconnect', function(){
-    console.log('client disconnected: ' + socket.id);
 
-  });
+    socket.on('disconnect', function() {
+        console.log('client disconnected: ' + socket.id);
+
+    });
 
 });
-server.listen(3000, function(){ console.log('socket.io server listening on port 3000') });
+server.listen(3000, function() {
+    console.log('socket.io server listening on port 3000')
+});
 
 
 
@@ -347,8 +396,8 @@ MISC
 
 
 module.exports = {
-  app: function(db){
-    database = db;
-    return app;
-  }
+    app: function(db) {
+        database = db;
+        return app;
+    }
 }

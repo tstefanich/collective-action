@@ -282,7 +282,7 @@ function calcGeoDistance(lat1, lon1, lat2, lon2, units) {
 
 
 function redirectUserToProperPage(currentPos) {
-     console.log('redirectUserToProperPage');
+    //  console.log('redirectUserToProperPage');
   for (var i = allMarkers.length - 1; i >= 0; i--) {
     // Find slug
     //var $slug = $('.'+allLocation[i].url);

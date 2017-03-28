@@ -299,7 +299,7 @@ io.on('connection', function(socket) {
     // ~+~+~+~+~+~+~+~+
     // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
     // +~+~+~+~+~+~+~+
-    var connections = io.sockets.sockets //all connections 'global'
+    var connections = io.sockets.sockets //all connections 'global' (this should be a list of only who is logged into this location using socket.io rooms)
 
     function organizeUsersByWaitTime() { //create a list of all connected users in decending order (lowest wait time at the bottom of the returned array)
 
@@ -320,21 +320,24 @@ io.on('connection', function(socket) {
         }
 
         //sort
-        console.log('before sort', decendingUsers);
+        // console.log('before sort', decendingUsers);
         decendingUsers.sort(function(a, b) {
             return b.calculatedWaitTime - a.calculatedWaitTime
         })
-        console.log('after sort', decendingUsers);
+        // console.log('after sort', decendingUsers);
 
         return decendingUsers;
     }
 
 
-    socket.on('getPriorityUsers', function(numberUsers, callback) {
-        io.emit('newGame', 'newGame')
+    socket.on('getPriorityUsers', function(numberUsers, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
+      io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
+
+      ////////////////////////////
+      // get the users who have waited the longest
+      ///////////////////////////
 
         var priorityUsers = organizeUsersByWaitTime()
-
         // choose some
         var returnPriorityUsers = priorityUsers.slice(0, numberUsers);
         console.log('selections:', returnPriorityUsers);
@@ -354,26 +357,46 @@ io.on('connection', function(socket) {
             socket.to(element.id).emit('myTurn', 'its your turn');
         });
 
-        if(priorityUsers.length < numberUsers){
-          returnPriorityUsers = false;
-        }
-        //send the selected users back to the game-projection
-        callback(returnPriorityUsers)
+        // if(priorityUsers.length < numberUsers){
+        //   returnPriorityUsers = false;
+        // }
+
+        callback(returnPriorityUsers) //send the selected users back to the game-projection
+
+        ////////////////////////////
+        // Notify users who are coming up soon after calculation
+        ///////////////////////////
+        var soonUsers = organizeUsersByWaitTime()
+
+        var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
+
+        returnSoonUsers.forEach(function(element) {
+            // console.log(element.id);
+            socket.to(element.id).emit('mySoon', 'youre up soon');
+        });
+
     });
 
-    //never call this before getPriorityUsers
-    socket.on('getSoonUsers', function() {
-      var soonUsers = organizeUsersByWaitTime()
-
-      var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
-
-      returnSoonUsers.forEach(function(element) {
-          // console.log(element.id);
-          socket.to(element.id).emit('mySoon', 'youre up soon');
-      });
-
-
-    })
+    //this is the above broken into distinct messages, but it makes it much harder to do timing.
+    // socket.on('startNewGame',function(){
+    //   io.emit('newGame', 'newGame') //reset all users to default waiting status.
+    // })
+    //
+    // //never call this before getPriorityUsers
+    // socket.on('getSoonUsers', function() {
+    //   // io.emit('newGame', 'newGame') //reset all users to default waiting status.
+    //
+    //   var soonUsers = organizeUsersByWaitTime()
+    //
+    //   var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
+    //
+    //   returnSoonUsers.forEach(function(element) {
+    //       // console.log(element.id);
+    //       socket.to(element.id).emit('mySoon', 'youre up soon');
+    //   });
+    //
+    //
+    // })
 
 
     socket.on('disconnect', function() {

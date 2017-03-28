@@ -26,7 +26,7 @@ var allTasks = [
  {
    task:"Be a bicycle (and go for a ride)",
    time:10000,
-   players:3,
+   players:2,
    type: 'smallGroup'
  },
  {
@@ -109,14 +109,23 @@ var gameProjection = {
            this.wait = currentTask.time;
 
            console.log(currentTask.players);
-          //  socket.emit('newGame', 'newGame') //reset all users mobile views && push to the database
+          //  socket.emit('startNewGame', 'newGame') //reset all users mobile views && push to the database
            socket.emit('getPriorityUsers', currentTask.players , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
 
-             if(chosenPlayers == false){ //there are not enough users for this game connected to the server, try again.
-               gameProjection.newGame()
-             }
+            //Need to build in a check here to change the screen to wait for more players if there are less than 2.
+            //  if(chosenPlayers == false){ //there are not enough users for this game connected to the server, try again.
+            //    gameProjection.newGame()
+            //  }
+            if(chosenPlayers.length < 2) {
+              $('.currentTask').html('Waiting for more players to join...')
+              return;
+            }
 
-             console.log(chosenPlayers)
+            if(chosenPlayers.length < currentTask.players){
+                gameProjection.newGame()
+            }
+
+             console.log('chosenPlayers',chosenPlayers)
 
              var userlist = ""
              chosenPlayers.forEach(function(player){
@@ -133,7 +142,8 @@ var gameProjection = {
 
            }) // close getPriorityUsers
 
-           socket.emit('getSoonUsers', 'soon') //notify the people who are coming up soon. was thinking that we could do this to avoid having to calculate and store who is actually next and just notify maybe 10 or so people that they will be soon and should be on alert, this way they will be in the next 1-2 rounds... I can only see this being a problem for  all crowd games.
+           //this is now wrapped into get priority users.
+          //  socket.emit('getSoonUsers', 'soon') //notify the people who are coming up soon. was thinking that we could do this to avoid having to calculate and store who is actually next and just notify maybe 10 or so people that they will be soon and should be on alert, this way they will be in the next 1-2 rounds... I can only see this being a problem for  all crowd games.
 
         // }
     }
@@ -144,7 +154,7 @@ var gameProjection = {
 ********************/
 gameProjection.init();
 
-$(document).click(function(){
+$(document).click(function(){ //somethimes this fires twice for whatever reason...
   gameProjection.newGame()
 })
 /*******************

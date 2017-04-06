@@ -679,15 +679,17 @@ $(document).ready(function(){
      });
 
      // Links to slide additional info
-     $('body').on('click tap', '.more-details', function(e){
+     $('body').on('click touchstart', '.more-details', function(e){
         console.log('click')
         moreDetails($(this));
      });
 
      // Close Panels
-     $('body').on('click tap', '.close', function(e){
+     $('body').on('click touchstart', '.close', function(e){
+       console.log(e);
         slideDownPanel($(this));
      });
+
 
 
      //**********/

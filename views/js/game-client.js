@@ -92,7 +92,7 @@ socket.on('mySoon', function(data) {
     }
 });
 
-socket.on('myTurn', function(data) {
+socket.on('myTurn', function(taskToPlay) {
     //  console.log(data);
 
     var getUser = store.get('user')
@@ -101,7 +101,7 @@ socket.on('myTurn', function(data) {
         getUser.playing = true;
       store.set('user', getUser)
 
-    $('.waitingNext').html('Its your turn to act!')
+    $('.waitingNext').html('Its your turn to act! <br>' + taskToPlay )
     window.parent.document.title = '✅ play'
 
     //maybe turn this off, but its helpful to see who got chose in the tabs.

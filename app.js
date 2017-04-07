@@ -330,16 +330,15 @@ io.on('connection', function(socket) {
     }
 
 
-    socket.on('getPriorityUsers', function(numberUsers, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
+    socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
       io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
 
       ////////////////////////////
       // get the users who have waited the longest
       ///////////////////////////
-
         var priorityUsers = organizeUsersByWaitTime()
         // choose some
-        var returnPriorityUsers = priorityUsers.slice(0, numberUsers);
+        var returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
         console.log('selections:', returnPriorityUsers);
         //reset the waittime to Date.now() if we were chosen.
         for (var socketID in connections) {
@@ -354,10 +353,10 @@ io.on('connection', function(socket) {
         //notify users that it's their turn!
         returnPriorityUsers.forEach(function(element) {
             // console.log(element.id);
-            socket.to(element.id).emit('myTurn', 'its your turn');
+            socket.to(element.id).emit('myTurn', currentTask.task);
         });
 
-        // if(priorityUsers.length < numberUsers){
+        // if(priorityUsers.length < currentTask){
         //   returnPriorityUsers = false;
         // }
 

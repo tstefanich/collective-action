@@ -104,7 +104,7 @@ socket.on('myTurn', function(taskToPlay) {
     $('.waitingNext').html('Its your turn to act! <br>' + taskToPlay )
     window.parent.document.title = '✅ play'
 
-    //maybe turn this off, but its helpful to see who got chose in the tabs.
+    // trigger sound notification
     //  $('.myTurnAudio').get(0).play()
     //  slideDownPanel($('.page.waiting-room .close'));
 

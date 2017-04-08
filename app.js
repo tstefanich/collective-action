@@ -282,9 +282,6 @@ setTimeout(function() {
 io.on('connection', function(socket) {
     console.log('socket connected: ' + socket.id);
 
-
-    // socket.emit('reload','reload');
-
     socket.on('updateUser', function(userInfo) {
         // console.log(userInfo);
         socket.join(userInfo.room)
@@ -342,6 +339,7 @@ io.on('connection', function(socket) {
         if(currentTask.players == 'all'){
             //choose all
             returnPriorityUsers = priorityUsers
+            //should we reset the wait time here? prob dont need to since its an all player game...
           }else{
           // choose some
           returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
@@ -382,27 +380,6 @@ io.on('connection', function(socket) {
         });
 
     });
-
-    //this is the above broken into distinct messages, but it makes it much harder to do timing.
-    // socket.on('startNewGame',function(){
-    //   io.emit('newGame', 'newGame') //reset all users to default waiting status.
-    // })
-    //
-    // //never call this before getPriorityUsers
-    // socket.on('getSoonUsers', function() {
-    //   // io.emit('newGame', 'newGame') //reset all users to default waiting status.
-    //
-    //   var soonUsers = organizeUsersByWaitTime()
-    //
-    //   var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
-    //
-    //   returnSoonUsers.forEach(function(element) {
-    //       // console.log(element.id);
-    //       socket.to(element.id).emit('mySoon', 'youre up soon');
-    //   });
-    //
-    //
-    // })
 
 
     socket.on('disconnect', function() {

@@ -2,38 +2,37 @@ var allTasks = [
  {
    task:"Perform a flood",
    time: 3000,
-   players: 4,
-   type: 'largeGroup'
+   players: 4
  },
  {
     task:"Perform an earthquake (in the mountains)",
     time: 11000,
-    players: 5,
-    type: 'largeGroup'
+    players: 5
  },
  {
     task:"Perform a monsoon (or rainstorm)",
     time: 5000,
-    players: 5,
-    type: 'largeGroup'
+    players: 5
  },
  {
     task:"Envision a futuristic water filtration system",
     time: 7000,
-    players: 2,
-    type: 'smallGroup'
+    players: 2
  },
  {
    task:"Be a bicycle (and go for a ride)",
    time:10000,
-   players:2,
-   type: 'smallGroup'
+   players:2
  },
  {
-   task: "$ is a bee, everyone else is a flower, can the bee find some flowers to pollinate?",
+   task: "be a bee or a flower, can the bees find some flowers to pollinate?",
    time:6000,
-   players: 3,
-   type: 'smallGroup'
+   players: 3
+ },
+ {
+   task: "all players test",
+   time:6000,
+   players: 'all'
  }
 ]
 

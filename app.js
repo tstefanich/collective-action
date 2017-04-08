@@ -337,17 +337,24 @@ io.on('connection', function(socket) {
       // get the users who have waited the longest
       ///////////////////////////
         var priorityUsers = organizeUsersByWaitTime()
-        // choose some
-        var returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
-        console.log('selections:', returnPriorityUsers);
-        //reset the waittime to Date.now() if we were chosen.
-        for (var socketID in connections) {
-            // console.log(connections[socketID].id);
-            returnPriorityUsers.forEach(function(element) { //this could be more efficent.
-                if (connections[socketID].id == element.id) {
-                    connections[socketID].userObject.locationWaitTime = Date.now();
-                }
-            })
+        var returnPriorityUsers;
+
+        if(currentTask.players == 'all'){
+            //choose all
+            returnPriorityUsers = priorityUsers
+          }else{
+          // choose some
+          returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
+          console.log('selections:', returnPriorityUsers);
+          //reset the waittime to Date.now() if we were chosen.
+          for (var socketID in connections) {
+              // console.log(connections[socketID].id);
+              returnPriorityUsers.forEach(function(element) { //this could be more efficent.
+                  if (connections[socketID].id == element.id) {
+                      connections[socketID].userObject.locationWaitTime = Date.now();
+                  }
+              })
+          }
         }
 
         //notify users that it's their turn!

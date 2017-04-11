@@ -50,6 +50,8 @@ socket.on('reload',function(){
 
 var time;
 
+const GAME_LOCATION = 'location1'
+
 
 /**********************
 Helper Functions
@@ -82,39 +84,20 @@ var gameProjection = {
           //this.checkTimer();
 
      },
-    //  checkTimer:function(){
-    //       if(new Date().getTime() - time >= this.wait){
-    //            console.log("tick");//if it is, do something
-    //            time = new Date().getTime();//also update the stored time
-    //            gameProjection.getNewTask();
-    //       }
-    //  },
-    //  getNewTask:function(){
-    //       var currentTask = allTasks[getRandomInt(0,3)];
-    //       this.wait = currentTask.time;
-    //       $('.currentTask').html(currentTask.task);
-    //       socket.emit('newGame', 'newGame')
-    //
-    //  },
-    //  getPriorityUsers:function(numberUsers,callback){
-    //    socket.emit('getPriorityUsers', numberUsers, callback )
-    //  }
     newGame:function(){
         // if(new Date().getTime() - time >= this.wait){
            console.log("tick");//if it is, do something
            time = new Date().getTime();//also update the stored time
 
            var currentTask = allTasks[getRandomInt(0,allTasks.length)];
+           currentTask.location = GAME_LOCATION // attach the location of this game projection to each current task, we could do this in the json on each task too, but this might prevent us from easily re-using prompts at the commons/uniondepot endcaps.
            this.wait = currentTask.time;
 
-           console.log(currentTask.players);
+           console.log('currentTask',currentTask);
           //  socket.emit('startNewGame', 'newGame') //reset all users mobile views && push to the database
            socket.emit('getNewAndNotifyUsers', currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
 
-            //Need to build in a check here to change the screen to wait for more players if there are less than 2.
-            //  if(chosenPlayers == false){ //there are not enough users for this game connected to the server, try again.
-            //    gameProjection.newGame()
-            //  }
+            //check to change the screen to wait for more players if there are less than 2.
             if(chosenPlayers.length < 2) {
               $('.currentTask').html('Waiting for more players to join...')
               return;
@@ -141,10 +124,6 @@ var gameProjection = {
 
            }) // close getNewAndNotifyUsers
 
-           //this is now wrapped into get priority users.
-          //  socket.emit('getSoonUsers', 'soon') //notify the people who are coming up soon. was thinking that we could do this to avoid having to calculate and store who is actually next and just notify maybe 10 or so people that they will be soon and should be on alert, this way they will be in the next 1-2 rounds... I can only see this being a problem for  all crowd games.
-
-        // }
     }
 }
 

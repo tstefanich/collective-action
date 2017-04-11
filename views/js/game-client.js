@@ -10,7 +10,7 @@ function rand(max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
-var MortalKombat={characters:["Goro","Johnny Cage","Kano","Liu Kang","Raiden","Reptile","Scorpion","Shang Tsung","Sonya Blade","Sub-Zero","Baraka","Jade","Jax","Kintaro","Kitana","Kung Lao","Mileena","Noob Saibot","Shao Kahn","Smoke","Chameleon","Cyrax","Ermac","Kabal","Khameleon","Motaro","Nightwolf","Rain","Sektor","Sheeva","Sindel","Stryker","Fujin","Quan Chi","Kia","Jataaka","Sareena","Shinnok","Jarek","Kai","Meat","Reiko","Tanya","Blaze","Bo Rai Cho","Drahmin","Frost","Hsu Hao","Kenshi","Li Mei","Mokap","Moloch","Nitara","Ashrah","Dairou","Darrius","Havik","Hotaru","Kira","Kobra","Monster","Onaga","Shujinko","Daegon","Taven","Dark Kahn","Cyber Sub-Zero","Kratos","Skarlet","Belokk","Hornbuckle","Nimbus Terrafaux"],get:function(){var a=this.characters.length-1;return this.characters[Math.floor(Math.random()*a)]}};
+var MortalKombat={characters:["Goro","JohnnyCage","Kano","LiuKang","Raiden","Reptile","Scorpion","ShangTsung","SonyaBlade","Sub-Zero","Baraka","Jade","Jax","Kintaro","Kitana","KungLao","Mileena","NoobSaibot","ShaoKahn","Smoke","Chameleon","Cyrax","Ermac","Kabal","Khameleon","Motaro","Nightwolf","Rain","Sektor","Sheeva","Sindel","Stryker","Fujin","QuanChi","Kia","Jataaka","Sareena","Shinnok","Jarek","Kai","Meat","Reiko","Tanya","Blaze","BoRaiCho","Drahmin","Frost","HsuHao","Kenshi","LiMei","Mokap","Moloch","Nitara","Ashrah","Dairou","Darrius","Havik","Hotaru","Kira","Kobra","Monster","Onaga","Shujinko","Daegon","Taven","DarkKahn","CyberSub-Zero","Kratos","Skarlet","Belokk","Hornbuckle","NimbusTerrafaux"],get:function(){var a=this.characters.length-1;return this.characters[Math.floor(Math.random()*a)]}};
 
 var fakeData = {
   userName: MortalKombat.get(),
@@ -46,7 +46,7 @@ var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SER
 function currentUserInfo() {
     var ui = {
         userObject: store.get('user'),
-        room: 'location1'
+        room: 'location1' // SET THIS TO THE ROOM/LOCATION THE USER is going to login to. *******IMPORTANT******
     }
     return ui;
 }

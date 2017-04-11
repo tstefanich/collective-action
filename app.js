@@ -280,7 +280,7 @@ setTimeout(function() {
 }, 2000)
 
 io.on('connection', function(socket) {
-    console.log('socket connected: ' + socket.id);
+    console.log('socket connected:', socket);
 
     socket.on('updateUser', function(userInfo) {
         // console.log(userInfo);
@@ -290,21 +290,35 @@ io.on('connection', function(socket) {
         socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
     });
 
-    // console.log(io.sockets.sockets); //list of all sockets
+////////////////////////////
+// This queue version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
+///////////////////////////
 
+    var connections = io.sockets.sockets //all connections global, below functions are reliant on this.
+    // console.log('all connections:',connections);
 
-    // ~+~+~+~+~+~+~+~+
-    // This version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
-    // +~+~+~+~+~+~+~+
-    var connections = io.sockets.sockets //all connections 'global' (this should be a list of only who is logged into this location using socket.io rooms)
+    function allUsersInRoom(roomName){
+      var roomUsers = []
+      for (var socketID in connections) { //loop over all the user objects
+        if (connections[socketID].userObject != null && connections[socketID].rooms[roomName]) { //make sure were not looking at the projection and make sure we are looking at users logged into location
+          var user = {
+              id: socketID,
+              userObject: connections[socketID].userObject
+          }
+          roomUsers.push(user)
+        }
+      }
 
-    function organizeUsersByWaitTime() { //create a list of all connected users in decending order (lowest wait time at the bottom of the returned array)
+      return roomUsers;
+    }
+
+    function organizeUsersByWaitTime(roomName) { //create a list of all connected users in decending order (lowest wait time at the bottom of the returned array)
 
         // console.log(connections);
         var decendingUsers = []
 
-        for (var socketID in connections) { //loop over all the user ovjects
-            if (connections[socketID].userObject != null && connections[socketID].rooms.location1) { //make sure were not looking at the projection and make sure we are looking at users logged into location1
+        for (var socketID in connections) { //loop over all the user objects
+            if (connections[socketID].userObject != null && connections[socketID].rooms[roomName]) { //make sure were not looking at the projection and make sure we are looking at users logged into location
                 // console.log(connections[socketID]);
 
                 var user = {
@@ -333,15 +347,15 @@ io.on('connection', function(socket) {
       ////////////////////////////
       // get the users who have waited the longest
       ///////////////////////////
-        var priorityUsers = organizeUsersByWaitTime()
         var returnPriorityUsers;
 
         if(currentTask.players == 'all'){
             //choose all
-            returnPriorityUsers = priorityUsers
-            //should we reset the wait time here? prob dont need to since its an all player game...
+            returnPriorityUsers = allUsersInRoom(currentTask.location) //this prevents the users who have been waiting the longest from being reset when an all player game happens, if we want to reset them, we can use organizeUsersByWaitTime() here instead.
           }else{
           // choose some
+          var priorityUsers = organizeUsersByWaitTime(currentTask.location)
+
           returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
           console.log('selections:', returnPriorityUsers);
           //reset the waittime to Date.now() if we were chosen.
@@ -370,7 +384,7 @@ io.on('connection', function(socket) {
         ////////////////////////////
         // Notify users who are coming up soon after calculation
         ///////////////////////////
-        var soonUsers = organizeUsersByWaitTime()
+        var soonUsers = organizeUsersByWaitTime(currentTask.location)
 
         var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
 

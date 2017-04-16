@@ -282,7 +282,7 @@ function calcGeoDistance(lat1, lon1, lat2, lon2, units) {
 
 
 function redirectUserToProperPage(currentPos) {
-    //  console.log('redirectUserToProperPage');
+     console.log('redirectUserToProperPage');
   for (var i = allMarkers.length - 1; i >= 0; i--) {
     // Find slug
     //var $slug = $('.'+allLocation[i].url);
@@ -368,6 +368,10 @@ $(window).load(function(){
       // Message for Window Loaded
       console.log('window loaded');
 
+      setTimeout(function(){
+        $('#playGame').click() //for testing
+      },5000)
+
       //Parse Locations
       parseLocations(allLocations)
 
@@ -397,33 +401,6 @@ $(window).load(function(){
 Login Functions
 
 **************************/
-var userManager = {
-  set:function(data){
-    store.set('user',
-       {
-            userName: data.userName,
-            email: data.email,
-            avatar:  data.avatar, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-            team: data.team,
-            tasksPlayed: data.tasksPlayed,
-
-            // PING
-            loggedIn: data.loggedIn,
-            currentLocation: data.currentLocation,
-            priority: data.priority, // 1-5, lower is lower for the queueing system (MIGHT NEED THIS IN THE DB TOO?)
-            waitTime: data.waitTime,
-
-            // METRICS
-            score: data.score,
-            locationsVisited: data.locationsVisited, // location + timespent
-            totalTasks: data.totalTasks, // this may not be needed scores = totalPlays
-            totalTaskTime: data.totalTaskTime,
-            totalWaitTime: data.totalWaitTime,
-       }
-    );
-  },
-}
-
 
 var login = {
      emailTextFieldIsFilled:false,
@@ -468,17 +445,33 @@ var login = {
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                          // Break
-                         var email_address = $.trim($('.form-control.email-address.login').val());
-                         login.retrieveFromDatabase(email_address);
+                         login.retrieveFromDatabase();
                          break;
                }
           });
      },
-     retrieveFromDatabase:function(email_address){
-        $.post("http://localhost:8080/get-user",{email: email_address.toLowerCase()}, function(data){
-              userManager.set(data);
-        });
+     retrieveFromDatabase:function(button){
+          store.set('user',
+               {
+                    userName:'Marcus',
+                    email: 'email',
+                    avatar: 'Array', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+                    team: 'Number',
+                    tasksPlayed: 'Array',
 
+                    // PING
+                    loggedIn: 'Boolean',
+                    currentLocation: 'String',
+
+                    // METRICS
+                    score: 'Number',
+                    locationsVisited: 'Array', // location + timespent
+                    totalTasks: 'Number', // this may not be needed scores = totalPlays
+                    totalTaskTime: 'Number',
+                    totalWaitTime: 'Number',
+                    priority: 1, // 1-5, lower is lower
+               }
+          );
           setTimeout(function(){
                slideDownPanel($('.page.login .close'));
                slideDownPanel($('.page.intro .close'));
@@ -679,17 +672,15 @@ $(document).ready(function(){
      });
 
      // Links to slide additional info
-     $('body').on('click touchstart', '.more-details', function(e){
+     $('body').on('click tap', '.more-details', function(e){
         console.log('click')
         moreDetails($(this));
      });
 
      // Close Panels
-     $('body').on('click touchstart', '.close', function(e){
-       console.log(e);
+     $('body').on('click tap', '.close', function(e){
         slideDownPanel($(this));
      });
-
 
 
      //**********/
@@ -714,28 +705,6 @@ $(document).ready(function(){
      });
 
 
-
-     ///
-    //$.post("http://localhost:8080/update-fields",
-    //  {
-    //    email: 'sara@sara.com',
-    //    userName: "userName",
-    //    avatar: "avatar",
-    //    team: 69,
-    //    tasksPlayed:  69,
-    //    loggedIn:  "loggedIn"  ,
-    //    currentLocation:  "currentLocation" ,
-    //    priority: 69  ,
-    //    waitTime: 69  ,
-    //    score:  69  ,
-    //    locationsVisited: "locationsVisited"  ,
-    //    totalTasks: 69 ,
-    //    totalTaskTime: 69  ,
-    //    totalWaitTime: 69
-    //  }
-    //  , function(data){
-    //    userManager.set(data);
-    //  });
 });
 
 
@@ -904,7 +873,7 @@ function updateMarkerDistances(currentPos) {
 
       allMarkers[i].setVisible(true);
       allCircles[i].setOptions({fillOpacity:1, strokeOpacity:1});
-      // console.log(allMarkers[i].slug);
+      console.log(allMarkers[i].slug);
 
       if(allMarkers[i].distance <= allMarkers[i].radius){
             $slug.removeClass('outside-fence');

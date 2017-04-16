@@ -357,7 +357,7 @@ io.on('connection', function(socket) {
           var priorityUsers = organizeUsersByWaitTime(currentTask.location)
 
           returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
-          console.log('selections:', returnPriorityUsers);
+          console.log('play selections:', returnPriorityUsers);
           //reset the waittime to Date.now() if we were chosen.
           for (var socketID in connections) {
               // console.log(connections[socketID].id);
@@ -367,6 +367,19 @@ io.on('connection', function(socket) {
                   }
               })
           }
+          ////////////////////////////
+          // Notify users who are coming up soon after calculation
+          ///////////////////////////
+          var soonUsers = organizeUsersByWaitTime(currentTask.location)
+
+          var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
+          console.log('soon selections:', returnSoonUsers);
+
+          returnSoonUsers.forEach(function(element) {
+              // console.log(element.id);
+              socket.to(element.id).emit('mySoon', 'youre up soon');
+          });
+
         }
 
         //notify users that it's their turn!
@@ -380,18 +393,6 @@ io.on('connection', function(socket) {
         // }
 
         callback(returnPriorityUsers) //send the selected users back to the game-projection
-
-        ////////////////////////////
-        // Notify users who are coming up soon after calculation
-        ///////////////////////////
-        var soonUsers = organizeUsersByWaitTime(currentTask.location)
-
-        var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
-
-        returnSoonUsers.forEach(function(element) {
-            // console.log(element.id);
-            socket.to(element.id).emit('mySoon', 'youre up soon');
-        });
 
     });
 

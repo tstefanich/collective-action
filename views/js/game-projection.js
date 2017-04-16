@@ -111,7 +111,7 @@ var gameProjection = {
 
              var userlist = ""
              chosenPlayers.forEach(function(player){
-               userlist += player.userObject.userName
+               userlist += player.userObject.userName + " : " + player.id
                userlist += '<br>'
              })
 

@@ -136,6 +136,15 @@ app.get('/game-projection', function(req, res, next) {
 
 });
 
+app.get('/game-projection-new', function(req, res, next) {
+    database.dbInfo(function(results) {
+        return res.render('game-projection-new', {
+            'users': results,
+            templateName: 'game-projection-new'
+        });
+    });
+});
+
 app.get('/admin-1', function(req, res, next) {
     database.dbInfo(function(results) {
         return res.render('admin-1', {
@@ -320,7 +329,6 @@ io.on('connection', function(socket) {
         for (var socketID in connections) { //loop over all the user objects
             if (connections[socketID].userObject != null && connections[socketID].rooms[roomName]) { //make sure were not looking at the projection and make sure we are looking at users logged into location
                 // console.log(connections[socketID]);
-
                 var user = {
                     id: socketID,
                     calculatedWaitTime: Date.now() - connections[socketID].userObject.locationWaitTime,
@@ -340,6 +348,10 @@ io.on('connection', function(socket) {
         return decendingUsers;
     }
 
+    socket.on('getNumberOfUsers', function(roomName, callback) { 
+        var users = allUsersInRoom(roomName);
+        callback(users); //send the selected users back to the game-projection
+    });
 
     socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
       io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
@@ -352,7 +364,7 @@ io.on('connection', function(socket) {
         if(currentTask.players == 'all'){
             //choose all
             returnPriorityUsers = allUsersInRoom(currentTask.location) //this prevents the users who have been waiting the longest from being reset when an all player game happens, if we want to reset them, we can use organizeUsersByWaitTime() here instead.
-          }else{
+          } else {
           // choose some
           var priorityUsers = organizeUsersByWaitTime(currentTask.location)
 

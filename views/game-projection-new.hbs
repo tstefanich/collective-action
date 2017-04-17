@@ -1,0 +1,215 @@
+{{> header-game}}
+
+<style>
+body,html{font-size: 50px;}
+
+.page h1{color:white;font-size:12px;margin-left:20px; position:absolute;left:16px;top:16px;}
+.page{background-color:black;overflow:hidden;}
+.page .container {margin:0 auto;width:50%;color:white;text-align:center;  position: relative;
+  top: 50%;
+  transform: translateY(-50%);}
+
+.page.title {background-color:black;background-image:url(assets/images/projections/title.png);background-repeat:no-repeat;background-size:contain;background-position:center center;}
+
+
+	.page .people ul {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 2.5rem;
+     margin-top: 2.5rem;
+}
+.page .people ul, .page .people ul.portrait {
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -o-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -o-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.page .people ol, .page .people ul, .page .people li {
+    list-style: none;
+}
+.page .people li {
+    opacity:0;
+
+}
+
+.page .people li img {
+    display:block;
+        width: 50%;
+    margin: 0 auto;
+}
+.page .people ul {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: box;
+    display: flex;
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -o-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+
+
+</style>
+
+<div class="currentTask">CLICK FOR NEW TASK</div>
+
+<div class="page title slideUp" style="">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+        <a href="#title" id="title"></a>
+     	<div class="close glyphicon glyphicon-menu-left" ></div>
+     </div>
+	<h1>Title Screen</h1>
+</div>
+
+<div class="page highscores-players">
+    <!-- Top Nav Bar -->
+    <div class="nav" style="display:none;">
+	    <a href="#highscores-players" id="highscores-players"></a>
+    	<div class="close glyphicon glyphicon-menu-left"></div>
+    </div>
+    <div class="container">
+    	<h2>High Scores</h2>
+        <p>PLayer 1 --- 8327</p>
+        <p>PLayer 2 --- 8327</p>
+        <p>PLayer 3 --- 8327</p>
+        <p>PLayer 4 --- 8327</p>
+        <p>PLayer 5 --- 8327</p>
+        <p>PLayer 6 --- 8327</p>
+     </div>
+	<h1>Highscores</h1>
+</div>
+
+<div class="page highscores-teams">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+        <a href="#highscores-teams" id="highscores-teams" ></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container">
+    	<h2>Team Scores</h2>
+        <p>Team 1 --- 1234</p>
+        <p>Team 2 --- 5554</p>
+        <p>Team 3 --- 6566</p>
+        <p>Team 4 --- 7777</p>
+     </div>
+	<h1>Team Scores</h1>
+</div>
+
+<div class="page teaser">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+        <a href="#teaser" id="teaser"></a>
+     	<div class="close glyphicon glyphicon-menu-left" ></div>
+     </div>
+     <div class="container">
+        <p>Get ready players!!!!!</p>
+     </div>
+	<h1>Teaser</h1>
+</div>
+
+<div class="page get-players">
+    <!-- Top Nav Bar -->
+    <div class="nav" style="display:none;">
+        <a href="#get-players" id="get-players"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+    </div>
+    <div class="container" style="width:80%">
+        <div class="people">
+            <p>HEY!!!</p>
+        	<ul>
+        		<li>TEST 1<img src="assets/images/avatars/avatar_4.png"></li>
+        		<li>TEST 2<img src="assets/images/avatars/avatar_40.png"></li>
+        		<li>TEST 3<img src="assets/images/avatars/avatar_50.png"></li>
+        		<li>TEST 4<img src="assets/images/avatars/avatar_60.png"></li>
+        	</ul>
+       	</div>
+     </div>
+	<h1>Getting Players Animation</h1>
+</div>
+
+<div class="page we-need-more-players">
+     <!-- Top Nav Bar -->
+     <div class="nav"  style="display:none;">
+     	<a href="#we-need-more-players" id="we-need-more-players"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container">
+        <p>We Need More players!!!!!</p>
+     </div>
+	<h1>We need more players</h1>
+</div>
+
+<div class="page get-task">
+     <!-- Top Nav Bar -->
+     <div class="nav"  style="display:none;">
+     	<a href="#get-task" id="get-task"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container">
+        <p>Getting your task now...</p>
+     </div>
+	<h1>Get Task Animation</h1>
+</div>
+
+
+<div class="page prep-for-task">
+     <!-- Top Nav Bar -->
+     <div class="nav"  style="display:none;">
+     	<a href="#prep-for-task" id="prep-for-task"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container">
+        <p> You have 30 seconds to prep for task</p>
+        <p class="currentTask"></p>
+     </div>
+	<h1>Prep For Task</h1>
+</div>
+
+<div class="page start-task">
+    <!-- Top Nav Bar -->
+    <div class="nav" style="display:none;">
+        <a href="#start-task" id="start-task" ></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+    </div>
+     <div class="container">
+        <p class="currentTask"></p>
+     </div>
+	<h1>Start Task animation</h1>
+</div>
+
+<div class="page end-task">
+    <!-- Top Nav Bar -->
+    
+    <div class="nav" style="display:none;">
+    	<a href="#end-task" id="end-task"></a>
+    	<div class="close glyphicon glyphicon-menu-left " ></div>
+    </div>
+	<h1>End Task animation</h1>
+</div>
+
+{{> footer}}

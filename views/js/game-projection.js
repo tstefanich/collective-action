@@ -63,6 +63,9 @@ function getRandomInt(min, max) {
 }
 
 
+
+
+
 var gameProjection = {
      currentTask:null,
      wait:null,
@@ -84,7 +87,7 @@ var gameProjection = {
           //this.checkTimer();
 
      },
-    newGame:function(){
+     newGame:function(){
         // if(new Date().getTime() - time >= this.wait){
            console.log("tick");//if it is, do something
            time = new Date().getTime();//also update the stored time

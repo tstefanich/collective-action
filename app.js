@@ -353,6 +353,11 @@ io.on('connection', function(socket) {
         callback(users); //send the selected users back to the game-projection
     });
 
+    socket.on('scorePoints', function(roomName, callback) { 
+        var users = allUsersInRoom(roomName);
+        callback(users); //send the selected users back to the game-projection
+    });
+
     socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
       io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
 

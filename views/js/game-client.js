@@ -26,7 +26,7 @@ var fakeData = {
   waitTime: rand(1000),
 
   // METRICS
-  score: 0,
+  score: 200,
   locationsVisited: ['River','Target'], // location + timespent
   totalTasks: rand(30), // this may not be needed scores = totalPlays
   totalTaskTime: rand(1000),
@@ -41,14 +41,12 @@ store.set('user', fakeData)
 ///////////////////////////
 
 
-var myLocation = Math.floor(Math.random() * 2) //Join a random location for testing... This should be changed based on geolocation 
-
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
 function currentUserInfo() {
     var ui = {
         userObject: store.get('user'),
-        room: 'location' + myLocation // SET THIS TO THE ROOM/LOCATION THE USER is going to login to. *******IMPORTANT******
+        room: 'location1' // SET THIS TO THE ROOM/LOCATION THE USER is going to login to. *******IMPORTANT******
     }
     return ui;
 }
@@ -71,32 +69,42 @@ socket.on('reconnect', function() {
 })
 
 socket.on('newGame', function() {
-    //upload user local storage to the database (dont overwrite the user, only update the values incase something goes wrong)
-    console.log('~~~~~~NEWGAME!');
-    // console.log('newGame:', store.get('user'));
     $('.waitingNext').html('Waiting At Location XXX')
-    window.parent.document.title = myLocation + '🚫' + socket.id
+    //upload user local storage to the database (dont overwrite the user, only update the values incase something goes wrong)
+    // var getUser =  store.get('user')
+    console.log('~~~~~~NEWGAME!');
+
+    var getUser = store.get('user')
+        getUser.playing = false;
+      store.set('user', getUser)
+    // console.log('newGame:', store.get('user'));
+    window.parent.document.title = '🚫 wait'
 })
 
 socket.on('mySoon', function(data) {
     //if im a next user, change my status to reflect.
     console.log('~~~~~~mySoon!');
+    var getUser = store.get('user')
+
+    if(!getUser.playing){
       $('.waitingNext').html('Get ready to act! <br> Its soon your turn to play!')
-      window.parent.document.title = myLocation + '⚠️' + socket.id
+      window.parent.document.title = '⚠️ soon'
+    }
 });
 
 socket.on('myTurn', function(taskToPlay) {
     //  console.log(data);
-    console.log('~~~MYTURN~~~');
-    var getUser = store.get('user')
+
+    var getUser = store.get('user');
         getUser.totalTasks++ //these are the same thing...
         getUser.score++ //these are the same thing...
+        getUser.playing = true;
       store.set('user', getUser)
 
-    $('.waitingNext').html('Its your turn to act! <br>' + taskToPlay + '<br> My Score:' + getUser.score )
-    window.parent.document.title = myLocation + '✅' + socket.id
+    $('.waitingNext').html('Its your turn to act! <br>' + taskToPlay )
+    window.parent.document.title = '✅ play'
 
-    // trigger sound notification on phone
+    // trigger sound notification
     //  $('.myTurnAudio').get(0).play()
     //  slideDownPanel($('.page.waiting-room .close'));
 

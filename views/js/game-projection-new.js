@@ -11,7 +11,7 @@ function search(array, key, prop){
     prop = (typeof prop === 'undefined') ? 'name' : prop;    
     var tempArray = [];
     for (var i=0; i < array.length; i++) {
-        if (array[i][prop] === key) {
+        if (array[i][prop] <= key) {
             tempArray.push(array[i]);
         }
     }
@@ -185,9 +185,12 @@ function getRandomInt(min, max) {
 
 
 var gameProjection = {
-     currentNumberofConnections:null,
+     currentNumberOfConnections:null,
+     requestedNumberOfConnections: false,
      currentPlayers:null,
+     requestedCurrentPlayers: false,
      currentTask:null,
+     requestedTask: false,
      wait:5000,
      state:'title',
      gameStateIndex:0,
@@ -211,10 +214,22 @@ var gameProjection = {
      },
      setStateAndTime:function(state, waitTime){
       var self = this;
-      slideDownPanel($('.page.'+self.state+' .close'));
-      moreDetails($('.page.'+state+' .nav a'));
+      console.log(state);
+      if(state != 'get-number-of-connections' && state != 'get-task' && state != 'get-players'){
+        slideDownPanel($('.page.slideUp .close'));
+        moreDetails($('.page.'+state+' .nav a'));
+      }
       self.state = state;
       self.wait = waitTime
+     },
+     reset:function(){
+      var self = this;
+      self.currentNumberOfConnections = null;
+      self.requestedNumberOfConnections = false;
+      self.currentPlayers = null;
+      self.requestedCurrentPlayers = false;
+      self.currentTask = null;
+      self.requestedTask = false;
      },
       checkTimer:function(){
            var self = this;
@@ -224,24 +239,52 @@ var gameProjection = {
                 time = new Date().getTime();//also update the stored time
                 switch (self.state) {
                   case 'title':
-                      self.setStateAndTime('highscores-players', self.wait);
+                      self.setStateAndTime('highscores-players', 5000);
                       break;
                   case 'highscores-players':
-                      self.setStateAndTime('highscores-teams', self.wait);
+                      self.setStateAndTime('highscores-teams', 5000);
                       break;
                   case 'highscores-teams':
-                      self.setStateAndTime('teaser', self.wait);
+                      self.setStateAndTime('get-number-of-connections', 500);
                       break;
-                  case 'teaser':
-                      gameProjection.checkNumberOfConnections();
-                      gameProjection.getTask();
-                      gameProjection.writeTaskToScreen();
-                      gameProjection.getPlayers();
-                      //check to change the screen to wait for more players if there are less than 2.
-                      if(self.currentNumberofConnections < 2) {
-                        self.setStateAndTime('we-need-more-players', self.wait);
+                  case 'get-number-of-connections':
+                      console.log(self.currentNumberOfConnections)
+                      if (self.requestedNumberOfConnections == false){
+                        self.requestedNumberOfConnections = true;
+                        self.checkNumberOfConnections();
+                      } else if (self.currentNumberOfConnections == null){
+                        self.setStateAndTime('get-number-of-connections', 100);
                       } else {
                         self.setStateAndTime('get-task', self.wait);
+                      }
+                      break;
+                  case 'get-task':
+                      if (self.requestedTask == false){
+                        self.requestedTask = true;
+                        self.getTask();
+                      } else if (self.currentTask == null){
+                        self.setStateAndTime('get-task', 100);
+                      } else {
+                        self.writeTaskToScreen();
+                        self.setStateAndTime('get-players', 100);
+                      }
+                      break;
+                  case 'get-players':
+                      if (self.requestedCurrentPlayers == false){
+                        self.requestedCurrentPlayers = true;
+                        self.getPlayers();
+                      } else if (self.currentPlayers == null){
+                        self.setStateAndTime('get-players', 100);
+                      } else {
+                        self.setStateAndTime('teaser', 5000);
+                      }
+                      break;
+                  case 'teaser':                      
+                      //check to change the screen to wait for more players if there are less than 2.
+                      if(self.currentNumberOfConnections < 2) {
+                        self.setStateAndTime('we-need-more-players', 3000);
+                      } else {
+                        self.setStateAndTime('prep-for-task', 30000);
                       }
                       //var interval = 0;
                       //self.setStateAndTime('get-players', self.wait);
@@ -250,27 +293,21 @@ var gameProjection = {
                       //  $(this).delay(interval).animate({opacity:1});
                       //});
                       break;
-                  case 'get-players':
-                      self.setStateAndTime('get-task', self.wait);
-                      console.log('get players');
-                      break;
                   case 'we-need-more-players':
-                      self.setStateAndTime('teaser', self.wait);
-                      break;
-                  case 'get-task':
-                      self.setStateAndTime('prep-for-task', self.wait);
+                      self.setStateAndTime('teaser', 3000);
                       break;
                   case 'prep-for-task':
                       // time to get ready 
-                      self.setStateAndTime('start-task', self.wait);
+                      self.setStateAndTime('start-task',  gameProjection.currentTask.time);
                       break;
                   case 'start-task':
                       // time to get ready
-                      self.setStateAndTime('end-task', self.wait);
+                      self.setStateAndTime('end-task', 7000);
                       break;
                   case 'end-task':
-                      //self.scorePoints();
-                      self.setStateAndTime('title', self.wait);
+                      self.scorePoints();
+                      self.reset();
+                      self.setStateAndTime('title', 10000);
                       break;
                 }
                 //self.state = self.gameStates[self.gameStateIndex % 5];
@@ -295,20 +332,24 @@ var gameProjection = {
                 console.log('highscore team');
                 self.checkTimer();
                 break;
+            case 'get-number-of-connections':
+                console.log('get-number-of-connections');
+                self.checkTimer();
+                break;
+            case 'get-task':
+                console.log('get-task');
+                self.checkTimer();
+                break;
+            case 'get-players':
+                console.log('get-players');
+                self.checkTimer();
+                break;
             case 'teaser':
                 console.log('teaser');
                 self.checkTimer();
                 break;
-            case 'get-players':
-                console.log('get players');
-                self.checkTimer();
-                break;
             case 'we-need-more-players':
                 console.log('we-need-more-players');
-                self.checkTimer();
-                break;
-            case 'get-task':
-                console.log('get task');
                 self.checkTimer();
                 break;
             case 'prep-for-task':
@@ -341,7 +382,7 @@ var gameProjection = {
     checkNumberOfConnections:function(){
       socket.emit('getNumberOfUsers', GAME_LOCATION, function(numberOfConnections) { //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
         console.log(numberOfConnections);
-        gameProjection.currentNumberofConnections = numberOfConnections.length;
+        gameProjection.currentNumberOfConnections = numberOfConnections.length;
       }); // close getNewAndNotifyUsers
     },
     getPlayers:function(){
@@ -350,19 +391,21 @@ var gameProjection = {
       }); // close getNewAndNotifyUsers
     },
     getTask:function(){
-      var numberOfPlayers = gameProjection.currentNumberofConnections;
+      var numberOfPlayers = gameProjection.currentNumberOfConnections;
       var searchResults = null;
-      if(gameProjection.currentNumberofConnections < 6){ 
+      if(gameProjection.currentNumberOfConnections < 2){ 
         // This need to be changed not to grab specific number of connections but only task that have a minimum number of connections
-        searchResults = search(allTasks, gameProjection.currentNumberofConnections,'players')
+        searchResults = [];
       } else {
-        searchResults = allTasks[getRandomInt(0,allTasks.length)];
+        searchResults = search(allTasks, gameProjection.currentNumberOfConnections,'players')
+        //searchResults = allTasks[getRandomInt(0,allTasks.length)];
       }
       console.log(searchResults);
       gameProjection.currentTask = searchResults[getRandomInt(0,searchResults.length)];
     },
     writeTaskToScreen:function(){
-      $('.currentTask').html(gameProjection.currentTask.task);
+      var task = gameProjection.currentTask.task;
+      $('.currentTask').html(task);
     },
     scorePoints:function(){
       socket.emit('scoreAndSavePoints', gameProjection.currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.

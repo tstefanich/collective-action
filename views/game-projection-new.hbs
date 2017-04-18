@@ -8,7 +8,8 @@ body,html{font-size: 50px;background:black;}
 .page .container {margin:0 auto;width:50%;color:white;text-align:center;  position: relative;
   top: 50%;
   transform: translateY(-50%);}
-
+.currentTask{color:green;}
+.prep-time{color:pink;}
 .page.title {background-color:black;background-image:url(assets/images/projections/title.png);background-repeat:no-repeat;background-size:contain;background-position:center center;}
 
 
@@ -182,7 +183,7 @@ body,html{font-size: 50px;background:black;}
      	<div class="close glyphicon glyphicon-menu-left"></div>
      </div>
      <div class="container">
-        <p> You have 30 seconds to prep for task</p>
+        <p> You have <span class="prep-time">30</span> seconds to prep for task</p>
         <p class="currentTask"></p>
      </div>
 	<h1>Prep For Task</h1>
@@ -197,7 +198,7 @@ body,html{font-size: 50px;background:black;}
      <div class="container">
         <p class="currentTask"></p>
      </div>
-	<h1>Start Task animation</h1>
+	<h1>Start Task</h1>
 </div>
 
 <div class="page end-task">
@@ -207,7 +208,7 @@ body,html{font-size: 50px;background:black;}
     	<a href="#end-task" id="end-task"></a>
     	<div class="close glyphicon glyphicon-menu-left " ></div>
     </div>
-	<h1>End Task animation</h1>
+	<h1>End Task</h1>
 </div>
 
 {{> footer}}

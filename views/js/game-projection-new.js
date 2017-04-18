@@ -191,6 +191,8 @@ var gameProjection = {
      requestedCurrentPlayers: false,
      currentTask:null,
      requestedTask: false,
+     prepCounter:0,
+     prepTime:30000,
      wait:5000,
      state:'title',
      gameStateIndex:0,
@@ -230,6 +232,9 @@ var gameProjection = {
       self.requestedCurrentPlayers = false;
       self.currentTask = null;
       self.requestedTask = false;
+
+      self.prepTime = 30000;
+      self.prepCounter = 0;
      },
       checkTimer:function(){
            var self = this;
@@ -245,7 +250,7 @@ var gameProjection = {
                       self.setStateAndTime('highscores-teams', 5000);
                       break;
                   case 'highscores-teams':
-                      self.setStateAndTime('get-number-of-connections', 500);
+                      self.setStateAndTime('get-number-of-connections', 100);
                       break;
                   case 'get-number-of-connections':
                       console.log(self.currentNumberOfConnections)
@@ -276,6 +281,7 @@ var gameProjection = {
                       } else if (self.currentPlayers == null){
                         self.setStateAndTime('get-players', 100);
                       } else {
+                        self.newGame();
                         self.setStateAndTime('teaser', 5000);
                       }
                       break;
@@ -354,6 +360,7 @@ var gameProjection = {
                 break;
             case 'prep-for-task':
                 console.log('prep for task');
+                self.writePrepTimeToScreen();
                 self.checkTimer();
                 break;
             case 'start-task':
@@ -407,6 +414,12 @@ var gameProjection = {
       var task = gameProjection.currentTask.task;
       $('.currentTask').html(task);
     },
+    writePrepTimeToScreen:function(){
+      var self = this;
+      self.prepCounter++;
+      var prepTime = Math.floor(self.prepTime/1000 - (self.prepCounter/60));
+      $('.prep-time').html(prepTime);
+    },
     scorePoints:function(){
       socket.emit('scoreAndSavePoints', gameProjection.currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
             gameProjection.currentPlayers = chosenPlayers;
@@ -416,7 +429,7 @@ var gameProjection = {
         // if(new Date().getTime() - time >= this.wait){
            console.log("tick");//if it is, do something
 
-           var currentTask = allTasks[getRandomInt(0,allTasks.length)];
+           var currentTask = gameProjection.currentTask;
            currentTask.location = GAME_LOCATION // attach the location of this game projection to each current task, we could do this in the json on each task too, but this might prevent us from easily re-using prompts at the commons/uniondepot endcaps.
        
 
@@ -426,31 +439,31 @@ var gameProjection = {
 
 
             //check to change the screen to wait for more players if there are less than 2.
-            if(chosenPlayers.length < 2) {
-              $('.currentTask').html('Waiting for more players to join...')
-              //gameProjection.setStateAndTime('we-need-more-players', gameProjection.wait)
-              return;
-            }
+            //if(chosenPlayers.length < 2) {
+            //  //$('.currentTask').html('Waiting for more players to join...')
+            //  //gameProjection.setStateAndTime('we-need-more-players', gameProjection.wait)
+            //  return;
+            //}
 
             //if(chosenPlayers.length < currentTask.players){
             //    gameProjection.newGame()
             //}
 
-             console.log('chosenPlayers',chosenPlayers)
+             //console.log('chosenPlayers',chosenPlayers)
 
-             var userlist = ""
-             chosenPlayers.forEach(function(player){
-               $('.people ul').append('<li>'+player.userObject.userName+'<img src="assets/images/avatars/avatar_4.png"></li>');
-             })
+             //var userlist = ""
+             //chosenPlayers.forEach(function(player){
+             //  $('.people ul').append('<li>'+player.userObject.userName+'<img src="assets/images/avatars/avatar_4.png"></li>');
+             //})
 
-             $('.currentTask').html(
-               currentTask.task
-               + '<br>'
-               + userlist
-             )
+             //$('.currentTask').html(
+             //  currentTask.task
+             //  + '<br>'
+             //  + userlist
+             //)
 
-              time = new Date().getTime();//also update the stored time
-              this.wait = currentTask.time;
+              //time = new Date().getTime();//also update the stored time
+              //this.wait = currentTask.time;
 
            }) // close getNewAndNotifyUsers
 

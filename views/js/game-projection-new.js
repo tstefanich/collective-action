@@ -266,9 +266,9 @@ var gameProjection = {
                   case 'setup-game': 
                       self.newGame();      
                       self.writeTaskToScreen();
-                      self.setStateAndTime('teaser', 5000);  
+                      self.setStateAndTime('invite-to-performance-area', 5000);  
                       break;
-                  case 'teaser': 
+                  case 'invite-to-performance-area': 
                       //check to change the screen to wait for more players if there are less than 2.
                       if(self.currentNumberOfConnections < 2) {
                         self.setStateAndTime('we-need-more-players', 3000);
@@ -283,7 +283,7 @@ var gameProjection = {
                       //});
                       break;
                   case 'we-need-more-players':
-                      self.setStateAndTime('teaser', 3000);
+                      self.setStateAndTime('invite-to-performance-area', 3000);
                       break;
                   case 'prep-for-task':
                       // time to get ready 
@@ -332,8 +332,8 @@ var gameProjection = {
                 console.log('get-players');
                 self.checkTimer();
                 break;
-            case 'teaser':
-                console.log('teaser');
+            case 'invite-to-performance-area':
+                console.log('invite-to-performance-area');
                 self.checkTimer();
                 break;
             case 'we-need-more-players':

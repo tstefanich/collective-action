@@ -354,8 +354,8 @@ io.on('connection', function(socket) {
     });
 
     socket.on('scorePoints', function(roomName, callback) { 
-        var users = allUsersInRoom(roomName);
-        callback(users); //send the selected users back to the game-projection
+        //var users = allUsersInRoom(roomName);
+        //callback(users); //send the selected users back to the game-projection
     });
 
     socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.

@@ -236,6 +236,7 @@ var gameProjection = {
       self.prepTime = 30000;
       self.prepCounter = 0;
      },
+
       checkTimer:function(){
            var self = this;
            if(new Date().getTime())
@@ -250,42 +251,24 @@ var gameProjection = {
                       self.setStateAndTime('highscores-teams', 5000);
                       break;
                   case 'highscores-teams':
-                      self.setStateAndTime('get-number-of-connections', 100);
+                      self.setStateAndTime('get-number-of-connections-task-players', 100);
                       break;
-                  case 'get-number-of-connections':
-                      console.log(self.currentNumberOfConnections)
-                      if (self.requestedNumberOfConnections == false){
-                        self.requestedNumberOfConnections = true;
-                        self.checkNumberOfConnections();
-                      } else if (self.currentNumberOfConnections == null){
-                        self.setStateAndTime('get-number-of-connections', 100);
+                  case 'get-number-of-connections-task-players':
+                      self.checkIfNumberOfConnectionsIsEmptyAndGet();
+                      self.checkIfTaskIsEmptyAndGet();
+                      self.checkIfPlayersIsEmptyAndGet();
+                      if(self.currentNumberOfConnections != null && self.currentTask != null && self.currentPlayers != null){
+                        self.setStateAndTime('setup-game', 1000);
                       } else {
-                        self.setStateAndTime('get-task', self.wait);
+                        self.setStateAndTime('get-number-of-connections-task-players', 100);
                       }
                       break;
-                  case 'get-task':
-                      if (self.requestedTask == false){
-                        self.requestedTask = true;
-                        self.getTask();
-                      } else if (self.currentTask == null){
-                        self.setStateAndTime('get-task', 100);
-                      } else {
-                        self.writeTaskToScreen();
-                        self.setStateAndTime('get-players', 100);
-                      }
+                  case 'setup-game': 
+                      self.newGame();      
+                      self.writeTaskToScreen();
+                      self.setStateAndTime('teaser', 5000);  
                       break;
-                  case 'get-players':
-                      if (self.requestedCurrentPlayers == false){
-                        self.requestedCurrentPlayers = true;
-                        self.getPlayers();
-                      } else if (self.currentPlayers == null){
-                        self.setStateAndTime('get-players', 100);
-                      } else {
-                        self.newGame();
-                        self.setStateAndTime('teaser', 5000);
-                      }
-                      break;
-                  case 'teaser':                      
+                  case 'teaser': 
                       //check to change the screen to wait for more players if there are less than 2.
                       if(self.currentNumberOfConnections < 2) {
                         self.setStateAndTime('we-need-more-players', 3000);
@@ -304,16 +287,19 @@ var gameProjection = {
                       break;
                   case 'prep-for-task':
                       // time to get ready 
+                      console.log(gameProjection.currentPlayers)
+
                       self.setStateAndTime('start-task',  gameProjection.currentTask.time);
                       break;
                   case 'start-task':
-                      // time to get ready
                       self.setStateAndTime('end-task', 7000);
                       break;
                   case 'end-task':
-                      self.scorePoints();
+                      self.setStateAndTime('reset', 100);
+                      break;
+                  case 'reset':
                       self.reset();
-                      self.setStateAndTime('title', 10000);
+                      self.setStateAndTime('title', 1000);
                       break;
                 }
                 //self.state = self.gameStates[self.gameStateIndex % 5];
@@ -338,15 +324,11 @@ var gameProjection = {
                 console.log('highscore team');
                 self.checkTimer();
                 break;
-            case 'get-number-of-connections':
+            case 'get-number-of-connections-task-players':
                 console.log('get-number-of-connections');
                 self.checkTimer();
                 break;
-            case 'get-task':
-                console.log('get-task');
-                self.checkTimer();
-                break;
-            case 'get-players':
+            case 'setup-game':
                 console.log('get-players');
                 self.checkTimer();
                 break;
@@ -372,6 +354,10 @@ var gameProjection = {
                 console.log('end task');
                 self.checkTimer();
                 break;
+            case 'reset':
+                console.log('reset task');
+                self.checkTimer();
+                break;
           }
 
 
@@ -386,16 +372,39 @@ var gameProjection = {
     //  getPriorityUsers:function(numberUsers,callback){
     //    socket.emit('getPriorityUsers', numberUsers, callback )
     //  }
+    checkIfNumberOfConnectionsIsEmptyAndGet:function(){
+      var self = gameProjection;
+      if (self.requestedNumberOfConnections == false){
+        self.requestedNumberOfConnections = true;
+        self.checkNumberOfConnections();
+      } 
+    },
     checkNumberOfConnections:function(){
       socket.emit('getNumberOfUsers', GAME_LOCATION, function(numberOfConnections) { //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
         console.log(numberOfConnections);
         gameProjection.currentNumberOfConnections = numberOfConnections.length;
       }); // close getNewAndNotifyUsers
     },
+    checkIfPlayersIsEmptyAndGet:function(){
+      var self = gameProjection;
+      if (self.requestedCurrentPlayers == false && self.currentTask != null){
+        self.requestedCurrentPlayers = true;
+        self.getPlayers();
+      } 
+    },
     getPlayers:function(){
+      gameProjection.currentTask.location = GAME_LOCATION;
       socket.emit('getNewAndNotifyUsers', gameProjection.currentTask, function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
+        console.log(chosenPlayers);
         gameProjection.currentPlayers = chosenPlayers;
       }); // close getNewAndNotifyUsers
+    },
+    checkIfTaskIsEmptyAndGet:function(){
+      var self = gameProjection;
+      if (self.requestedTask == false && self.currentNumberOfConnections != null){
+        self.requestedTask = true;
+        self.getTask();
+      }
     },
     getTask:function(){
       var numberOfPlayers = gameProjection.currentNumberOfConnections;
@@ -422,7 +431,7 @@ var gameProjection = {
     },
     scorePoints:function(){
       socket.emit('scoreAndSavePoints', gameProjection.currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
-            gameProjection.currentPlayers = chosenPlayers;
+        gameProjection.currentPlayers = chosenPlayers;
       }); // close getNewAndNotifyUsers
     },
     newGame:function(){

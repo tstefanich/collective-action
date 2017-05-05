@@ -367,8 +367,8 @@ $(window).load(function(){
       // Message for Window Loaded
       console.log('window loaded');
       var newHeight = $(window).height();
-      newHeight = newHeight - ($('.intro-footer').outerHeight() * 1.6) ;
-      $('.page.intro .carousel-inner').css('margin-top', $('.intro-footer').outerHeight()+'px' );
+      newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) ;
+      $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
       $('.page.intro .carousel-inner .item img').css('height', newHeight+'px')
       //setTimeout(function(){
       //  $('#playGame').click() //for testing
@@ -669,7 +669,7 @@ $(document).ready(function(){
      // Regenerate Avatar Button
      $('body').on('click tap', '.regenerate-avatar-btn', function(e){
        var totalNumberOfAvatars =  75;
-       var r = Math.round(Math.random()*totalNumberOfAvatars)
+       var r = Math.ceil(Math.random()*totalNumberOfAvatars)
        $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.svg')
      });
 

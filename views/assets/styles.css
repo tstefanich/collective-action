@@ -43,7 +43,16 @@ body {
 }
 
 .container {
-    margin-top:62px;
+    padding-top:62px;
+    box-sizing: border-box;
+}
+
+.page.warning{
+    background-color: white;
+    background-image: url('/assets/images/warning/warning.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size:90%;
 
 }
 /******************
@@ -348,7 +357,7 @@ Global page styling
     0);
     /*-webkit-backface-visibility: hidden;*/
 
-    background: white;
+    background-color: white;
 }
 .page.intro {
     z-index: 9999;
@@ -563,7 +572,7 @@ Loading page
     text-shadow: 0 0 0 transparent;
 }
 .btn.btn-default.sign-up-continue-btn.carousel-sign-up-btn.btn-primary {
-    background: green;
+    color: green;
 }
 
 .sign-up-button-container.disable .btn.btn-default.sign-up-continue-btn.carousel-sign-up-btn {
@@ -610,16 +619,29 @@ Intro page
     bottom: 0;
     right: 15px;
     left: 15px;
-          border-top:2px solid #f15a29;
-
+    border-top:2px solid #f15a29;
 }
-
+.intro-footer .row {
+    padding-bottom: 6px;
+    padding-top: 0;
+}
+.intro-footer .nav-divider {    
+    border-right: 2px solid #f15a29;
+    height: 35px;
+    width: 0px;
+    float: left;
+    position: fixed;
+    left: 50%;
+    transform: rotate(45deg);
+    z-index: 1;
+    bottom: 8px;
+}
 .intro-header {
     position: fixed;
     top: 0;
     right: 15px;
     left: 15px;
-          border-bottom:2px solid #f15a29;
+    border-bottom:2px solid #f15a29;
 
 }
 /*******************************

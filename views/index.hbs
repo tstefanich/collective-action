@@ -117,7 +117,7 @@ Signup Page
                <div class="item avatar-sign-up">
                     <div class="container">
                          <p>Generate your character.</p>
-                         <img class="regenerate-avatar-image" src="assets/images/intro/avatar_68.png" alt="...">
+                         <img class="regenerate-avatar-image" src="assets/images/avatars/15.svg" alt="...">
                          <div class="row">
                               <div class="col-xs-1">&nbsp;</div>
                               <div class="col-xs-10">
@@ -141,6 +141,7 @@ Signup Page
                <div class="col-xs-6">
                     <a class="btn btn-default sign-up-back-btn carousel-sign-up-btn" style="width:100%;" href="#back" onclick="signUpCarouselDirection = 'left'; $('#carousel-sign-up').carousel('prev');">Back</a>
                </div>
+               <div class="nav-divider"></div>
                <div class="col-xs-6">
                     <a class="btn btn-default sign-up-continue-btn carousel-sign-up-btn" style="width:100%;" href="#continue" >Continue</a>
                </div>
@@ -157,14 +158,25 @@ Homescreen Page
      <div class="nav"><div class="close " style="display:none;"></div><div class="title" style="margin-left: 0;text-align: center;">Collective Action!</div></div>
 
      <!-- Content -->
-     <div class="container" style="text-align: center;">
-          <img class="regenerate-avatar-image" src="assets/images/intro/avatar_68.png" alt="..." style="height:400px;">
-          <a id="playGame" class="project-launcher btn btn-default more-details artwork" data-project-url="game-client" href="#ucla-game" role="button">Play Now!</a>
+     <div class="container" style="text-align: center;height:100%;background-image:url('assets/images/avatars/68.svg');background-repeat:no-repeat;background-position:center center; background-size:AUTO; ">
+    
+          <!--<a id="playGame" class="project-launcher btn btn-default more-details artwork" data-project-url="game-client" href="#ucla-game" role="button">Play Now!</a>-->
 
      </div>
 
      <!-- Footer -->
      <div class="intro-footer">
+          <div class="row sign-up-button-container disable">
+               <div class="col-xs-6">
+                    <a class="btn btn-default sign-up-continue-btn more-details" style="width:100%;color:grey" href="#warning">Play</a>
+               </div>
+               <div class="nav-divider"></div>
+               <div class="col-xs-6">
+                    <a class="btn btn-default more-details" style="width:100%;" href="#map">Find Location</a>
+               </div>
+          </div>
+     </div>
+     <!--<div class="intro-footer">
           <div class="row">
                <div class="col-xs-3">
                     <a class="btn btn-default more-details" style="width:100%;" href="#help" ><span class="glyphicon glyphicon-question-sign"></span></a>
@@ -179,7 +191,7 @@ Homescreen Page
                     <a class="btn btn-default more-details logout" style="width:100%;" href="#log-out"><span class="glyphicon glyphicon-log-out"></span></a>
                </div>
           </div>
-     </div>
+     </div>-->
 </div>
 
 
@@ -247,6 +259,21 @@ Map Page
 
      <!-- Content -->
      <div id="map" ></div>
+
+</div>
+
+
+<!--////////////
+Warning Page
+///////////--->
+<div class="page warning">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close "></div><div class="title">Warning!!!</div></div>
+
+     <!-- Content -->
+     <div class="container">
+          
+     </div>
 
 </div>
 

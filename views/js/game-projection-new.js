@@ -18,43 +18,7 @@ function search(array, key, prop){
     return tempArray;
 }
 
-var allTasks = [
- {
-   task:"Perform a flood",
-   time: 3000,
-   players: 4
- },
- {
-    task:"Perform an earthquake (in the mountains)",
-    time: 11000,
-    players: 5
- },
- {
-    task:"Perform a monsoon (or rainstorm)",
-    time: 5000,
-    players: 5
- },
- {
-    task:"Envision a futuristic water filtration system",
-    time: 7000,
-    players: 2
- },
- {
-   task:"Be a bicycle (and go for a ride)",
-   time:10000,
-   players:2
- },
- {
-   task: "be a bee or a flower, can the bees find some flowers to pollinate?",
-   time:6000,
-   players: 3
- },
- {
-   task: "all players test",
-   time:6000,
-   players: 'all'
- }
-]
+var allTasks = []
 
 
 function moreDetails(click){
@@ -217,7 +181,7 @@ var gameProjection = {
      setStateAndTime:function(state, waitTime){
       var self = this;
       console.log(state);
-      if(state != 'get-number-of-connections' && state != 'get-task' && state != 'get-players'){
+      if(state != 'get-number-of-connections-task-players' && state != 'get-number-of-connections' && state != 'get-task' && state != 'get-players'){
         slideDownPanel($('.page.slideUp .close'));
         moreDetails($('.page.'+state+' .nav a'));
       }
@@ -257,7 +221,7 @@ var gameProjection = {
                       self.checkIfNumberOfConnectionsIsEmptyAndGet();
                       self.checkIfTaskIsEmptyAndGet();
                       self.checkIfPlayersIsEmptyAndGet();
-                      if(self.currentNumberOfConnections != null && self.currentTask != null && self.currentPlayers != null){
+                      if(self.currentNumberOfConnections != null && self.currentTask != null && self.currentPlayers != null && allTasks.length > 0){
                         self.setStateAndTime('setup-game', 1000);
                       } else {
                         self.setStateAndTime('get-number-of-connections-task-players', 100);
@@ -283,7 +247,7 @@ var gameProjection = {
                       //});
                       break;
                   case 'we-need-more-players':
-                      self.setStateAndTime('invite-to-performance-area', 3000);
+                      self.setStateAndTime('get-number-of-connections-task-players', 3000);
                       break;
                   case 'prep-for-task':
                       // time to get ready 
@@ -325,7 +289,7 @@ var gameProjection = {
                 self.checkTimer();
                 break;
             case 'get-number-of-connections-task-players':
-                console.log('get-number-of-connections');
+                console.log('get-number-of-connections-task-players');
                 self.checkTimer();
                 break;
             case 'setup-game':
@@ -428,6 +392,38 @@ var gameProjection = {
       self.prepCounter++;
       var prepTime = Math.floor(self.prepTime/1000 - (self.prepCounter/60));
       $('.prep-time').html(prepTime);
+    },
+    convertSpreadsheetToTasksObject:function(json){
+        //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json
+        console.log('parsing Google Spreadsheet');   
+        console.log(json);
+
+        for (var i = 0; i < json.feed.entry.length; i++) {
+          //  This is console.log for the each row in the spreadsheet
+          //  console.log( json.feed.entry[i]);     
+          var task = json.feed.entry[i].gsx$prompt.$t;
+          var timePrep =  5000;//json.feed.entry[i].gsx$bio.$t;
+          var timePlay =  30000;//json.feed.entry[i].gsx$bio.$t;
+          var time = 10000;//json.feed.entry[i].gsx$bio.$t;
+          var players = json.feed.entry[i].gsx$numberofplayers.$t; 
+        
+          Object
+          var tempObject = {
+            task: task,
+            timePrep: timePrep,
+            timePlay: timePlay,
+            players: players
+          }
+
+          // Make a newly formatted Master List/Array 
+          // of all of the projects
+          allTasks.push(tempObject); 
+
+        //marker.setVisible(true);
+        }
+        console.log('parsed Google Spreadsheet');   
+
+        
     },
     scorePoints:function(){
       socket.emit('scoreAndSavePoints', gameProjection.currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.

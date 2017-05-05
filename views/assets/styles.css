@@ -939,7 +939,7 @@ h2.project-title {
     top: 0;
     width: 50px;
     height: 55px;
-    color: white;
+    color: black;
     z-index: 9999999;
     opacity: 0;
     display: none;

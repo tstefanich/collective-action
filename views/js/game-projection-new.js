@@ -10,7 +10,7 @@
 
 function search(array, key, prop){
     // Optional, but fallback to key['name'] if not selected
-    prop = (typeof prop === 'undefined') ? 'name' : prop;    
+    prop = (typeof prop === 'undefined') ? 'name' : prop;
     var tempArray = [];
     for (var i=0; i < array.length; i++) {
         if (array[i][prop] <= key) {
@@ -158,7 +158,7 @@ var gameProjection = {
      currentTask:null,
      requestedTask: false,
      prepCounter:0,
-     prepTime:30000,
+     prepTime:3000,
      wait:5000,
      state:'title',
      gameStateIndex:0,
@@ -199,7 +199,7 @@ var gameProjection = {
       self.currentTask = null;
       self.requestedTask = false;
 
-      self.prepTime = 30000;
+      self.prepTime = 3000;
       self.prepCounter = 0;
      },
 
@@ -229,17 +229,17 @@ var gameProjection = {
                         self.setStateAndTime('get-number-of-connections-task-players', 100);
                       }
                       break;
-                  case 'setup-game': 
-                      //self.newGame();      
+                  case 'setup-game':
+                      // self.newGame();
                       self.writeTaskToScreen();
-                      self.setStateAndTime('invite-to-performance-area', 5000);  
+                      self.setStateAndTime('invite-to-performance-area', 5000);
                       break;
-                  case 'invite-to-performance-area': 
+                  case 'invite-to-performance-area':
                       //check to change the screen to wait for more players if there are less than 2.
                       if(self.currentNumberOfConnections < 2) {
                         self.setStateAndTime('we-need-more-players', 3000);
                       } else {
-                        self.setStateAndTime('prep-for-task', 30000);
+                        self.setStateAndTime('prep-for-task', 3000);
                       }
                       //var interval = 0;
                       //self.setStateAndTime('get-players', self.wait);
@@ -252,7 +252,7 @@ var gameProjection = {
                       self.setStateAndTime('get-number-of-connections-task-players', 3000);
                       break;
                   case 'prep-for-task':
-                      // time to get ready 
+                      // time to get ready
                       console.log(gameProjection.currentPlayers)
 
                       self.setStateAndTime('start-task',  gameProjection.currentTask.time);
@@ -264,6 +264,7 @@ var gameProjection = {
                       self.setStateAndTime('reset', 100);
                       break;
                   case 'reset':
+                      socket.emit('resetViews', self.currentPlayers)
                       self.reset();
                       self.setStateAndTime('title', 1000);
                       break;
@@ -312,7 +313,7 @@ var gameProjection = {
                 self.checkTimer();
                 break;
             case 'start-task':
-                // time to get ready 
+                // time to get ready
                 console.log('start task');
                 self.checkTimer();
                 break;
@@ -343,7 +344,7 @@ var gameProjection = {
       if (self.requestedNumberOfConnections == false){
         self.requestedNumberOfConnections = true;
         self.checkNumberOfConnections();
-      } 
+      }
     },
     checkNumberOfConnections:function(){
       socket.emit('getNumberOfUsers', GAME_LOCATION, function(numberOfConnections) { //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
@@ -356,7 +357,7 @@ var gameProjection = {
       if (self.requestedCurrentPlayers == false && self.currentTask != null){
         self.requestedCurrentPlayers = true;
         self.getPlayers();
-      } 
+      }
     },
     getPlayers:function(){
       gameProjection.currentTask.location = GAME_LOCATION;
@@ -375,7 +376,7 @@ var gameProjection = {
     getTask:function(){
       var numberOfPlayers = gameProjection.currentNumberOfConnections;
       var searchResults = null;
-      if(gameProjection.currentNumberOfConnections < 2){ 
+      if(gameProjection.currentNumberOfConnections < 2){
         // This need to be changed not to grab specific number of connections but only task that have a minimum number of connections
         searchResults = [];
       } else {
@@ -397,87 +398,92 @@ var gameProjection = {
     },
     convertSpreadsheetToTasksObject:function(json){
         //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json
-        console.log('parsing Google Spreadsheet');   
+        console.log('parsing Google Spreadsheet');
         console.log(json);
 
         for (var i = 0; i < json.feed.entry.length; i++) {
           //  This is console.log for the each row in the spreadsheet
-          //  console.log( json.feed.entry[i]);     
+          //  console.log( json.feed.entry[i]);
           var task = json.feed.entry[i].gsx$prompt.$t;
           var timePrep =  5000;//json.feed.entry[i].gsx$bio.$t;
           var timePlay =  30000;//json.feed.entry[i].gsx$bio.$t;
           var time = 10000;//json.feed.entry[i].gsx$bio.$t;
-          var players = json.feed.entry[i].gsx$numberofplayers.$t; 
-        
+          var players = json.feed.entry[i].gsx$numberofplayers.$t;
+
           Object
           var tempObject = {
             task: task,
             timePrep: timePrep,
             timePlay: timePlay,
+<<<<<<< HEAD
             time: time,
             players: players
+=======
+            players: players,
+            time:time
+>>>>>>> origin/master
           }
 
-          // Make a newly formatted Master List/Array 
+          // Make a newly formatted Master List/Array
           // of all of the projects
-          allTasks.push(tempObject); 
+          allTasks.push(tempObject);
 
         //marker.setVisible(true);
         }
-        console.log('parsed Google Spreadsheet');   
+        console.log('parsed Google Spreadsheet');
 
-        
+
     },
     scorePoints:function(){
       socket.emit('scoreAndSavePoints', gameProjection.currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
         gameProjection.currentPlayers = chosenPlayers;
       }); // close getNewAndNotifyUsers
     },
-    newGame:function(){
-        // if(new Date().getTime() - time >= this.wait){
-           console.log("tick");//if it is, do something
-
-           var currentTask = gameProjection.currentTask;
-           currentTask.location = GAME_LOCATION // attach the location of this game projection to each current task, we could do this in the json on each task too, but this might prevent us from easily re-using prompts at the commons/uniondepot endcaps.
-       
-
-           console.log('currentTask',currentTask);
-           //  socket.emit('startNewGame', 'newGame') //reset all users mobile views && push to the database
-           socket.emit('getNewAndNotifyUsers', currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
-
-
-            //check to change the screen to wait for more players if there are less than 2.
-            //if(chosenPlayers.length < 2) {
-            //  //$('.currentTask').html('Waiting for more players to join...')
-            //  //gameProjection.setStateAndTime('we-need-more-players', gameProjection.wait)
-            //  return;
-            //}
-
-            //if(chosenPlayers.length < currentTask.players){
-            //    gameProjection.newGame()
-            //}
-
-             //console.log('chosenPlayers',chosenPlayers)
-
-             //var userlist = ""
-             //chosenPlayers.forEach(function(player){
-             //  $('.people ul').append('<li>'+player.userObject.userName+'<img src="assets/images/avatars/avatar_4.png"></li>');
-             //})
-
-             //$('.currentTask').html(
-             //  currentTask.task
-             //  + '<br>'
-             //  + userlist
-             //)
-
-              //time = new Date().getTime();//also update the stored time
-              //this.wait = currentTask.time;
-
-           }) // close getNewAndNotifyUsers
-
-    }
+    // newGame:function(){
+    //     // if(new Date().getTime() - time >= this.wait){
+    //        console.log("tick");//if it is, do something
+    //
+    //        var currentTask = gameProjection.currentTask;
+    //        currentTask.location = GAME_LOCATION // attach the location of this game projection to each current task, we could do this in the json on each task too, but this might prevent us from easily re-using prompts at the commons/uniondepot endcaps.
+    //
+    //
+    //        console.log('currentTask',currentTask);
+    //        //  socket.emit('startNewGame', 'newGame') //reset all users mobile views && push to the database
+    //        socket.emit('getNewAndNotifyUsers', currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
+    //
+    //
+    //         //check to change the screen to wait for more players if there are less than 2.
+    //         //if(chosenPlayers.length < 2) {
+    //         //  //$('.currentTask').html('Waiting for more players to join...')
+    //         //  //gameProjection.setStateAndTime('we-need-more-players', gameProjection.wait)
+    //         //  return;
+    //         //}
+    //
+    //         //if(chosenPlayers.length < currentTask.players){
+    //         //    gameProjection.newGame()
+    //         //}
+    //
+    //          //console.log('chosenPlayers',chosenPlayers)
+    //
+    //          //var userlist = ""
+    //          //chosenPlayers.forEach(function(player){
+    //          //  $('.people ul').append('<li>'+player.userObject.userName+'<img src="assets/images/avatars/avatar_4.png"></li>');
+    //          //})
+    //
+    //          //$('.currentTask').html(
+    //          //  currentTask.task
+    //          //  + '<br>'
+    //          //  + userlist
+    //          //)
+    //
+    //           //time = new Date().getTime();//also update the stored time
+    //           //this.wait = currentTask.time;
+    //
+    //        }) // close getNewAndNotifyUsers
+    //
+    // }
 }
-    
+
 
 /*******************
      Setup

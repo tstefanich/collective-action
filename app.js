@@ -348,14 +348,23 @@ io.on('connection', function(socket) {
         return decendingUsers;
     }
 
-    socket.on('getNumberOfUsers', function(roomName, callback) { 
+    socket.on('getNumberOfUsers', function(roomName, callback) {
         var users = allUsersInRoom(roomName);
         callback(users); //send the selected users back to the game-projection
     });
 
-    socket.on('scorePoints', function(roomName, callback) { 
+    socket.on('scorePoints', function(roomName, callback) {
         //var users = allUsersInRoom(roomName);
         //callback(users); //send the selected users back to the game-projection
+    });
+ 
+    //reset mobile views to 'waiting screen'
+    socket.on('resetViews', function(users){
+      console.log('resetViews users',users);
+        users.forEach(function(element) {
+          // console.log(element.id);
+          socket.to(element.id).emit('newGame', 'newGame');
+      });
     });
 
     socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.

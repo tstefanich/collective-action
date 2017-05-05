@@ -668,7 +668,7 @@ $(document).ready(function(){
      $('body').on('click tap', '.regenerate-avatar-btn', function(e){
        var totalNumberOfAvatars =  75;
        var r = Math.round(Math.random()*totalNumberOfAvatars)
-       $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/avatar_'+ r +'.png')
+       $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.svg')
      });
 
      // Links to slide additional info

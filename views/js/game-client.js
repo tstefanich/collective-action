@@ -48,7 +48,7 @@ var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SER
 function currentUserInfo() {
     var ui = {
         userObject: store.get('user'),
-        room: 'location1' // SET THIS TO THE ROOM/LOCATION THE USER is going to login to. *******IMPORTANT******
+        room: LOCATION //*******IMPORTANT****** //set in the game-client.hbs
     }
     return ui;
 }
@@ -71,7 +71,7 @@ socket.on('reconnect', function() {
 })
 
 socket.on('newGame', function() {
-    $('.waitingNext').html('')
+    // $('.waitingNext').html('')
     //upload user local storage to the database here (dont overwrite the user, only update the values incase something goes wrong)
     // var getUser =  store.get('user')
     console.log('~~~~~~NEWGAME!');
@@ -88,7 +88,7 @@ socket.on('mySoon', function(data) {
     console.log('~~~~~~mySoon!');
     var getUser = store.get('user')
 
-      $('.waitingNext').html('')
+      // $('.waitingNext').html('')
       window.parent.document.title = '⚠️' + socket.id
       // $('.page').css('background-color','yellow')
       $('.page').css('background-image','url(assets/images/client/mySoon.png)')

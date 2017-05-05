@@ -415,13 +415,9 @@ var gameProjection = {
             task: task,
             timePrep: timePrep,
             timePlay: timePlay,
-<<<<<<< HEAD
             time: time,
             players: players
-=======
-            players: players,
-            time:time
->>>>>>> origin/master
+
           }
 
           // Make a newly formatted Master List/Array

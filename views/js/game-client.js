@@ -5,6 +5,8 @@
 ////////////////////////////
 // Fake User Data in Local Storage
 ///////////////////////////
+
+
 function rand(max) {
   min = Math.ceil(1);
   max = Math.floor(max);

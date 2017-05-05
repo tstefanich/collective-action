@@ -6,6 +6,8 @@
  * @param {string} [prop] - The property name to find it in
  */
 
+
+
 function search(array, key, prop){
     // Optional, but fallback to key['name'] if not selected
     prop = (typeof prop === 'undefined') ? 'name' : prop;    
@@ -228,7 +230,7 @@ var gameProjection = {
                       }
                       break;
                   case 'setup-game': 
-                      self.newGame();      
+                      //self.newGame();      
                       self.writeTaskToScreen();
                       self.setStateAndTime('invite-to-performance-area', 5000);  
                       break;
@@ -412,6 +414,7 @@ var gameProjection = {
             task: task,
             timePrep: timePrep,
             timePlay: timePlay,
+            time: time,
             players: players
           }
 

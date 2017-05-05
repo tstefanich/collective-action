@@ -363,14 +363,16 @@ if (navigator.geolocation) {
     }
 
 
-
 $(window).load(function(){
       // Message for Window Loaded
       console.log('window loaded');
-
-      setTimeout(function(){
-        $('#playGame').click() //for testing
-      },5000)
+      var newHeight = $(window).height();
+      newHeight = newHeight - ($('.intro-footer').outerHeight() * 1.6) ;
+      $('.page.intro .carousel-inner').css('margin-top', $('.intro-footer').outerHeight()+'px' );
+      $('.page.intro .carousel-inner .item img').css('height', newHeight+'px')
+      //setTimeout(function(){
+      //  $('#playGame').click() //for testing
+      //},5000)
 
       //Parse Locations
       parseLocations(allLocations)
@@ -959,6 +961,7 @@ function initMap() {
     //  content: content,
     //  maxWidth: 150,
     //});
+
 
     infowindow = new InfoBubble({
         map: googleMap,

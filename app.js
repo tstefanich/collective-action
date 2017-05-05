@@ -357,7 +357,7 @@ io.on('connection', function(socket) {
         //var users = allUsersInRoom(roomName);
         //callback(users); //send the selected users back to the game-projection
     });
-
+ 
     //reset mobile views to 'waiting screen'
     socket.on('resetViews', function(users){
       console.log('resetViews users',users);

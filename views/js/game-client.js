@@ -69,12 +69,14 @@ socket.on('reconnect', function() {
 })
 
 socket.on('newGame', function() {
-    $('.waitingNext').html('Waiting At Location XXX')
+    $('.waitingNext').html('')
     //upload user local storage to the database here (dont overwrite the user, only update the values incase something goes wrong)
     // var getUser =  store.get('user')
     console.log('~~~~~~NEWGAME!');
     window.parent.document.title = '🚫' + socket.id
-    $('.page').css('background-color','red')
+    // $('.page').css('background-color','red')
+    $('.page').css('background-image','url(assets/images/client/newGame.png)')
+
 
 })
 
@@ -84,9 +86,11 @@ socket.on('mySoon', function(data) {
     console.log('~~~~~~mySoon!');
     var getUser = store.get('user')
 
-      $('.waitingNext').html('Get ready to act! <br> Its soon your turn to play!')
+      $('.waitingNext').html('')
       window.parent.document.title = '⚠️' + socket.id
-      $('.page').css('background-color','yellow')
+      // $('.page').css('background-color','yellow')
+      $('.page').css('background-image','url(assets/images/client/mySoon.png)')
+
 });
 
 socket.on('myTurn', function(taskToPlay) {
@@ -97,9 +101,11 @@ socket.on('myTurn', function(taskToPlay) {
         getUser.score++ //these are the same thing...
       store.set('user', getUser)
 
-    $('.waitingNext').html('Its your turn to act! <br>' + taskToPlay )
+    // $('.waitingNext').html( taskToPlay )
     window.parent.document.title = '✅' + socket.id
-    $('.page').css('background-color','green')
+    // $('.page').css('background-color','green')
+    $('.page').css('background-image','url(assets/images/client/myTurn.png)')
+
 
     // trigger sound notification
     //  $('.myTurnAudio').get(0).play()

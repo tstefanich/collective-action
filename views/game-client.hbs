@@ -1,26 +1,35 @@
 {{> header-game}}
 <style>
 body, html{
-     background:black;
-     color:white;
+     background:white;
+     color:black;
 }
 .page {
-     background: black;
+    background:white;
+    /*background: black;*/
+    background:url(assets/images/client/newGame.png);
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center center;
+
 }
-.page .nav {
-     background: black;
+.page .nav, .btn {
+     /*background: black;*/
+     background:white;
 }
+
+
+
 </style>
 <!--////////////
 Queue/waiting-room Page
 ///////////--->
 <div class="page queue waiting-room slideUp">
      <!-- Top Nav Bar -->
-     <div class="nav"><div class="close glyphicon glyphicon-menu-left " style="display:none;"></div></div>
+     <!-- <div class="nav"><div class="close glyphicon glyphicon-menu-left " style="display:none;"></div></div> -->
 
      <!-- Content -->
      <div class="waitingNext">
-         You are waiting in the Queue at Location XXX
      </div>
      <audio class="myTurnAudio" src="assets/audio/myturn.mp3"></audio>
 </div>

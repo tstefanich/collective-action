@@ -504,6 +504,7 @@ var signUp = {
           $("#carousel-sign-up").carousel();
           signUp.eventListeners();
           signUp.checkIfFieldsAreFilled();
+          $('.form-control.username').attr('placeholder', generateUsername())
      },
      goToNextSlide:function(){
           signUp.hideErrorMessages();
@@ -610,6 +611,19 @@ var signUp = {
           },500);
      },
      eventListeners:function(){
+       $('body').on('click tap', '.generate-username-btn', function(e){
+         $('.form-control.username').val(generateUsername());
+         if($.trim($('.form-control.username').val()) != ''){
+              signUp.usernameTextFieldIsFilled = true;
+              signUp.enableContinueButton();
+              console.log('Input username Filled');
+         } else {
+              signUp.usernameTextFieldIsFilled = false;
+              signUp.disableContinueButton();
+              console.log('Input username empty');
+         }
+       });
+
           $('body').on('click tap', '.sign-up-continue-btn', function(e){
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
@@ -620,6 +634,7 @@ var signUp = {
                          break;
                     case $('#carousel-sign-up .item.username-sign-up').hasClass('active'):
                          //put your cases here
+
                          signUp.databaseHasUser();
                          break;
                     case $('#carousel-sign-up .item.avatar-sign-up').hasClass('active'):
@@ -1229,4 +1244,22 @@ function zoomInOnMyLocation(){
   googleMap.panTo(new google.maps.LatLng(currentPosition.lat, currentPosition.lng));
   googleMap.setZoom(18);
   //googleMap.setCenter( new google.maps.LatLng(currentPosition.lat, currentPosition.lng );
+}
+
+
+
+
+
+function generateUsername(){
+//way of being, things, action
+  var first = ['Kooky','Sunny','Happy','Rainy','Light','Heavy','Windy','Cloudy','Chipper','Wild','Grumpy','Silly','Active','Sneaky','Jumpy','Flippy','Smelly','Wierd','Strange','Odd', 'Normal', 'Plain', 'Squishy', 'Green','Magenta','Blue','Purple','Nice','Magic','Orange','Cool','Sloppy','Slow','Fast','Hungry','Sleepy','Short','Tall','Peppy','Standing','Sitting','Shiny','Loud', 'Quiet', 'Chirpy'];
+  var second = ['Worm', 'Bug','Bird','River','Mountain','Owl','Canoe','Boat','Tree','Turtle','Lake','Otter','Bee','Fly','Wolf','Leaf','Pollen','Pants','Cloud','Raindrop','Iceberg','Heatwave','Backpack','Shoe','Oar','Sail','Grass','Sand','Rock','Water','Sky','Sun','Moon','Planet','Ocean','Nest','Moose','Bear','Ant','Spider','Fish','Plant','Snack','Bike','Earth','Snail'];
+  var third = ['Dance','Party','Jump','Paddle','Trip','Skip','Walk','Run','Stand','Shout','Stampede','Parade','Event','Race','Commute','Highfive','Hug','Snooze','Nap','Hike','Climb','Garden','Shirt','Friend','Popsicle','Flag','Chant'];
+  // r = Math.round(Math.random()*100)
+  r1 = Math.floor(Math.random()*first.length)
+  r2 = Math.floor(Math.random()*second.length)
+  r3 = Math.floor(Math.random()*third.length)
+
+  return first[r1]+second[r2]+third[r3];
+
 }

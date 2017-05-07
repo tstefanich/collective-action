@@ -132,8 +132,6 @@ app.get('/game-projection', function(req, res, next) {
             templateName: 'game-projection'
         });
     });
-
-
 });
 
 app.get('/game-projection-new', function(req, res, next) {
@@ -151,7 +149,6 @@ app.get('/admin-1', function(req, res, next) {
             'users': results
         });
     });
-
 });
 
 
@@ -280,7 +277,6 @@ socket.io && Queue
 **************************************/
 var server = require('http').createServer();
 var io = require('socket.io')(server);
-// var location1= io.of('/location1');
 
 //liveReload views on nodemon auto server reboot
 setTimeout(function() {
@@ -353,11 +349,10 @@ io.on('connection', function(socket) {
         callback(users); //send the selected users back to the game-projection
     });
 
-    socket.on('scorePoints', function(roomName, callback) {
-        //var users = allUsersInRoom(roomName);
-        //callback(users); //send the selected users back to the game-projection
+    socket.on('scorePoints', function(players) {
+      //not implemented yet
     });
- 
+
     //reset mobile views to 'waiting screen'
     socket.on('resetViews', function(users){
       console.log('resetViews users',users);

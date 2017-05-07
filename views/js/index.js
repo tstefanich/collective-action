@@ -370,9 +370,9 @@ $(window).load(function(){
       newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) ;
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
       $('.page.intro .carousel-inner .item img').css('height', newHeight+'px')
-      //setTimeout(function(){
-      //  $('#playGame').click() //for testing
-      //},5000)
+      setTimeout(function(){
+       $('#playGame').click() //for testing
+      },5000)
 
       //Parse Locations
       parseLocations(allLocations)
@@ -1218,7 +1218,7 @@ function displayLocation( position ) {
       position: myLatLng,
       zIndex:9999,
       icon: {
-         url: '/assets/images/avatars/avatar_68.png',
+         url: '/assets/images/avatars/68.svg',
         //size: new google.maps.Point( 16, 16 ),
               scaledSize: new google.maps.Size(17, 17), // scaled size
               origin: null, // origin

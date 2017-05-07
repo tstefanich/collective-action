@@ -40,6 +40,7 @@ body {
     padding-right: 10px;
     overflow: hidden;
     margin-top:0px;
+    padding-top: 0;
 }
 
 .container {
@@ -52,7 +53,7 @@ body {
     background-image: url('/assets/images/warning/warning.png');
     background-repeat: no-repeat;
     background-position: center bottom;
-    background-size:90%;
+    background-size: auto 90%;
 
 }
 /******************
@@ -157,6 +158,22 @@ button:focus {
 }
 .navbar-nav li.menu-item-16358.expanded {
     width: 100%;
+}
+
+.main-menu{
+    position:absolute;
+    right:0;
+    top:0;
+    background-position: center center;
+    background-image:url('/assets/images/menu.png') ;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height:50px;
+    width:50px;
+    display: block;
+}
+.page.menu a{
+    display:block;border-bottom:2px solid #f15a29;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
 }
 /******************
 

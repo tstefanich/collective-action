@@ -4,7 +4,9 @@
   /**********************
   LOCATION SPECIFIC ATTRIBUTES
   **********************/
-  const GAME_LOCATION = 'location1'
+  var locations = ['commons','westbank']
+  const GAME_LOCATION = locations[Math.floor(Math.random()*2)]
+  console.log(GAME_LOCATION);
 </script>
 
 <style>

@@ -363,7 +363,8 @@ io.on('connection', function(socket) {
     });
 
     socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
-      io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
+      // io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
+      io.to(currentTask.location).emit('newGame'); //reset only to the players in the room on new game 
 
       ////////////////////////////
       // get the users who have waited the longest

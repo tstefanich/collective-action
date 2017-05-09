@@ -75,7 +75,7 @@ socket.on('newGame', function() {
     //upload user local storage to the database here (dont overwrite the user, only update the values incase something goes wrong)
     // var getUser =  store.get('user')
     console.log('~~~~~~NEWGAME!');
-    window.parent.document.title = '🚫' + socket.id
+    window.parent.document.title = GAME_LOCATION + '🚫' + socket.id
     // $('.page').css('background-color','red')
     $('.page').css('background-image','url(assets/images/client/newGame.png)')
 
@@ -89,7 +89,7 @@ socket.on('mySoon', function(data) {
     var getUser = store.get('user')
 
       // $('.waitingNext').html('')
-      window.parent.document.title = '⚠️' + socket.id
+      window.parent.document.title = GAME_LOCATION + '⚠️' + socket.id
       // $('.page').css('background-color','yellow')
       $('.page').css('background-image','url(assets/images/client/mySoon.png)')
 
@@ -104,7 +104,7 @@ socket.on('myTurn', function(taskToPlay) {
       store.set('user', getUser)
 
     // $('.waitingNext').html( taskToPlay )
-    window.parent.document.title = '✅' + socket.id
+    window.parent.document.title = GAME_LOCATION + '✅' + socket.id
     // $('.page').css('background-color','green')
     $('.page').css('background-image','url(assets/images/client/myTurn.png)')
 

@@ -17,30 +17,30 @@ var MortalKombat={characters:["Goro","JohnnyCage","Kano","LiuKang","Raiden","Rep
 var fakeData = {
   userName: MortalKombat.get(),
   email: MortalKombat.get() + '@' + MortalKombat.get() + '.com',
-  avatar: [1,2,3,4], // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+  avatar: '69.svg', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
   team: 1,
-  tasksPlayed: [rand(30),rand(30),rand(30)],
+  // tasksPlayed: [rand(30),rand(30),rand(30)],
 
   // PING
-  loggedIn: true,
-  currentLocation: 'River',
-  priority: rand(30),
-  waitTime: rand(1000),
+  // loggedIn: true,
+  // currentLocation: 'River',
+  // priority: rand(30),
+  // waitTime: rand(1000),
 
   // METRICS
   score: 200,
   locationsVisited: ['River','Target'], // location + timespent
-  totalTasks: rand(30), // this may not be needed scores = totalPlays
-  totalTaskTime: rand(1000),
-  totalWaitTime: rand(1000),
+  // totalTasks: rand(30), // this may not be needed scores = totalPlays
+  // totalTaskTime: rand(1000),
+  // totalWaitTime: rand(1000),
 };
 
 store.set('user', fakeData)
 
 
-////////////////////////////
+//////////////////////////
 // End Fake User Data
-///////////////////////////
+/////////////////////////
 
 
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
@@ -48,7 +48,7 @@ var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SER
 function currentUserInfo() {
     var ui = {
         userObject: store.get('user'),
-        room: 'location1' // SET THIS TO THE ROOM/LOCATION THE USER is going to login to. *******IMPORTANT******
+        room: GAME_LOCATION //*******IMPORTANT****** //set in the game-client.hbs
     }
     return ui;
 }
@@ -71,7 +71,7 @@ socket.on('reconnect', function() {
 })
 
 socket.on('newGame', function() {
-    $('.waitingNext').html('')
+    // $('.waitingNext').html('')
     //upload user local storage to the database here (dont overwrite the user, only update the values incase something goes wrong)
     // var getUser =  store.get('user')
     console.log('~~~~~~NEWGAME!');
@@ -88,7 +88,7 @@ socket.on('mySoon', function(data) {
     console.log('~~~~~~mySoon!');
     var getUser = store.get('user')
 
-      $('.waitingNext').html('')
+      // $('.waitingNext').html('')
       window.parent.document.title = '⚠️' + socket.id
       // $('.page').css('background-color','yellow')
       $('.page').css('background-image','url(assets/images/client/mySoon.png)')
@@ -99,7 +99,7 @@ socket.on('myTurn', function(taskToPlay) {
     //  console.log(data);
 
     var getUser = store.get('user');
-        getUser.totalTasks++ //these are the same thing...
+        // getUser.totalTasks++ //these are the same thing...
         getUser.score++ //these are the same thing...
       store.set('user', getUser)
 
@@ -120,16 +120,3 @@ socket.on('disconnect', function() {
     console.log('disconnected from the server as: ' + socket.id);
 
 });
-
-
-
-/*****
-
-slideDownPanel($('.page.waiting-room .close'));
-This function needs the jQuery Object to work you need to target the close button
-
-moreDetails($('.more-details.game.btn');
-This needs to be an anchor tag with a href like this
-<a class="btn btn-default more-details" href="#login">Login</a>
-
-*/

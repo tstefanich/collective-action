@@ -466,16 +466,16 @@ database.updateFields = function(req, callback){
       userName: data.userName,
       avatar: data.avatar,
       team: data.team ,
-      tasksPlayed: data.tasksPlayed,
-      loggedIn:  data.loggedIn ,
-      currentLocation:  data.currentLocation,
-      priority: data.priority  ,
-      waitTime: data.waitTime  ,
+      tasksPlayed: data.tasksPlayed, //Delete
+      loggedIn:  data.loggedIn , //Delete
+      currentLocation:  data.currentLocation, //Delete
+      priority: data.priority  , //Delete
+      waitTime: data.waitTime  , //Delete?
       score:  data.score  ,
-      locationsVisited: data.locationsVisited  ,
+      locationsVisited: data.locationsVisited  , //Delete?
       totalTasks: data.totalTasks ,
-      totalTaskTime: data.totalTaskTime  ,
-      totalWaitTime: data.totalWaitTime
+      totalTaskTime: data.totalTaskTime  , //Delete
+      totalWaitTime: data.totalWaitTime //Delete
      }
    }, function(err, user) {
     if (err) throw err;

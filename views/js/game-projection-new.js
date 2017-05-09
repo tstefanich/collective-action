@@ -135,10 +135,9 @@ socket.on('reload',function(){
   console.log('~+~+~+~ RELOADED PAGE');
 })
 
-var time;
+// var time;
 
-const GAME_LOCATION = 'location1'
-
+// const GAME_LOCATION = 'location1' ///////////IMPORTANT ***** SET GAME LOCATION IN game-projection.hbs
 
 /**********************
 Helper Functions
@@ -158,6 +157,7 @@ var gameProjection = {
      currentTask:null,
      requestedTask: false,
      prepCounter:0,
+     numberOfTimesGetDataHasRun: 0,
      prepTime:3000,
      wait:5000,
      state:'title',
@@ -168,10 +168,10 @@ var gameProjection = {
           // this.getNewTask();
           // this.newGame()
 
-          //socket.on('connect', function(){
-          //     console.log('connected to the server as: ' + socket.id);
-          //});
-//
+          socket.on('connect', function(){
+              console.log('connected to the server as: ' + socket.id);
+          });
+
           //socket.on('disconnect', function(){
           //     console.log('disconnected from the server as: ' + socket.id);
           //});
@@ -201,6 +201,8 @@ var gameProjection = {
 
       self.prepTime = 3000;
       self.prepCounter = 0;
+
+      self.numberOfTimesGetDataHasRun = 0;
      },
 
       checkTimer:function(){
@@ -225,8 +227,14 @@ var gameProjection = {
                       self.checkIfPlayersIsEmptyAndGet();
                       if(self.currentNumberOfConnections != null && self.currentTask != null && self.currentPlayers != null && allTasks.length > 0){
                         self.setStateAndTime('setup-game', 1000);
+                      } else if(self.currentNumberOfConnections <= 1 && self.currentTask != null && self.currentPlayers <= 1 && allTasks.length > 0){
+                        self.setStateAndTime('title', 1000);
+                      } else if(self.numberOfTimesGetDataHasRun > 15) {
+                        self.setStateAndTime('title', 1000);
+                        self.numberOfTimesGetDataHasRun = 0; // Maybe this should be self.reset();
                       } else {
                         self.setStateAndTime('get-number-of-connections-task-players', 100);
+                        self.numberOfTimesGetDataHasRun++;
                       }
                       break;
                   case 'setup-game':
@@ -329,16 +337,6 @@ var gameProjection = {
 
 
      },
-    //  getNewTask:function(){
-    //       var currentTask = allTasks[getRandomInt(0,3)];
-    //       this.wait = currentTask.time;
-    //       $('.currentTask').html(currentTask.task);
-    //       socket.emit('newGame', 'newGame')
-    //
-    //  },
-    //  getPriorityUsers:function(numberUsers,callback){
-    //    socket.emit('getPriorityUsers', numberUsers, callback )
-    //  }
     checkIfNumberOfConnectionsIsEmptyAndGet:function(){
       var self = gameProjection;
       if (self.requestedNumberOfConnections == false){
@@ -347,7 +345,7 @@ var gameProjection = {
       }
     },
     checkNumberOfConnections:function(){
-      socket.emit('getNumberOfUsers', GAME_LOCATION, function(numberOfConnections) { //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
+      socket.emit('getNumberOfUsers', GAME_LOCATION, function(numberOfConnections) {
         console.log(numberOfConnections);
         gameProjection.currentNumberOfConnections = numberOfConnections.length;
       }); // close getNewAndNotifyUsers
@@ -361,7 +359,7 @@ var gameProjection = {
     },
     getPlayers:function(){
       gameProjection.currentTask.location = GAME_LOCATION;
-      socket.emit('getNewAndNotifyUsers', gameProjection.currentTask, function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
+      socket.emit('getNewAndNotifyUsers', gameProjection.currentTask, function(chosenPlayers){
         console.log(chosenPlayers);
         gameProjection.currentPlayers = chosenPlayers;
       }); // close getNewAndNotifyUsers
@@ -415,13 +413,9 @@ var gameProjection = {
             task: task,
             timePrep: timePrep,
             timePlay: timePlay,
-<<<<<<< HEAD
             time: time,
             players: players
-=======
-            players: players,
-            time:time
->>>>>>> origin/master
+
           }
 
           // Make a newly formatted Master List/Array
@@ -435,9 +429,8 @@ var gameProjection = {
 
     },
     scorePoints:function(){
-      socket.emit('scoreAndSavePoints', gameProjection.currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
-        gameProjection.currentPlayers = chosenPlayers;
-      }); // close getNewAndNotifyUsers
+      //not implemented yet
+      socket.emit('scorePoints', {} );
     },
     // newGame:function(){
     //     // if(new Date().getTime() - time >= this.wait){
@@ -494,11 +487,4 @@ $(document).ready(function(){ //somethimes this fires twice for whatever reason.
   gameProjection.draw()
 });
 
-
-$(document).click(function(){ //somethimes this fires twice for whatever reason...
-  //gameProjection.newGame()
-})
-/*******************
-     Draw
-********************/
 

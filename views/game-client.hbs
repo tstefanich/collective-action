@@ -1,4 +1,12 @@
 {{> header-game}}
+
+<script type="text/javascript">
+  /**********************
+  LOCATION SPECIFIC ATTRIBUTES
+  **********************/
+  const GAME_LOCATION = 'location1'
+</script>
+
 <style>
 body, html{
      background:white;
@@ -18,9 +26,11 @@ body, html{
      background:white;
 }
 
+.game, .waiting-room{}
 
 
 </style>
+
 <!--////////////
 Queue/waiting-room Page
 ///////////--->
@@ -33,21 +43,5 @@ Queue/waiting-room Page
      </div>
      <audio class="myTurnAudio" src="assets/audio/myturn.mp3"></audio>
 </div>
-<a class="btn btn-default more-details waiting-room" href="#waiting-room">Login</a>
-
-<!--////////////
-Game/Prompt Page
-///////////--->
-<div class="page game prompt">
-     <!-- Top Nav Bar -->
-     <div class="nav"><div class="close glyphicon glyphicon-menu-left " style="display:none;"></div><div class="title">Logout!</div></div>
-
-     <!-- Content -->
-     <div class="container">
-         Log out This should not be a page but, logout and reload index.hbs
-     </div>
-</div>
-<a class="btn btn-default more-details game" href="#game">Login</a>
-
 
 {{> footer}}

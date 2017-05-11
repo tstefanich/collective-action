@@ -150,13 +150,22 @@ app.get('/game-projection-new', function(req, res, next) {
     });
 });
 
-app.get('/admin-1', function(req, res, next) {
+app.get('/admin', function(req, res, next) {
     database.dbInfo(function(results) {
-        return res.render('admin-1', {
+        return res.render('admin', {
             'users': results
         });
     });
 });
+
+app.get('/database-view', function(req, res, next) {
+    database.dbInfo(function(results) {
+        return res.render('database-view', {
+            'users': results
+        });
+    });
+});
+
 
 
 

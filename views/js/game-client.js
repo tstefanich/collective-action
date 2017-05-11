@@ -43,8 +43,8 @@ store.set('user', fakeData)
 /////////////////////////
 
 //prevent uses phone from sleeping.
-var noSleep = new NoSleep();
-noSleep.enable();
+// var noSleep = new NoSleep();
+// noSleep.enable();
 
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
@@ -81,7 +81,7 @@ socket.on('newGame', function() {
     window.parent.document.title = GAME_LOCATION + '🚫' + socket.id
     // $('.page').css('background-color','red')
     $('.page').css('background-image','url(assets/images/client/newGame.png)')
-
+    $('.bottomHalf').html( '')
 
 })
 
@@ -95,6 +95,8 @@ socket.on('mySoon', function(data) {
       window.parent.document.title = GAME_LOCATION + '⚠️' + socket.id
       // $('.page').css('background-color','yellow')
       $('.page').css('background-image','url(assets/images/client/mySoon.png)')
+      $('.bottomHalf').html( '')
+
 
 });
 
@@ -110,6 +112,8 @@ socket.on('myTurn', function(taskToPlay) {
     window.parent.document.title = GAME_LOCATION + '✅' + socket.id
     // $('.page').css('background-color','green')
     $('.page').css('background-image','url(assets/images/client/myTurn.png)')
+    $('.bottomHalf').html( taskToPlay )
+
 
 
     // trigger sound notification

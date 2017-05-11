@@ -42,6 +42,9 @@ store.set('user', fakeData)
 // End Fake User Data
 /////////////////////////
 
+//prevent uses phone from sleeping.
+var noSleep = new NoSleep();
+noSleep.enable();
 
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 

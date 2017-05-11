@@ -114,12 +114,18 @@ app.get('/', function(req, res, next) {
     });
 });
 
+
+// app.get('/p/:tagId', function(req, res) {
+//   res.send("tagId is set to " + req.params.tagId);
+// });
+
 app.get('/game-client', function(req, res, next) {
-    database.dbInfo(function(results) {
+    // database.dbInfo(function(results) {
         return res.render('game-client', {
-            'users': results,
-            templateName: 'game-client'
-        });
+            // 'users': results,
+            templateName: 'game-client',
+            setLocation: req.query.location
+        // });
     });
 
 
@@ -138,7 +144,8 @@ app.get('/game-projection-new', function(req, res, next) {
     database.dbInfo(function(results) {
         return res.render('game-projection-new', {
             'users': results,
-            templateName: 'game-projection-new'
+            templateName: 'game-projection-new',
+            setLocation: req.query.location
         });
     });
 });
@@ -364,7 +371,7 @@ io.on('connection', function(socket) {
 
     socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
       // io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
-      io.to(currentTask.location).emit('newGame'); //reset only to the players in the room on new game 
+      io.to(currentTask.location).emit('newGame'); //reset only to the players in the room on new game
 
       ////////////////////////////
       // get the users who have waited the longest

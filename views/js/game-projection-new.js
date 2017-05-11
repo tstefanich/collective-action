@@ -149,7 +149,9 @@ function getRandomInt(min, max) {
 }
 
 
+
 var gameProjection = {
+     bodyElement: $('body'),
      currentNumberOfConnections:null,
      requestedNumberOfConnections: false,
      currentPlayers:null,
@@ -174,9 +176,9 @@ var gameProjection = {
      TimePrepForTask: 30000,
      TimeStartTask: 60000,
      TimeEndTask: 7000,
+     TimeEndScore: 7000,
      TimeReset: 250,
   
-
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           time = new Date().getTime();//store the current time
@@ -202,8 +204,28 @@ var gameProjection = {
         slideDownPanel($('.page.slideUp .close'));
         moreDetails($('.page.'+state+' .nav a'));
       }
+      if($('body').hasClass('warning')){
+        $('body').removeClass('warning');
+      }
       self.state = state;
       self.wait = waitTime
+     },
+     removeBodyClassForAnimatedBackground:function(){
+      var self = this;
+      if(self.bodyElement.hasClass('warning')){
+        self.bodyElement.removeClass('warning');
+      }
+     },
+     animateBackgroundForLowTime:function(){
+      var self = this;
+      var prepTime = Math.floor(self.TimePrepForTask/1000 - (self.prepFrameCounter/60));
+      var taskTime = Math.floor(self.TimeStartTask/1000 - (self.taskFrameCounter/60));
+      
+      if(taskTime < 10 && self.state == 'start-task'){
+        self.bodyElement.addClass('warning');
+      } else if(prepTime < 10 && self.state == 'prep-for-task'){
+        self.bodyElement.addClass('warning');
+      }
      },
      reset:function(){
       var self = this;
@@ -255,6 +277,7 @@ var gameProjection = {
                   case 'setup-game':
                       // self.newGame();
                       self.writeTaskToScreen();
+                      $('#sound-ding')[0].play();
                       self.setStateAndTime('invite-to-performance-area', self.TimeInviteToPerformanceArea);
                       break;
                   case 'invite-to-performance-area':
@@ -263,6 +286,7 @@ var gameProjection = {
                         self.setStateAndTime('we-need-more-players', self.TimeWeNeedMorePlayers);
                       } else {
                         self.setStateAndTime('prep-for-task', self.TimePrepForTask);
+                        $('#sound-jingle')[0].play();
                       }
                       //var interval = 0;
                       //self.setStateAndTime('get-players', self.wait);
@@ -277,13 +301,20 @@ var gameProjection = {
                   case 'prep-for-task':
                       // time to get ready
                       console.log(gameProjection.currentPlayers)
-
-                      self.setStateAndTime('start-task',  gameProjection.currentTask.time);
+                      self.setStateAndTime('start-task',  self.TimeStartTask);
+                      self.removeBodyClassForAnimatedBackground();
+                      $('#sound-ding')[0].play();
+                      //self.setStateAndTime('start-task',  gameProjection.currentTask.time);
                       break;
                   case 'start-task':
                       self.setStateAndTime('end-task', self.TimeEndTask);
+                      self.removeBodyClassForAnimatedBackground();
+                      $('#sound-fanfare')[0].play();
                       break;
                   case 'end-task':
+                      self.setStateAndTime('end-score', self.TimeEndScore);
+                      break;
+                  case 'end-score':
                       self.setStateAndTime('reset', self.TimeReset);
                       break;
                   case 'reset':
@@ -333,15 +364,22 @@ var gameProjection = {
             case 'prep-for-task':
                 console.log('prep for task');
                 self.writePrepTimeToScreen();
+                self.animateBackgroundForLowTime();
                 self.checkTimer();
                 break;
             case 'start-task':
                 // time to get ready
                 console.log('start task');
+                self.writeTaskTimeToScreen();
+                self.animateBackgroundForLowTime();
                 self.checkTimer();
                 break;
             case 'end-task':
                 console.log('end task');
+                self.checkTimer();
+                break;
+            case 'end-score':
+                console.log('end score');
                 self.checkTimer();
                 break;
             case 'reset':
@@ -352,6 +390,7 @@ var gameProjection = {
 
 
      },
+      
     checkIfNumberOfConnectionsIsEmptyAndGet:function(){
       var self = gameProjection;
       if (self.requestedNumberOfConnections == false){
@@ -396,8 +435,9 @@ var gameProjection = {
         searchResults = search(allTasks, gameProjection.currentNumberOfConnections,'players')
         //searchResults = allTasks[getRandomInt(0,allTasks.length)];
       }
-      console.log(searchResults);
+      console.log(ameProjection.currentTask.time);
       gameProjection.currentTask = searchResults[getRandomInt(0,searchResults.length)];
+      gameProjection.TimeStartTask = gameProjection.currentTask.time;
     },
     writeTaskToScreen:function(){
       var task = gameProjection.currentTask.task;
@@ -427,6 +467,7 @@ var gameProjection = {
         self.TimePrepForTask = 3000;
         self.TimeStartTask = 5000;
         self.TimeEndTask = 1000;
+        self.TimeEndScore = 1000;
         self.TimeReset = 250;
     },
     convertSpreadsheetToTasksObject:function(json){

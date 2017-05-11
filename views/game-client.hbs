@@ -30,6 +30,14 @@ body, html{
 
 .game, .waiting-room{}
 
+.topHalf, .bottomHalf{
+  height: 50vh;
+  margin-left:10vw;
+  margin-right:10vw;
+  padding-top:10vw;
+
+  color: #1c75ba;
+}
 
 </style>
 
@@ -41,8 +49,12 @@ Queue/waiting-room Page
      <!-- <div class="nav"><div class="close glyphicon glyphicon-menu-left " style="display:none;"></div></div> -->
 
      <!-- Content -->
-     <div class="waitingNext">
+     <div class="topHalf">
+       <!-- invisible buffer -->
      </div>
+     <div class="bottomHalf">
+     </div>
+
      <audio class="myTurnAudio" src="assets/audio/myturn.mp3"></audio>
 </div>
 

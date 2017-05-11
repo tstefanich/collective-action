@@ -370,9 +370,10 @@ $(window).load(function(){
       newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) ;
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
       $('.page.intro .carousel-inner .item img').css('height', newHeight+'px')
-      setTimeout(function(){
-       $('#playGame').click() //for testing
-      },5000)
+
+      // setTimeout(function(){
+      //  $('#playGame').click() //for testing
+      // },5000)
 
       //Parse Locations
       parseLocations(allLocations)

@@ -156,9 +156,9 @@ var gameProjection = {
      requestedCurrentPlayers: false,
      currentTask:null,
      requestedTask: false,
-     prepCounter:0,
+     prepFrameCounter:0,
+     taskFrameCounter:0,
      numberOfTimesGetDataHasRun: 0,
-     prepTime:3000,
      wait:5000,
      state:'title',
      gameStateIndex:0,
@@ -214,8 +214,8 @@ var gameProjection = {
       self.currentTask = null;
       self.requestedTask = false;
 
-      self.prepTime = 3000;
-      self.prepCounter = 0;
+      self.prepFrameCounter = 0;
+      self.taskFrameCounter = 0;
 
       self.numberOfTimesGetDataHasRun = 0;
      },
@@ -405,9 +405,15 @@ var gameProjection = {
     },
     writePrepTimeToScreen:function(){
       var self = this;
-      self.prepCounter++;
-      var prepTime = Math.floor(self.prepTime/1000 - (self.prepCounter/60));
+      self.prepFrameCounter++;
+      var prepTime = Math.floor(self.TimePrepForTask/1000 - (self.prepFrameCounter/60));
       $('.prep-time').html(prepTime);
+    },
+    writeTaskTimeToScreen:function(){
+      var self = this;
+      self.taskFrameCounter++;
+      var taskTime = Math.floor(self.TimeStartTask/1000 - (self.taskFrameCounter/60));
+      $('.task-time').html(taskTime);
     },
     setupDebugTimes:function(){
         var self = this;
@@ -513,7 +519,7 @@ var gameProjection = {
 $(document).ready(function(){ //somethimes this fires twice for whatever reason...
   console.log('load');
   gameProjection.init();
-  gameProjection.setupDebugTimes();
+  //gameProjection.setupDebugTimes();
   gameProjection.draw()
 });
 

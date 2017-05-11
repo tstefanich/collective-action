@@ -162,7 +162,22 @@ var gameProjection = {
      wait:5000,
      state:'title',
      gameStateIndex:0,
-     gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
+
+     // Time Variables
+     TimeTitle: 5000,
+     TimeHighscoresPlayers:5000,
+     TimeHighscoresTeams:5000,
+     TimeGetNumberOfConnectionsTaskPlayers:500,
+     TimeSetupGame:500,
+     TimeInviteToPerformanceArea: 5000,
+     TimeWeNeedMorePlayers: 5000,
+     TimePrepForTask: 30000,
+     TimeStartTask: 60000,
+     TimeEndTask: 7000,
+     TimeReset: 250,
+  
+
+     //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           time = new Date().getTime();//store the current time
           // this.getNewTask();
@@ -213,24 +228,24 @@ var gameProjection = {
                 time = new Date().getTime();//also update the stored time
                 switch (self.state) {
                   case 'title':
-                      self.setStateAndTime('highscores-players', 5000);
+                      self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
                       break;
                   case 'highscores-players':
-                      self.setStateAndTime('highscores-teams', 5000);
+                      self.setStateAndTime('highscores-teams', self.TimeHighscoresTeams);
                       break;
                   case 'highscores-teams':
-                      self.setStateAndTime('get-number-of-connections-task-players', 100);
+                      self.setStateAndTime('get-number-of-connections-task-players', self.TimeGetNumberOfConnectionsTaskPlayers);
                       break;
                   case 'get-number-of-connections-task-players':
                       self.checkIfNumberOfConnectionsIsEmptyAndGet();
                       self.checkIfTaskIsEmptyAndGet();
                       self.checkIfPlayersIsEmptyAndGet();
                       if(self.currentNumberOfConnections != null && self.currentTask != null && self.currentPlayers != null && allTasks.length > 0){
-                        self.setStateAndTime('setup-game', 1000);
+                        self.setStateAndTime('setup-game', self.TimeSetupGame);
                       } else if(self.currentNumberOfConnections <= 1 && self.currentTask != null && self.currentPlayers <= 1 && allTasks.length > 0){
-                        self.setStateAndTime('title', 1000);
+                        self.setStateAndTime('title', self.TimeTitle);
                       } else if(self.numberOfTimesGetDataHasRun > 15) {
-                        self.setStateAndTime('title', 1000);
+                        self.setStateAndTime('title', self.TimeTitle);
                         self.numberOfTimesGetDataHasRun = 0; // Maybe this should be self.reset();
                       } else {
                         self.setStateAndTime('get-number-of-connections-task-players', 100);
@@ -240,14 +255,14 @@ var gameProjection = {
                   case 'setup-game':
                       // self.newGame();
                       self.writeTaskToScreen();
-                      self.setStateAndTime('invite-to-performance-area', 5000);
+                      self.setStateAndTime('invite-to-performance-area', self.TimeInviteToPerformanceArea);
                       break;
                   case 'invite-to-performance-area':
                       //check to change the screen to wait for more players if there are less than 2.
                       if(self.currentNumberOfConnections < 2) {
-                        self.setStateAndTime('we-need-more-players', 3000);
+                        self.setStateAndTime('we-need-more-players', self.TimeWeNeedMorePlayers);
                       } else {
-                        self.setStateAndTime('prep-for-task', 3000);
+                        self.setStateAndTime('prep-for-task', self.TimePrepForTask);
                       }
                       //var interval = 0;
                       //self.setStateAndTime('get-players', self.wait);
@@ -257,7 +272,7 @@ var gameProjection = {
                       //});
                       break;
                   case 'we-need-more-players':
-                      self.setStateAndTime('get-number-of-connections-task-players', 3000);
+                      self.setStateAndTime('get-number-of-connections-task-players', self.TimeGetNumberOfConnectionsTaskPlayers);
                       break;
                   case 'prep-for-task':
                       // time to get ready
@@ -266,15 +281,15 @@ var gameProjection = {
                       self.setStateAndTime('start-task',  gameProjection.currentTask.time);
                       break;
                   case 'start-task':
-                      self.setStateAndTime('end-task', 7000);
+                      self.setStateAndTime('end-task', self.TimeEndTask);
                       break;
                   case 'end-task':
-                      self.setStateAndTime('reset', 100);
+                      self.setStateAndTime('reset', self.TimeReset);
                       break;
                   case 'reset':
                       socket.emit('resetViews', self.currentPlayers)
                       self.reset();
-                      self.setStateAndTime('title', 1000);
+                      self.setStateAndTime('title', self.TimeTitle);
                       break;
                 }
                 //self.state = self.gameStates[self.gameStateIndex % 5];
@@ -394,6 +409,20 @@ var gameProjection = {
       var prepTime = Math.floor(self.prepTime/1000 - (self.prepCounter/60));
       $('.prep-time').html(prepTime);
     },
+    setupDebugTimes:function(){
+        var self = this;
+        self.TimeTitle = 1000;
+        self.TimeHighscoresPlayers = 1000;
+        self.TimeHighscoresTeams = 1000;
+        self.TimeGetNumberOfConnectionsTaskPlayers = 500;
+        self.TimeSetupGame = 500;
+        self.TimeInviteToPerformanceArea = 3000;
+        self.TimeWeNeedMorePlayers = 3000;
+        self.TimePrepForTask = 3000;
+        self.TimeStartTask = 5000;
+        self.TimeEndTask = 1000;
+        self.TimeReset = 250;
+    },
     convertSpreadsheetToTasksObject:function(json){
         //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json
         console.log('parsing Google Spreadsheet');
@@ -484,6 +513,7 @@ var gameProjection = {
 $(document).ready(function(){ //somethimes this fires twice for whatever reason...
   console.log('load');
   gameProjection.init();
+  gameProjection.setupDebugTimes();
   gameProjection.draw()
 });
 

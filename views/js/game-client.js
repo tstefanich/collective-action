@@ -7,32 +7,23 @@
 ///////////////////////////
 
 
-function rand(max) {
-  min = Math.ceil(1);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-var MortalKombat={characters:["Goro","JohnnyCage","Kano","LiuKang","Raiden","Reptile","Scorpion","ShangTsung","SonyaBlade","Sub-Zero","Baraka","Jade","Jax","Kintaro","Kitana","KungLao","Mileena","NoobSaibot","ShaoKahn","Smoke","Chameleon","Cyrax","Ermac","Kabal","Khameleon","Motaro","Nightwolf","Rain","Sektor","Sheeva","Sindel","Stryker","Fujin","QuanChi","Kia","Jataaka","Sareena","Shinnok","Jarek","Kai","Meat","Reiko","Tanya","Blaze","BoRaiCho","Drahmin","Frost","HsuHao","Kenshi","LiMei","Mokap","Moloch","Nitara","Ashrah","Dairou","Darrius","Havik","Hotaru","Kira","Kobra","Monster","Onaga","Shujinko","Daegon","Taven","DarkKahn","CyberSub-Zero","Kratos","Skarlet","Belokk","Hornbuckle","NimbusTerrafaux"],get:function(){var a=this.characters.length-1;return this.characters[Math.floor(Math.random()*a)]}};
+// function rand(max) {
+//   min = Math.ceil(1);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min)) + min;
+// }
+
+var userNames = ['Ben', 'TylerStefanich', 'Sara']
+var emails = ['ben@benmoren.com', 'tyler@tylerstefanich.com', 'sara@sara.com']
+var chooser = Math.floor(Math.random()*3);
 
 var fakeData = {
-  userName: MortalKombat.get(),
-  email: MortalKombat.get() + '@' + MortalKombat.get() + '.com',
+  userName: userNames[chooser],
+  email: emails[chooser],
   avatar: '69.svg', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
   team: 1,
-  // tasksPlayed: [rand(30),rand(30),rand(30)],
-
-  // PING
-  // loggedIn: true,
-  // currentLocation: 'River',
-  // priority: rand(30),
-  // waitTime: rand(1000),
-
-  // METRICS
-  score: 200,
+  score: 0,
   locationsVisited: ['River','Target'], // location + timespent
-  // totalTasks: rand(30), // this may not be needed scores = totalPlays
-  // totalTaskTime: rand(1000),
-  // totalWaitTime: rand(1000),
 };
 
 store.set('user', fakeData)
@@ -103,10 +94,14 @@ socket.on('mySoon', function(data) {
 socket.on('myTurn', function(taskToPlay) {
     //  console.log(data);
 
+    //Add Points to the client side user object.
     var getUser = store.get('user');
-        // getUser.totalTasks++ //these are the same thing...
-        getUser.score++ //these are the same thing...
+        console.log('getUser1', getUser);
+        getUser.score++
+        console.log('getUser2', getUser);
+        socket.emit('scorePoints', getUser)
       store.set('user', getUser)
+
 
     // $('.waitingNext').html( taskToPlay )
     window.parent.document.title = GAME_LOCATION + '✅' + socket.id

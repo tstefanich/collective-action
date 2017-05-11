@@ -23,6 +23,9 @@ function toLower (str) {
     return str.toLowerCase();
 }
 
+function handleError(err){
+  console.error(err)
+}
 
 var database = {
 
@@ -255,6 +258,14 @@ database.saveUser = function (doc){
   });
 }
 
+database.updatePoints = function (searchEmail, newScore){
+  
+  var query = { email: searchEmail };
+  this.Users.findOneAndUpdate(query, { score: newScore }, function(err){
+      if (err) return handleError(err);
+  })
+}
+
 /************************************
 
  DATABASE Delete Functions (mongodb)
@@ -409,23 +420,6 @@ this.Users.aggregate(
       callback(results);
     }
   );
-}
-
-
-
-
-
-database.saveTitle = function (searchTerm, newTitle){
-  this.Users.update(
-    { _id: searchTerm },
-    { $set:
-      {
-        title: newTitle
-      }
-    }, function (err) {
-      if (err) return handleError(err);
-      // updated!
-    });
 }
 
 

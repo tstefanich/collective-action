@@ -365,8 +365,11 @@ io.on('connection', function(socket) {
         callback(users); //send the selected users back to the game-projection
     });
 
-    socket.on('scorePoints', function(players) {
-      //not implemented yet
+    socket.on('scorePoints', function(user) {
+      console.log('scorePoints',user.email);
+      console.log('scorePoints',user.score);
+
+      database.updatePoints(user.email, user.score)
     });
 
     //reset mobile views to 'waiting screen'
@@ -425,10 +428,6 @@ io.on('connection', function(socket) {
             // console.log(element.id);
             socket.to(element.id).emit('myTurn', currentTask.task);
         });
-
-        // if(priorityUsers.length < currentTask){
-        //   returnPriorityUsers = false;
-        // }
 
         callback(returnPriorityUsers) //send the selected users back to the game-projection
 

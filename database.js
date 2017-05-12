@@ -58,30 +58,15 @@ var database = {
 
 
         self.userSchema = mongoose.Schema({
-
-          // STATIC
           //uid: Number, // may not need this, autoIndex is true by default..
           userName: String,
           email: { type: String, set: toLower },
           avatar: String, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
           team: Number,
-          tasksPlayed: Array,
-
-          // PING
-          loggedIn: Boolean,
-          currentLocation: String,
-          priority: Number,
-          waitTime: Number,
-
-          // METRICS
+          // waitTime: Number,
+          // tasksPlayed: Array,
           score: Number,
           locationsVisited: Array, // location + timespent
-          totalTasks: Number, // this may not be needed scores = totalPlays
-          totalTaskTime: Number,
-          totalWaitTime: Number,
-
-          //Aggragate Metrics
-          //logs: String, // may not needed this
         });
 
         // Very Important! Make the title and text parameters "text" indices
@@ -180,62 +165,14 @@ database.checkIfUserExists = function (req,callback)
   })
 }
 
-database.getSortedUsers = function(number, sortBy, callback){
-  // this.Users.aggregate().group({ _id: '$userName',
-  //       userName: { $addToSet: "$userName"  },
-  //       email: { $addToSet: "$email"  },
-  //       avatar: { $addToSet: "$avatar"  },
-  //       team: { $addToSet: "$team"  },
-  //       tasksPlayed: { $addToSet: "$tasksPlayed"  },
-  //       loggedIn: { $addToSet: "$loggedIn"  },
-  //       currentLocation: { $addToSet: "$currentLocation"  },
-  //       priority: { $addToSet: "$priority"  },
-  //       waitTime: { $addToSet: "$waitTime"  },
-  //       score: { $addToSet: "$score"  },
-  //       locationsVisited: { $addToSet: "$locationsVisited"  },
-  //       totalTasks: { $addToSet: "$totalTasks"  },
-  //       totalTaskTime: { $addToSet: "$totalTaskTime"  },
-  //       totalWaitTime: { $addToSet: "$totalWaitTime"  },
-  //     })
-  //     .limit(10)
-  //     .sort('-score')
-  //     .exec(callback)
+database.getSortedUsers = function(limitNum, sortBy, callback){
+  // sortby ex: '-score' to sort score decending
+  this.Users.find({}).sort(sortBy).limit(limitNum).exec(function(err, results) {
+    if (err) return handleError(err);
+    console.log(results);
+    callback(results)
+   });
 
-  this.Users.find({}).where().sort('-score').all(function (posts) {
-    console.log(posts);
-  // do something with the array of posts
-  callback(posts)
-});
-
-  // database.Users.aggregate(
-  //   { $group:
-  //     { _id: '$userName',
-  //      userName: { $addToSet: "$userName"  },
-  //      email: { $addToSet: "$email"  },
-  //      avatar: { $addToSet: "$avatar"  },
-  //      team: { $addToSet: "$team"  },
-  //      tasksPlayed: { $addToSet: "$tasksPlayed"  },
-  //      loggedIn: { $addToSet: "$loggedIn"  },
-  //      currentLocation: { $addToSet: "$currentLocation"  },
-  //      priority: { $addToSet: "$priority"  },
-  //      waitTime: { $addToSet: "$waitTime"  },
-  //      score: { $addToSet: "$score"  },
-  //      locationsVisited: { $addToSet: "$locationsVisited"  },
-  //      totalTasks: { $addToSet: "$totalTasks"  },
-  //      totalTaskTime: { $addToSet: "$totalTaskTime"  },
-  //      totalWaitTime: { $addToSet: "$totalWaitTime"  },
-  //    }
-  // },{$limit: 2},{$sort: {score: 1}},
-  //   function (err, results) {
-  //     if (err) return handleError(err);
-  //    //  console.log(results);
-  //     callback(results);
-  //   }
-  // );
-
-
-
-  // callback(results)
 }
 
 
@@ -327,20 +264,12 @@ database.fakeData = function(){
       email: emails[i],
       avatar: Math.ceil(Math.random()*240) + '.png',
       team: 1,
-      tasksPlayed: [rand(30),rand(30),rand(30)],
-
-      // PING
-      loggedIn: true,
-      currentLocation: 'River',
-      priority: rand(30),
-      waitTime: rand(1000),
+      // tasksPlayed: [rand(30),rand(30),rand(30)],
+      // waitTime: rand(1000),
 
       // METRICS
       score: Math.ceil(Math.random()*200) ,
       locationsVisited: ['River','Target'], // location + timespent
-      totalTasks: rand(30), // this may not be needed scores = totalPlays
-      totalTaskTime: rand(1000),
-      totalWaitTime: rand(1000),
     });
 
     // SAVE USER
@@ -455,16 +384,11 @@ database.updateFields = function(req, callback){
       userName: data.userName,
       avatar: data.avatar,
       team: data.team ,
-      tasksPlayed: data.tasksPlayed, //Delete
-      loggedIn:  data.loggedIn , //Delete
-      currentLocation:  data.currentLocation, //Delete
-      priority: data.priority  , //Delete
-      waitTime: data.waitTime  , //Delete?
+      // tasksPlayed: data.tasksPlayed, //Delete
+      // waitTime: data.waitTime  , //Delete?
       score:  data.score  ,
-      locationsVisited: data.locationsVisited  , //Delete?
-      totalTasks: data.totalTasks ,
-      totalTaskTime: data.totalTaskTime  , //Delete
-      totalWaitTime: data.totalWaitTime //Delete
+      locationsVisited: data.locationsVisited
+
      }
    }, function(err, user) {
     if (err) throw err;
@@ -484,16 +408,10 @@ database.dbInfo = function (callback) {
       email: { $addToSet: "$email"  },
       avatar: { $addToSet: "$avatar"  },
       team: { $addToSet: "$team"  },
-      tasksPlayed: { $addToSet: "$tasksPlayed"  },
-      loggedIn: { $addToSet: "$loggedIn"  },
-      currentLocation: { $addToSet: "$currentLocation"  },
-      priority: { $addToSet: "$priority"  },
-      waitTime: { $addToSet: "$waitTime"  },
+      // tasksPlayed: { $addToSet: "$tasksPlayed"  },
+      // waitTime: { $addToSet: "$waitTime"  },
       score: { $addToSet: "$score"  },
       locationsVisited: { $addToSet: "$locationsVisited"  },
-      totalTasks: { $addToSet: "$totalTasks"  },
-      totalTaskTime: { $addToSet: "$totalTaskTime"  },
-      totalWaitTime: { $addToSet: "$totalWaitTime"  },
      }
    },
    function (err, results) {

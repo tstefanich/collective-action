@@ -1,42 +1,38 @@
-{{> header-admin}}
+{{> header}}
+
+<a href="/" class='btn'>Back to Play</a>
+<h3 class="text-center">Top 10 users by score</h3>
 
     <div class="container">
       <div id="products" class="">
         <div class="item list-group-item title-headers clearfix col-md-4">
-          <div class="col col-xs-0 col-sm-1 col-md-1 hidden-xs">&nbsp;</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">User Name</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">Team</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">Score</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">Current Location</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">Locations Visited</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">Total Tasks</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">Total Task Time</div>
-          <div class="col col-xs-1 col-sm-1 col-md-1">Total Wait Time</div>
-
-
-
-          <div class="col col-xs-0 col-sm-1 col-md-1 hidden-xs">Tasks Played</div>
+          <div class="col col-xs-2 col-sm-1 col-md-1 hidden-xs">&nbsp;</div>
+          <div class="col col-xs-6 col-sm-1 col-md-2">User Name</div>
+          <div class="col col-xs-2 col-sm-1 col-md-4 hidden-xs">Email</div>
+          <div class="col col-xs-2 col-sm-1 col-md-1">Team</div>
+          <div class="col col-xs-2 col-sm-1 col-md-1">Score</div>
+          <!-- <div class="col col-xs-2 col-sm-1 col-md-2">Current Location</div> -->
+          <div class="col col-xs-2 col-sm-0 col-md-2 hidden-xs">Locations Visited</div>
+          <!-- <div class="col col-xs-2 col-sm-1 col-md-2">Total Tasks</div>
+          <div class="col col-xs-2 col-sm-1 col-md-2">Total Task Time</div>
+          <div class="col col-xs-2 col-sm-1 col-md-2">Total Wait Time</div> -->
+          <!-- <div class="col col-xs-0 col-sm-1 col-md-2 hidden-xs">Tasks Played</div> -->
         </div>
+
         {{#each users}}
             <div data-pdf-file="{{pdf}}" class="item item-content list-group-item clearfix col-xs-4 col-sm-4 col-md-4">
-              <a href="/{{title}}/view">
-                <div class="col col-xs-0 col-sm-1 col-md-1 image hidden-xs"><img src="/assets/images/avatars/{{avatar}}"></div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{userName}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{team}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{score}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{currentLocation}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{locationsVisited}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{totalTasks}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{totalTaskTime}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{totalWaitTime}}</div>
-                <div class="col col-xs-1 col-sm-1 col-md-1">{{tasksPlayed}}</div>
+                <div class="col col-xs-2 col-sm-1 col-md-1 image hidden-xs"><img src="/assets/images/avatars/{{avatar}}"></div>
+                <div class="col col-xs-6 col-sm-1 col-md-2">{{userName}}</div>
+                <div class="col col-xs-2 col-sm-1 col-md-4 hidden-xs">{{email}}</div>
+                <div class="col col-xs-2 col-sm-1 col-md-1">{{team}}</div>
+                <div class="col col-xs-2 col-sm-1 col-md-1">{{score}}</div>
+                <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{currentLocation}}</div> -->
+                <div class="col col-xs-0 col-sm-1 col-md-2 hidden-xs">{{locationsVisited}}</div>
+                <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{totalTasks}}</div> -->
+                <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{totalTaskTime}}</div> -->
+                <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{totalWaitTime}}</div> -->
+                <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{tasksPlayed}}</div> -->
 
-
- <!--
-avatar
- loggedIn: { $addToSet: "$loggedIn"  }  -->
-
-              </a>
             </div>
         {{/each}}
       </div>

@@ -282,6 +282,7 @@ var gameProjection = {
                       self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
                       break;
                   case 'highscores-players':
+                      self.writeHighScoresToScreen(10);
                       self.setStateAndTime('highscores-teams', self.TimeHighscoresTeams);
                       break;
                   case 'highscores-teams':
@@ -498,6 +499,11 @@ var gameProjection = {
         self.TimeEndTask = 1000;
         self.TimeEndScore = 1000;
         self.TimeReset = 250;
+    },
+    writeHighScoresToScreen:function(number){
+      socket.emit('getHighScoreUsers',10,function(results){
+        console.log('highScores',results);
+      })
     },
     convertSpreadsheetToTasksObject:function(json){
         //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json

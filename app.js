@@ -389,6 +389,12 @@ io.on('connection', function(socket) {
       database.updatePoints(user.email, user.score)
     });
 
+    socket.on('getHighScoreUsers',function(number,callback){
+      database.getSortedUsers(number,'-score',function(results){
+        callback(results)
+      });
+    });
+
     //reset mobile views to 'waiting screen'
     socket.on('resetViews', function(users){
       console.log('resetViews users',users);

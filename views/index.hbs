@@ -7,7 +7,7 @@ Loading Page
 
 <div class="page loading">
      <div class="text-container" style="position: relative;top: 50%;transform: translateY(-50%);">
-	       <div class="loading-container"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+	       <div class="loading-container"><img class="glyphicon-refresh-animate" src="assets/images/loading-screen/loading_sun.png">
 	            <br>Loading...<span class="this-forces-font-to-load" style="position:absolute;opacity:0;width:0;overflow:hidden"><strong><i>l</i></strong></span>
 	       </div>
 	  </div>
@@ -168,7 +168,7 @@ Homescreen Page
      <!-- Content -->
      <div class="container" style="text-align: center;height:100%;background-image:url('assets/images/avatars/68.svg');background-repeat:no-repeat;background-position:center center; background-size:AUTO; ">
 
-          <a id="playGame" class="project-launcher btn btn-default more-details artwork" data-project-url="game-client" href="#ucla-game" role="button">Play Now!</a>
+          <!--<a id="playGame" class="project-launcher btn btn-default more-details artwork" data-project-url="game-client" href="#ucla-game" role="button">Play Now!</a>-->
 
      </div>
 
@@ -176,7 +176,8 @@ Homescreen Page
      <div class="intro-footer">
           <div class="row sign-up-button-container disable">
                <div class="col-xs-6">
-                    <a class="btn btn-default more-details" style="width:100%;color:grey" href="#warning">Play</a>
+                    <!--<a class="btn btn-default more-details" style="width:100%;color:grey" href="#warning">Play</a>-->
+                    <a class="btn btn-default more-details" style="width:100%;color:grey" href="#playtest-menu">Play</a>
                </div>
                <div class="nav-divider"></div>
                <div class="col-xs-6">
@@ -216,6 +217,27 @@ Menu Page
           <a class="more-details" href="#how-to-play">How to Play</a>
           <a class="more-details" href="#about">About</a>
           <a class="more-details logout" href="#log-out">Log Out</a>
+     </div>
+
+</div>
+
+
+<!--////////////
+Menu For Playtest Page
+///////////--->
+<div class="page playtest-menu">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close "></div><div class="title">Which room are you in?</div></div>
+
+     <!-- Content -->
+     <div class="container" style="padding-top: 50px;">
+      <!--<a class="more-details" href="#map">Locations</a>-->
+          <a class="more-details project-launcher artwork" data-project-url="game-client?location=commons" href="#commons" >Gallery 1</a>
+          <a class="more-details project-launcher artwork" data-project-url="game-client?location=westbank" href="#westbank" >Gallery 2</a>
+          <a class="more-details project-launcher artwork" data-project-url="game-client?location=littleafrica" href="#littleafrica" >Gallery 3</a>
+          <!--<a class="more-details project-launcher artwork" data-project-url="game-client?location=rondo" href="#rondo" >Rondo</a>
+          <a class="more-details project-launcher artwork" data-project-url="game-client?location=littlemekong" href="#littlemekong">Little Mekong</a>
+          <a class="more-details project-launcher artwork" data-project-url="game-client?location=lowertown" href="#lowertown">Lowertown</a>-->
      </div>
 
 </div>

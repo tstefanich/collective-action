@@ -295,6 +295,10 @@ button:focus {
 .page.menu a{
      display:block;border-bottom:2px solid #f15a29;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
 }
+
+.page.playtest-menu a{
+     display:block;border-bottom:2px solid #f15a29;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
+}
 /******************
 
     Navigation Mobile
@@ -669,10 +673,12 @@ Loading page
     left: 0;
     right: 0;
     z-index: 10001;
-    color: #f05a28;
+    color:#0caaff;
     text-align: center;
 }
 .page.loading .glyphicon-refresh-animate {
+
+    width:50px;
     -animation: spin 2s infinite linear;
     -webkit-animation: spin2 2s infinite linear;
     font-size: 32px;

@@ -63,7 +63,7 @@ var database = {
           //uid: Number, // may not need this, autoIndex is true by default..
           userName: String,
           email: { type: String, set: toLower },
-          avatar: Array, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+          avatar: String, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
           team: Number,
           tasksPlayed: Array,
 

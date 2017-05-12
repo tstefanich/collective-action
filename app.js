@@ -159,7 +159,8 @@ app.get('/admin', function(req, res, next) {
 });
 
 app.get('/database-view', function(req, res, next) {
-    database.dbInfo(function(results) {
+    // database.dbInfo(function(results) {
+    database.getSortedUsers(0,0,function(results){
         return res.render('database-view', {
             'users': results
         });

@@ -63,7 +63,7 @@ var database = {
           //uid: Number, // may not need this, autoIndex is true by default..
           userName: String,
           email: { type: String, set: toLower },
-          avatar: Array, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+          avatar: String, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
           team: Number,
           tasksPlayed: Array,
 
@@ -180,18 +180,62 @@ database.checkIfUserExists = function (req,callback)
   })
 }
 
-database.getSortedUsers = function(number, sortBy){
-  this.Users.
-  find({ email: /host/ }).
-  where('name.last').equals('Ghost').
-  where('age').gt(17).lt(66).
-  where('likes').in(['vaporizing', 'talking']).
-  limit(10).
-  sort('-occupation').
-  select('name occupation').
-  exec(callback);
+database.getSortedUsers = function(number, sortBy, callback){
+  // this.Users.aggregate().group({ _id: '$userName',
+  //       userName: { $addToSet: "$userName"  },
+  //       email: { $addToSet: "$email"  },
+  //       avatar: { $addToSet: "$avatar"  },
+  //       team: { $addToSet: "$team"  },
+  //       tasksPlayed: { $addToSet: "$tasksPlayed"  },
+  //       loggedIn: { $addToSet: "$loggedIn"  },
+  //       currentLocation: { $addToSet: "$currentLocation"  },
+  //       priority: { $addToSet: "$priority"  },
+  //       waitTime: { $addToSet: "$waitTime"  },
+  //       score: { $addToSet: "$score"  },
+  //       locationsVisited: { $addToSet: "$locationsVisited"  },
+  //       totalTasks: { $addToSet: "$totalTasks"  },
+  //       totalTaskTime: { $addToSet: "$totalTaskTime"  },
+  //       totalWaitTime: { $addToSet: "$totalWaitTime"  },
+  //     })
+  //     .limit(10)
+  //     .sort('-score')
+  //     .exec(callback)
+
+  this.Users.find({}).where().sort('-score').all(function (posts) {
+    console.log(posts);
+  // do something with the array of posts
+  callback(posts)
+});
+
+  // database.Users.aggregate(
+  //   { $group:
+  //     { _id: '$userName',
+  //      userName: { $addToSet: "$userName"  },
+  //      email: { $addToSet: "$email"  },
+  //      avatar: { $addToSet: "$avatar"  },
+  //      team: { $addToSet: "$team"  },
+  //      tasksPlayed: { $addToSet: "$tasksPlayed"  },
+  //      loggedIn: { $addToSet: "$loggedIn"  },
+  //      currentLocation: { $addToSet: "$currentLocation"  },
+  //      priority: { $addToSet: "$priority"  },
+  //      waitTime: { $addToSet: "$waitTime"  },
+  //      score: { $addToSet: "$score"  },
+  //      locationsVisited: { $addToSet: "$locationsVisited"  },
+  //      totalTasks: { $addToSet: "$totalTasks"  },
+  //      totalTaskTime: { $addToSet: "$totalTaskTime"  },
+  //      totalWaitTime: { $addToSet: "$totalWaitTime"  },
+  //    }
+  // },{$limit: 2},{$sort: {score: 1}},
+  //   function (err, results) {
+  //     if (err) return handleError(err);
+  //    //  console.log(results);
+  //     callback(results);
+  //   }
+  // );
 
 
+
+  // callback(results)
 }
 
 
@@ -292,7 +336,7 @@ database.fakeData = function(){
       waitTime: rand(1000),
 
       // METRICS
-      score: 200,
+      score: Math.ceil(Math.random()*200) ,
       locationsVisited: ['River','Target'], // location + timespent
       totalTasks: rand(30), // this may not be needed scores = totalPlays
       totalTaskTime: rand(1000),

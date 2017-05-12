@@ -3,6 +3,7 @@
   "short_name": "C.A.!",
   "start_url": ".",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#fff",
   "description": "",
   "icons": [{

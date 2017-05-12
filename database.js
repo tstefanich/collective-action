@@ -82,7 +82,7 @@ var database = {
         self.Users = mongoose.model('Users', self.userSchema);
 
         //self.deleteAllUsers();
-        self.fakeData();
+        //self.fakeData();
         //self.updateFields();
         // self.getUsers(self.Users);
         // self.findUser('sara@sara.com')

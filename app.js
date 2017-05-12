@@ -232,6 +232,23 @@ app.post('/check-user', function(req, res) {
     //res.send(req.body);
 });
 
+app.post('/save-user', function(req, res) {
+    //database.restoreFile(req);
+    console.log(req.body)
+    database.saveUser(req, function(err, response) {
+        if (err) {
+            return res.status(422).json({
+                error: err.message
+            });
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+    // This was need for successful callback for ajax
+    // This should probably be in a callback maybe inside the restoreFile request.... maybe....
+    //res.send(req.body);
+});
+
 app.post('/check-email', function(req, res) {
     //database.restoreFile(req);
     console.log(req.body.email)

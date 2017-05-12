@@ -93,12 +93,12 @@ input[type="color"]:focus,
 }
 .btn-default:focus,
 .btn-default.focus {
-  color: #333;
+  color: inherit;
   background-color: #e6e6e6;
   border-color: #8c8c8c;
 }
 .btn-default:hover {
-  color: #333;
+  color: inherit;
   background-color: transparent;
   border-color: transparent;
 }
@@ -118,7 +118,7 @@ input[type="color"]:focus,
 .btn-default:active.focus,
 .btn-default.active.focus,
 .open > .dropdown-toggle.btn-default.focus {
-  color: #333;
+  color: inherit;
   background-color: transparent;
   border-color: transparent;
 }
@@ -701,7 +701,7 @@ Loading page
     background:transparent;
 }
 .btn-default:active {
-    color: #e5e5e5;
+    color: inherit;
     opacity: 1;
     background:transparent;
     text-shadow: 0 0 0 transparent;
@@ -745,14 +745,19 @@ Loading page
 /**** Mobile Touch Fixes****/
 
 .btn:hover {
-    background: white;
-    background-color: white;
     color: #e5e5e5;
 }
 .btn-default:hover {
-    background: white;
-    background-color: white;
     color: #e5e5e5;
+}
+
+.btn:hover {
+    background-color: inherit;
+}
+
+.btn-default:active:hover, .btn-default.active:hover, .open > .dropdown-toggle.btn-default:hover, .btn-default:active:focus, .btn-default.active:focus, .open > .dropdown-toggle.btn-default:focus, .btn-default:active.focus, .btn-default.active.focus, .open > .dropdown-toggle.btn-default.focus{
+
+    color:inherit;
 }
 /*******************************
 

@@ -362,14 +362,33 @@ if (navigator.geolocation) {
       handleLocationError(false, locationWindow, currentPosition);
     }
 
-
-$(window).load(function(){
-      // Message for Window Loaded
+function resizeImages(){
       console.log('window loaded');
       var newHeight = $(window).height();
       newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) ;
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
       $('.page.intro .carousel-inner .item img').css('height', newHeight+'px')
+      $('.regenerate-avatar-image').css('height', newHeight-100+'px')
+      $('.regenerate-avatar-image').css('background-size', 'auto '+newHeight+'px' );
+}
+
+function generateAvatar(){
+    var totalNumberOfAvatars =  75;
+    var r = Math.ceil(Math.random()*totalNumberOfAvatars)
+    $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.png')
+    $('.regenerate-avatar-image').attr('data-avatar-id', r );
+}
+
+
+$(window).resize(function(){
+  resizeImages();
+
+})
+$(window).load(function(){
+      generateAvatar();
+
+      // Message for Window Loaded
+      resizeImages();
 
       // setTimeout(function(){
       //  $('#playGame').click() //for testing
@@ -411,24 +430,23 @@ $(window).load(function(){
      //Fix height problem with sign-up
      $('#carousel-sign-up .carousel-inner .item').height($(document).height());
 
-     // Regenerate Avatar Button
-     $('body').on('touchstart', '.regenerate-avatar-btn', function(e){
-       var totalNumberOfAvatars =  75;
-       var r = Math.ceil(Math.random()*totalNumberOfAvatars)
-       $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.png')
+
+
+
+     $('body').on('touchstart', '.btn', function(e){
+        e.preventDefault()
+       $(this).blur();
      });
 
 
-
-
+     // Regenerate Avatar Button
+     $('body').on('tap', '.regenerate-avatar-btn', function(e){
+      generateAvatar();
+     });
       // Regenerate Avatar Button
      $('body').on('touchstart', '.regenerate-avatar-btn', function(e){
-       var totalNumberOfAvatars =  75;
-       var r = Math.ceil(Math.random()*totalNumberOfAvatars)
-       $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.png')
+       generateAvatar();
      });
-
-
 
 
      // Links to slide additional info
@@ -690,13 +708,32 @@ var signUp = {
      },
      saveToDatabase:function(button){
           //You clicked Save button
+               var userObject = {
+                    userName: $('input.username').val(),
+                    email: $('input.email-address').val().toLowerCase(),
+                    avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+                    team: 'TEAM-TEST',
+                    //tasksPlayed: 'Array',
+                    //maybe WaitTime:
+                    
+                    // METRICS
+                    score: 0,
+                    locationsVisited: [], // not required, but tyler wanted it
+               }
+               store.set('user',userObject);
+                console.log(userObject);
+          $.post("/save-user",userObject, function(data){
+               console.log(data);
+               login.setAvatarPageInfo();
+                 moreDetails(button);
+                //Slide Down Signup page
+                setTimeout(function(){
+                     slideDownPanel($('.page.sign-up .close'));
+                     slideDownPanel($('.page.intro .close'));
+                },500);
+             });
           // Slide up Main menu / Home
-          moreDetails(button);
-          //Slide Down Signup page
-          setTimeout(function(){
-               slideDownPanel($('.page.sign-up .close'));
-               slideDownPanel($('.page.intro .close'));
-          },500);
+        
      },
      eventListeners:function(){
        $('body').on('click tap', '.generate-username-btn', function(e){

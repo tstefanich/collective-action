@@ -181,14 +181,41 @@ database.getSortedUsers = function(limitNum, sortBy, callback){
  DATABASE Save Functions (mongodb)
 
 ************************************/
-
-database.saveUser = function (doc){
+//used for Fake Data
+database.saveFakeUser = function (doc){
 
   doc.save(function (err, doc) {
     if (err) return console.error(err);
     // doc.test(); // maybe run the function if you feel like it
   });
 }
+
+database.saveUser = function (req,callback){
+  var data = new this.Users({
+      userName: req.body.userName,
+      email: req.body.email,
+      avatar: req.body.avatar,
+      team: 1,
+      // tasksPlayed: [rand(30),rand(30),rand(30)],
+      // waitTime: rand(1000),
+
+      // METRICS
+      score: 0 ,
+      locationsVisited: [], // location + timespent
+    });
+
+    // SAVE USER
+
+        
+  data.save(function (err, doc) {
+    return callback(null, 'saved user');
+    if (err) return console.error(err);
+    // doc.test(); // maybe run the function if you feel like it
+  });
+}
+
+  
+
 
 database.updatePoints = function (searchEmail, newScore){
 
@@ -273,7 +300,7 @@ database.fakeData = function(){
     });
 
     // SAVE USER
-    this.saveUser(data, function(){})
+    this.saveFakeUser(data, function(){})
   }
 
 }

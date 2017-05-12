@@ -312,7 +312,7 @@ var gameProjection = {
                   case 'start-task':
                       self.setStateAndTime('end-task', self.TimeEndTask);
                       self.removeBodyClassForAnimatedBackground();
-                      $('#sound-fanfare')[0].play();
+                      $('#sound-cheers')[0].play();
                       break;
                   case 'end-task':
                       self.setStateAndTime('end-score', self.TimeEndScore);

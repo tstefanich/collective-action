@@ -280,9 +280,9 @@ var gameProjection = {
                 switch (self.state) {
                   case 'title':
                       self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
+                      self.writeHighScoresToScreen();
                       break;
                   case 'highscores-players':
-                      self.writeHighScoresToScreen(10);
                       self.setStateAndTime('highscores-teams', self.TimeHighscoresTeams);
                       break;
                   case 'highscores-teams':
@@ -501,7 +501,7 @@ var gameProjection = {
         self.TimeReset = 250;
     },
     writeHighScoresToScreen:function(number){
-      socket.emit('getHighScoreUsers',10,function(results){
+      socket.emit('getHighScoreUsers',function(results){
         console.log('highScores',results);
       })
     },

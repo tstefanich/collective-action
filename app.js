@@ -389,8 +389,8 @@ io.on('connection', function(socket) {
       database.updatePoints(user.email, user.score)
     });
 
-    socket.on('getHighScoreUsers',function(number,callback){
-      database.getSortedUsers(number,'-score',function(results){
+    socket.on('getHighScoreUsers',function(callback){
+      database.getSortedUsers(10,'-score',function(results){
         callback(results)
       });
     });

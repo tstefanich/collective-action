@@ -178,7 +178,7 @@ var gameProjection = {
      TimeEndTask: 7000,
      TimeEndScore: 7000,
      TimeReset: 250,
-  
+
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           time = new Date().getTime();//store the current time
@@ -220,7 +220,7 @@ var gameProjection = {
       var self = this;
       var prepTime = Math.floor(self.TimePrepForTask/1000 - (self.prepFrameCounter/60));
       var taskTime = Math.floor(self.TimeStartTask/1000 - (self.taskFrameCounter/60));
-      
+
       if(taskTime < 10 && self.state == 'start-task'){
         self.bodyElement.addClass('warning');
       } else if(prepTime < 10 && self.state == 'prep-for-task'){
@@ -390,7 +390,7 @@ var gameProjection = {
 
 
      },
-      
+
     checkIfNumberOfConnectionsIsEmptyAndGet:function(){
       var self = gameProjection;
       if (self.requestedNumberOfConnections == false){
@@ -435,7 +435,7 @@ var gameProjection = {
         searchResults = search(allTasks, gameProjection.currentNumberOfConnections,'players')
         //searchResults = allTasks[getRandomInt(0,allTasks.length)];
       }
-      console.log(ameProjection.currentTask.time);
+      // console.log(ameProjection.currentTask.time);
       gameProjection.currentTask = searchResults[getRandomInt(0,searchResults.length)];
       gameProjection.TimeStartTask = gameProjection.currentTask.time;
     },

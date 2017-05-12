@@ -366,9 +366,8 @@ io.on('connection', function(socket) {
     });
 
     socket.on('scorePoints', function(user) {
-      console.log('scorePoints',user.email);
-      console.log('scorePoints',user.score);
-
+      // console.log('scorePoints',user.email);
+      // console.log('scorePoints',user.score);
       database.updatePoints(user.email, user.score)
     });
 

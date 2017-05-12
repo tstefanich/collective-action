@@ -96,9 +96,9 @@ socket.on('myTurn', function(taskToPlay) {
 
     //Add Points to the client side user object.
     var getUser = store.get('user');
-        console.log('getUser1', getUser);
+        // console.log('getUser1', getUser);
         getUser.score++
-        console.log('getUser2', getUser);
+        // console.log('getUser2', getUser);
         socket.emit('scorePoints', getUser)
       store.set('user', getUser)
 

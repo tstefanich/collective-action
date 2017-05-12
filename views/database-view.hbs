@@ -20,7 +20,7 @@
         {{#each users}}
             <div data-pdf-file="{{pdf}}" class="item item-content list-group-item clearfix col-xs-4 col-sm-4 col-md-4">
               <a href="/{{title}}/view">
-                <div class="col col-xs-0 col-sm-1 col-md-1 image hidden-xs"><img src="/done/{{pdf}}/0.png"></div>
+                <div class="col col-xs-0 col-sm-1 col-md-1 image hidden-xs"><img src="/assets/images/avatars/{{avatar}}"></div>
                 <div class="col col-xs-1 col-sm-1 col-md-1">{{userName}}</div>
                 <div class="col col-xs-1 col-sm-1 col-md-1">{{team}}</div>
                 <div class="col col-xs-1 col-sm-1 col-md-1">{{score}}</div>
@@ -32,10 +32,10 @@
                 <div class="col col-xs-1 col-sm-1 col-md-1">{{tasksPlayed}}</div>
 
 
- <!--     
+ <!--
 avatar
  loggedIn: { $addToSet: "$loggedIn"  }  -->
-   
+
               </a>
             </div>
         {{/each}}

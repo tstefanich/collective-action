@@ -180,66 +180,17 @@ database.checkIfUserExists = function (req,callback)
   })
 }
 
+database.getSortedUsers = function(number, sortBy){
+  this.Users.
+  find({ email: /host/ }).
+  where('name.last').equals('Ghost').
+  where('age').gt(17).lt(66).
+  where('likes').in(['vaporizing', 'talking']).
+  limit(10).
+  sort('-occupation').
+  select('name occupation').
+  exec(callback);
 
-
-
-/************************************
-
- DATABASE Getters / Setters
-
-************************************/
-
-/// USERS
-
-//post // login & socket stuff
-database.retrieveUserData = function(email){
-  //return the users object via email lookup
-}
-
-//dont really need this if we are using local storage.
-// //accessible via app.js
-// database.retrieveConnectionTimeStamp = function(email){
-//   //look up a users timestamp by email
-// }
-//
-// //these are not in the schema yet, need to add above.
-// database.updatePriority = function(){
-//
-// }
-//
-// database.updateConnectionTimeStamp = function(){
-//
-// }
-//
-// database.updateTasksPlayed = function(){
-//
-// }
-
-
-// database.findUser = function(req,callback){
-//   // var email = req.body.email;
-//   // var thing = {email : findByEmail}
-//   this.Users.find({email:email}, function (err, user) {
-//
-//     console.log(user);
-//
-//
-//     if(err) console.error(err);
-//   })
-//
-//
-// }
-
-/// LOCATION
-
-
-database.getLocation = function ()
-{
-
-}
-
-database.setLocation = function ()
-{
 
 }
 
@@ -259,7 +210,7 @@ database.saveUser = function (doc){
 }
 
 database.updatePoints = function (searchEmail, newScore){
-  
+
   var query = { email: searchEmail };
   this.Users.findOneAndUpdate(query, { score: newScore }, function(err){
       if (err) return handleError(err);
@@ -330,7 +281,7 @@ database.fakeData = function(){
     var data = new this.Users({
       userName: userNames[i],
       email: emails[i],
-      avatar: [1,2,3,4], // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+      avatar: Math.ceil(Math.random()*240) + '.png',
       team: 1,
       tasksPlayed: [rand(30),rand(30),rand(30)],
 

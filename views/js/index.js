@@ -451,7 +451,7 @@ var login = {
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                         // Break
                         var email = $('input.email-address.login').val();
-                        $.post("http://localhost:8080/get-user",{email: email}, function(data){
+                        $.post("/get-user",{email: email}, function(data){
                              console.log(data);   
                              login.retrieveFromDatabase(data);
                              login.setAvatarPageInfo()
@@ -565,7 +565,7 @@ var signUp = {
      databaseHasEmail:function(){
           //put your cases here
           var email_address = $('input.email-address').val();
-          $.post("http://localhost:8080/check-email",{email: email_address.toLowerCase()}, function(data){
+          $.post("/check-email",{email: email_address.toLowerCase()}, function(data){
                if(data == true){ // Email is in the database already
                     $('#carousel-sign-up .item.email-sign-up').addClass('show-error');
                } else if(data == false){
@@ -581,7 +581,7 @@ var signUp = {
      databaseHasUser:function(){
           //put your cases here
           var user_name = $('input.username').val();
-          $.post("http://localhost:8080/check-user",{userName: user_name}, function(data){
+          $.post("/check-user",{userName: user_name}, function(data){
                console.log(data);
                if(data === 'blank'){ // Email is in the database already
                     //$('#carousel-sign-up .item.username-sign-up').addClass('show-error-profane');

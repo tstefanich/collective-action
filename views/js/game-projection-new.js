@@ -192,10 +192,36 @@ var gameProjection = {
               console.log('connected to the server as: ' + socket.id);
           });
 
+          gameProjection.parseTitleUrlParamater();
           //socket.on('disconnect', function(){
           //     console.log('disconnected from the server as: ' + socket.id);
           //});
 
+     },
+     parseTitleUrlParamater:function(){
+      var title = $('.location-title').text();
+      var titleElement = $('.location-title')
+
+      switch (title) {
+        case 'commons':
+            titleElement.html('Commons');
+            break;
+        case 'westbank':
+            titleElement.html('Westbank');
+            break;
+        case 'littleafrica':
+            titleElement.html('Little Africa');
+            break;
+        case 'rondo':
+            titleElement.html('Rondo');
+            break;
+        case 'littlemekong':
+            titleElement.html('Little Mekong');
+            break;
+        case 'lowertown':
+            titleElement.html('Lowertown');
+            break;
+      }
      },
      changeState:function(string){
       gameProjection.state = string;
@@ -489,11 +515,11 @@ var gameProjection = {
 
           Object
           var tempObject = {
-            task: task,
+            task: task.replace(/^\s+|\s+$/g, ""),
             timePrep: timePrep,
             timePlay: timePlay,
             time: time,
-            players: players
+            players: players.replace(/^\s+|\s+$/g, "")
 
           }
 

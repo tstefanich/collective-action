@@ -812,7 +812,7 @@ function slideDownPanel(link){
                 $iframe.css('opacity','1');
               },250);
 
-            }, 750);
+            }, 550);
 
 
 
@@ -826,7 +826,7 @@ function slideDownPanel(link){
      $this.parent('.nav').parent('.page').removeClass('slideUp');
      setTimeout(function(){
        $this.parent('.nav').parent('.page').css('display','none');
-     }, 750);
+     }, 350);
 
      }
 }

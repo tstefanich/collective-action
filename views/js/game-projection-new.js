@@ -204,13 +204,17 @@ var gameProjection = {
 
       switch (title) {
         case 'commons':
-            titleElement.html('Commons');
+            //titleElement.html('Commons');
+            titleElement.html('Gallery 1');
+
             break;
         case 'westbank':
-            titleElement.html('Westbank');
+            //titleElement.html('Westbank');
+            titleElement.html('Gallery 2');
             break;
         case 'littleafrica':
-            titleElement.html('Little Africa');
+            //titleElement.html('Little Africa');
+            titleElement.html('Gallery 3');
             break;
         case 'rondo':
             titleElement.html('Rondo');
@@ -467,7 +471,7 @@ var gameProjection = {
       }
       // console.log(ameProjection.currentTask.time);
       gameProjection.currentTask = searchResults[getRandomInt(0,searchResults.length)];
-      gameProjection.TimeStartTask = gameProjection.currentTask.time;
+      gameProjection.TimeStartTask = parseInt(gameProjection.currentTask.time);
     },
     writeTaskToScreen:function(){
       var task = gameProjection.currentTask.task;
@@ -516,7 +520,7 @@ var gameProjection = {
           var task = json.feed.entry[i].gsx$prompt.$t;
           var timePrep =  5000;//json.feed.entry[i].gsx$bio.$t;
           var timePlay =  30000;//json.feed.entry[i].gsx$bio.$t;
-          var time = 10000;//json.feed.entry[i].gsx$bio.$t;
+          var time = json.feed.entry[i].gsx$time.$t//10000;//json.feed.entry[i].gsx$bio.$t;
           var players = json.feed.entry[i].gsx$numberofplayers.$t;
 
           Object
@@ -524,7 +528,7 @@ var gameProjection = {
             task: task.replace(/^\s+|\s+$/g, ""),
             timePrep: timePrep,
             timePlay: timePlay,
-            time: time,
+            time: time.replace(/^\s+|\s+$/g, ""),
             players: players.replace(/^\s+|\s+$/g, "")
 
           }

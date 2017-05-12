@@ -13,7 +13,10 @@ function search(array, key, prop){
     prop = (typeof prop === 'undefined') ? 'name' : prop;
     var tempArray = [];
     for (var i=0; i < array.length; i++) {
+        // console.log(array[i][prop]);
         if (array[i][prop] <= key) {
+            tempArray.push(array[i]);
+        } else if(array[i][prop] == 'all'){
             tempArray.push(array[i]);
         }
     }

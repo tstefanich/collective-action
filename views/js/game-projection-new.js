@@ -516,7 +516,7 @@ var gameProjection = {
           var task = json.feed.entry[i].gsx$prompt.$t;
           var timePrep =  5000;//json.feed.entry[i].gsx$bio.$t;
           var timePlay =  30000;//json.feed.entry[i].gsx$bio.$t;
-          var time = 10000;//json.feed.entry[i].gsx$bio.$t;
+          var time = json.feed.entry[i].gsx$time.$t//10000;//json.feed.entry[i].gsx$bio.$t;
           var players = json.feed.entry[i].gsx$numberofplayers.$t;
 
           Object
@@ -524,7 +524,7 @@ var gameProjection = {
             task: task.replace(/^\s+|\s+$/g, ""),
             timePrep: timePrep,
             timePlay: timePlay,
-            time: time,
+            time: time.replace(/^\s+|\s+$/g, ""),
             players: players.replace(/^\s+|\s+$/g, "")
 
           }

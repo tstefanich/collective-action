@@ -541,12 +541,12 @@ var login = {
                     console.log('Input Email Empty');
                }
           });
-          $('.more-details.logout').on('click tap', function(event) {
+          $('.more-details.logout').on('touchstart', function(event) {
                login.logout();
           });
      },
      eventListeners:function(){
-          $('body').on('click tap', '.login-continue-btn', function(e){
+          $('body').on('touchstart', '.login-continue-btn', function(e){
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                         // Break
@@ -746,7 +746,7 @@ var signUp = {
         
      },
      eventListeners:function(){
-       $('body').on('click tap', '.generate-username-btn', function(e){
+       $('body').on('touchstart', '.generate-username-btn', function(e){
          $('.form-control.username').val(generateUsername());
          if($.trim($('.form-control.username').val()) != ''){
               signUp.usernameTextFieldIsFilled = true;
@@ -759,7 +759,7 @@ var signUp = {
          }
        });
 
-          $('body').on('click tap', '.sign-up-continue-btn', function(e){
+          $('body').on('touchstart', '.sign-up-continue-btn', function(e){
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                          signUp.databaseHasEmail();
@@ -784,7 +784,7 @@ var signUp = {
                }
           });
 
-          $('body').on('click tap', '.sign-up-back-btn', function (e) {
+          $('body').on('touchstart', '.sign-up-back-btn', function (e) {
             // do something…
             switch(true){
                  case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):

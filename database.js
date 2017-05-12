@@ -82,7 +82,11 @@ var database = {
         self.Users = mongoose.model('Users', self.userSchema);
 
         //self.deleteAllUsers();
+<<<<<<< HEAD
         self.fakeData();
+=======
+        // self.fakeData();
+>>>>>>> origin/master
         //self.updateFields();
         // self.getUsers(self.Users);
         // self.findUser('sara@sara.com')
@@ -206,7 +210,7 @@ database.saveUser = function (req,callback){
 
     // SAVE USER
 
-        
+
   data.save(function (err, doc) {
     return callback(null, 'saved user');
     if (err) return console.error(err);
@@ -214,7 +218,7 @@ database.saveUser = function (req,callback){
   });
 }
 
-  
+
 
 
 database.updatePoints = function (searchEmail, newScore){

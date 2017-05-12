@@ -204,13 +204,17 @@ var gameProjection = {
 
       switch (title) {
         case 'commons':
-            titleElement.html('Commons');
+            //titleElement.html('Commons');
+            titleElement.html('Gallery 1');
+
             break;
         case 'westbank':
-            titleElement.html('Westbank');
+            //titleElement.html('Westbank');
+            titleElement.html('Gallery 2');
             break;
         case 'littleafrica':
-            titleElement.html('Little Africa');
+            //titleElement.html('Little Africa');
+            titleElement.html('Gallery 3');
             break;
         case 'rondo':
             titleElement.html('Rondo');
@@ -467,7 +471,7 @@ var gameProjection = {
       }
       // console.log(ameProjection.currentTask.time);
       gameProjection.currentTask = searchResults[getRandomInt(0,searchResults.length)];
-      gameProjection.TimeStartTask = gameProjection.currentTask.time;
+      gameProjection.TimeStartTask = parseInt(gameProjection.currentTask.time);
     },
     writeTaskToScreen:function(){
       var task = gameProjection.currentTask.task;

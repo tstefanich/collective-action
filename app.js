@@ -391,6 +391,7 @@ io.on('connection', function(socket) {
 
     socket.on('getHighScoreUsers',function(callback){
       database.getSortedUsers(10,'-score',function(results){
+        console.log('highscores',results);
         callback(results)
       });
     });

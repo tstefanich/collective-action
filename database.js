@@ -82,11 +82,8 @@ var database = {
         self.Users = mongoose.model('Users', self.userSchema);
 
         //self.deleteAllUsers();
-<<<<<<< HEAD
-        self.fakeData();
-=======
-        // self.fakeData();
->>>>>>> origin/master
+        //self.fakeData();
+
         //self.updateFields();
         // self.getUsers(self.Users);
         // self.findUser('sara@sara.com')

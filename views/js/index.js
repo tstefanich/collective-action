@@ -376,7 +376,7 @@ $(window).load(function(){
       // },5000)
 
       //Parse Locations
-      parseLocations(allLocations)
+      parseLocations(allLocations);
 
       // Initialize Google Maps
       initMap();
@@ -395,6 +395,88 @@ $(window).load(function(){
           $(this).remove();
         });
       });
+
+
+
+
+
+
+
+
+
+
+           //Fix height problem with intro
+     $('#carousel-example-generic').height($(document).height()-$('.page.intro .intro-footer').height());
+
+     //Fix height problem with sign-up
+     $('#carousel-sign-up .carousel-inner .item').height($(document).height());
+
+     // Regenerate Avatar Button
+     $('body').on('touchstart', '.regenerate-avatar-btn', function(e){
+       var totalNumberOfAvatars =  75;
+       var r = Math.ceil(Math.random()*totalNumberOfAvatars)
+       $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.png')
+     });
+
+
+
+
+      // Regenerate Avatar Button
+     $('body').on('touchstart', '.regenerate-avatar-btn', function(e){
+       var totalNumberOfAvatars =  75;
+       var r = Math.ceil(Math.random()*totalNumberOfAvatars)
+       $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.png')
+     });
+
+
+
+
+     // Links to slide additional info
+     $('body').on('touchstart', '.more-details', function(e){
+        console.log('click')
+        moreDetails($(this));
+     });
+
+      $('body').on('tap', '.more-details', function(e){
+        console.log('click')
+        moreDetails($(this));
+     });
+
+     // Close Panels
+     $('body').on('touchstart', '.close', function(e){
+        e.stopPropagation();
+        console.log('clicked close');
+        slideDownPanel($(this));
+     });
+
+
+      $('body').on('tap', '.close', function(e){
+        e.stopPropagation();
+        console.log('tapped close');
+        slideDownPanel($(this));
+     });
+
+
+     //**********/
+     /*  Login  */
+     /***********/
+     login.init();
+     login.checkIfLoggedIn();
+     //**********/
+     /* Sign up */
+     /***********/
+     signUp.init();
+
+     // Fixes problem where button stays in active styles when pressed
+     $('.btn').mouseup(function(e){
+          // Removes focus of the button.
+          $(this).blur();
+     });
+
+     $('.btn-default').mouseup(function(e){
+          // Removes focus of the button.
+          $(this).blur();
+     });
 
 });
 
@@ -681,51 +763,7 @@ var signUp = {
 
 $(document).ready(function(){
 
-     //Fix height problem with intro
-     $('#carousel-example-generic').height($(document).height()-$('.page.intro .intro-footer').height());
 
-     //Fix height problem with sign-up
-     $('#carousel-sign-up .carousel-inner .item').height($(document).height());
-
-     // Regenerate Avatar Button
-     $('body').on('click tap', '.regenerate-avatar-btn', function(e){
-       var totalNumberOfAvatars =  75;
-       var r = Math.ceil(Math.random()*totalNumberOfAvatars)
-       $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.svg')
-     });
-
-     // Links to slide additional info
-     $('body').on('click tap', '.more-details', function(e){
-        console.log('click')
-        moreDetails($(this));
-     });
-
-     // Close Panels
-     $('body').on('click tap', '.close', function(e){
-        slideDownPanel($(this));
-     });
-
-
-     //**********/
-     /*  Login  */
-     /***********/
-     login.init();
-     login.checkIfLoggedIn();
-     //**********/
-     /* Sign up */
-     /***********/
-     signUp.init();
-
-     // Fixes problem where button stays in active styles when pressed
-     $('.btn').mouseup(function(e){
-          // Removes focus of the button.
-          $(this).blur();
-     });
-
-     $('.btn-default').mouseup(function(e){
-          // Removes focus of the button.
-          $(this).blur();
-     });
 
 
 });
@@ -831,7 +869,7 @@ function slideDownPanel(link){
      $this.parent('.nav').parent('.page').removeClass('slideUp');
      setTimeout(function(){
        $this.parent('.nav').parent('.page').css('display','none');
-     }, 350);
+     }, 650);
 
      }
 }

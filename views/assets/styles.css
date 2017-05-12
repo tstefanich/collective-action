@@ -255,7 +255,7 @@ button:focus {
     display: inline-block;
     width: 100%;
     position: absolute;
-    //top:5px;
+    /*top:5px;*/
     right: 0px;
 }
 .navbar-nav li.menu-item-16358.expanded form input {
@@ -265,7 +265,7 @@ button:focus {
     border: none;
     color: black;
     background-color: transparent;
-    //top: -3px;
+    /*top: -3px;*/
     font-family: 'SpaceMono-Bold', monospace, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -354,8 +354,8 @@ button:focus {
     border: 1px solid #f1f1f1;
     margin: 0 auto;
     position: relative;
-    //top: 50%;
-    //transform: translateY(-50%);
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
     text-align: center;
     display: block;
 }
@@ -414,7 +414,7 @@ button:focus {
     padding-top: 15px;
 }
 .item.list-group-item img {
-    //float:left;
+    /*float:left;*/
 }
 #list {
     padding-left: 0;
@@ -534,11 +534,10 @@ Global page styling
 
 .page .nav {
     height: 50px;
-    background-image: url(https://i.stack.imgur.com/9GmrL.jpg);
+    /*background-image: url(https://i.stack.imgur.com/9GmrL.jpg);*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    position: relative;
     background: white;
     color: black;
     margin-bottom: 10px;
@@ -546,7 +545,7 @@ Global page styling
     left: 15px;
     right: 15px;
     text-align: center;
-    position: fixed;
+    position: absolute;
     z-index: 99;
 }
 .page .nav .close {
@@ -971,10 +970,10 @@ Slide Panel CSS
 *********************************/
 
 .project-slide-panel {
-    //display: none;
+    /*display: none;*/
     isolation: isolate;
     background-color: white;
-    background-image: url(https://i.stack.imgur.com/9GmrL.jpg);
+    /*background-image: url(https://i.stack.imgur.com/9GmrL.jpg);*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -1045,7 +1044,7 @@ h2.project-title {
 }
 .project-slide-panel .nav {
     height: 50px;
-    background-image: url(https://i.stack.imgur.com/9GmrL.jpg);
+    /*background-image: url(https://i.stack.imgur.com/9GmrL.jpg);*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -1099,8 +1098,8 @@ h2.project-title {
 .iframe.project-slide-panel {
     width: 100%;
     border: 0;
-    background: black;
-    z-index: 999999;
+    background: white;
+    z-index: 99999;
 }
 .artwork.close {
     position: fixed;

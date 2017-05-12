@@ -783,11 +783,11 @@ Intro page
     bottom: 8px;
 }
 .intro-header {
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     right: 15px;
     left: 15px;
-    border-bottom:2px solid #f15a29;
+    border-bottom:0px solid #f15a29;
 
 }
 /*******************************

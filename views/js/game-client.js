@@ -13,20 +13,20 @@
 //   return Math.floor(Math.random() * (max - min)) + min;
 // }
 
-var userNames = ['Ben', 'TylerStefanich', 'Sara']
-var emails = ['ben@benmoren.com', 'tyler@tylerstefanich.com', 'sara@sara.com']
-var chooser = Math.floor(Math.random()*3);
+//var userNames = ['Ben', 'TylerStefanich', 'Sara']
+//var emails = ['ben@benmoren.com', 'tyler@tylerstefanich.com', 'sara@sara.com']
+//var chooser = Math.floor(Math.random()*3);
+//
+//var fakeData = {
+//  userName: userNames[chooser],
+//  email: emails[chooser],
+//  avatar: '69.svg', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+//  team: 1,
+//  score: 0,
+//  locationsVisited: ['River','Target'], // location + timespent
+//};
 
-var fakeData = {
-  userName: userNames[chooser],
-  email: emails[chooser],
-  avatar: '69.svg', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-  team: 1,
-  score: 0,
-  locationsVisited: ['River','Target'], // location + timespent
-};
-
-store.set('user', fakeData)
+//store.set('user', fakeData);
 
 
 //////////////////////////

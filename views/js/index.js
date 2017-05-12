@@ -553,8 +553,21 @@ var login = {
                         var email = $('input.email-address.login').val();
                         $.post("/get-user",{email: email}, function(data){
                              console.log(data);   
-                             login.retrieveFromDatabase(data);
-                             login.setAvatarPageInfo()
+                             if(data){ // Email is in the database already
+
+                                  console.log('you have a login');
+                                  login.retrieveFromDatabase(data);
+                                  login.setAvatarPageInfo()
+                                  setTimeout(function(){
+                                       slideDownPanel($('.page.login .close'));
+                                       slideDownPanel($('.page.intro .close'));
+                                  },500);
+                             } else {
+                                  $('.page.login').addClass('show-error');
+                                  console.log('there is no email with the name');
+
+                             }
+
                         });
                         //login.retrieveFromDatabase();
                         break;
@@ -566,6 +579,7 @@ var login = {
       $('.avatar-image').css('background-image','url(assets/images/avatars/'+user.avatar+'');
      },
      retrieveFromDatabase:function(data){
+          console.log(data)
           store.set('user',
                {
                     userName: data.userName,
@@ -580,10 +594,6 @@ var login = {
                     locationsVisited: data.locationsVisited, // not required, but tyler wanted it
                }
           );
-          setTimeout(function(){
-               slideDownPanel($('.page.login .close'));
-               slideDownPanel($('.page.intro .close'));
-          },500);
 
      },
      logout:function(){
@@ -723,8 +733,8 @@ var signUp = {
                store.set('user',userObject);
                 console.log(userObject);
           $.post("/save-user",userObject, function(data){
-               console.log(data);
-               login.setAvatarPageInfo();
+                 console.log(data);
+                 login.setAvatarPageInfo();
                  moreDetails(button);
                 //Slide Down Signup page
                 setTimeout(function(){

@@ -725,6 +725,8 @@ Loading page
      opacity: .5;
      pointer-events: none;
 }
+.page.login .alert{display:none;margin-top:16px;}
+.page.login.show-error .alert{display:block;}
 
 .login-in-button-container.disable .btn.btn-default.login-continue-btn.carousel-login-btn {
      opacity: .5;

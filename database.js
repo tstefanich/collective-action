@@ -39,7 +39,7 @@ var database = {
 
       mongoose.connect('mongodb://localhost/test',function(){
         /* Drop the DB at start to clear for testing, was getting flooded with fake data and I couldnt find where it was getting logged out... */
-        mongoose.connection.db.dropDatabase();
+        //mongoose.connection.db.dropDatabase();
       });
 
       console.log("connecting to database...");
@@ -82,7 +82,7 @@ var database = {
         self.Users = mongoose.model('Users', self.userSchema);
 
         //self.deleteAllUsers();
-        //self.fakeData();
+        self.fakeData();
         //self.updateFields();
         // self.getUsers(self.Users);
         // self.findUser('sara@sara.com')

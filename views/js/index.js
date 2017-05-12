@@ -381,6 +381,7 @@ $(window).load(function(){
       // Initialize Google Maps
       initMap();
 
+      // Check if you are logged in and set avatar info page
       // Check cookie is set for first visit and change
       // animation based on that.
       //checkAndSetCookieForMenu();
@@ -422,6 +423,7 @@ var login = {
           if(store.get('user')){
                slideDownPanel($('.page.login .close'));
                slideDownPanel($('.page.intro .close'));
+               login.setAvatarPageInfo();
           } else {
 
           }
@@ -447,32 +449,35 @@ var login = {
           $('body').on('click tap', '.login-continue-btn', function(e){
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
-                         // Break
-                         login.retrieveFromDatabase();
-                         break;
+                        // Break
+                        var email = $('input.email-address.login').val();
+                        $.post("http://localhost:8080/get-user",{email: email}, function(data){
+                             console.log(data);   
+                             login.retrieveFromDatabase(data);
+                             login.setAvatarPageInfo()
+                        });
+                        //login.retrieveFromDatabase();
+                        break;
                }
           });
      },
-     retrieveFromDatabase:function(button){
+     setAvatarPageInfo:function(){
+      var user = store.get('user');
+      $('.avatar-image').css('background-image','url(assets/images/avatars/'+user.avatar+'');
+     },
+     retrieveFromDatabase:function(data){
           store.set('user',
                {
-                    userName:'Marcus',
-                    email: 'email',
-                    avatar: 'Array', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: 'Number',
-                    tasksPlayed: 'Array',
-
-                    // PING
-                    loggedIn: 'Boolean',
-                    currentLocation: 'String',
-
+                    userName: data.userName,
+                    email: data.email,
+                    avatar: data.avatar, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
+                    team: 'TEAM-TEST',
+                    //tasksPlayed: 'Array',
+                    //maybe WaitTime:
+                    
                     // METRICS
-                    score: 'Number',
-                    locationsVisited: 'Array', // location + timespent
-                    totalTasks: 'Number', // this may not be needed scores = totalPlays
-                    totalTaskTime: 'Number',
-                    totalWaitTime: 'Number',
-                    priority: 1, // 1-5, lower is lower
+                    score: data.score,
+                    locationsVisited: data.locationsVisited, // not required, but tyler wanted it
                }
           );
           setTimeout(function(){

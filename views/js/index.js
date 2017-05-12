@@ -389,8 +389,8 @@ $(window).load(function(){
       //checkAndSetCookieForVisitedArtwork();
 
       // Fade out Loading Screen with a delay of 4 seconds
-      $('.loading-container').delay(4000).velocity({opacity: 0},1000,function(){
-        $('.page.loading').delay(500).velocity({opacity: 0},1000,function(){
+      $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
+        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
           $(this).remove();
         });
       });

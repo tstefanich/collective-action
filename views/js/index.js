@@ -373,7 +373,7 @@ function resizeImages(){
 }
 
 function generateAvatar(){
-    var totalNumberOfAvatars =  75;
+    var totalNumberOfAvatars = 294;
     var r = Math.ceil(Math.random()*totalNumberOfAvatars)
     $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.png')
     $('.regenerate-avatar-image').attr('data-avatar-id', r );
@@ -550,7 +550,7 @@ var login = {
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                         // Break
-                        var email = $('input.email-address.login').val();
+                        var email = $('input.email-address.login').val().trim();
                         $.post("/get-user",{email: email}, function(data){
                              console.log(data);   
                              if(data){ // Email is in the database already
@@ -674,7 +674,7 @@ var signUp = {
      },
      databaseHasEmail:function(){
           //put your cases here
-          var email_address = $('input.email-address').val();
+          var email_address = $.trim($('input.email-address').val());
           $.post("/check-email",{email: email_address.toLowerCase()}, function(data){
                if(data == true){ // Email is in the database already
                     $('#carousel-sign-up .item.email-sign-up').addClass('show-error');
@@ -690,7 +690,7 @@ var signUp = {
      },
      databaseHasUser:function(){
           //put your cases here
-          var user_name = $('input.username').val();
+          var user_name = $.trim($('input.username').val());
           $.post("/check-user",{userName: user_name}, function(data){
                console.log(data);
                if(data === 'blank'){ // Email is in the database already
@@ -719,8 +719,8 @@ var signUp = {
      saveToDatabase:function(button){
           //You clicked Save button
                var userObject = {
-                    userName: $('input.username').val(),
-                    email: $('input.email-address').val().toLowerCase(),
+                    userName: $.trim($('input.username').val()),
+                    email: $.trim($('input.email-address').val().toLowerCase()),
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
                     team: 'TEAM-TEST',
                     //tasksPlayed: 'Array',

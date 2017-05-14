@@ -130,7 +130,7 @@ function slideDownPanel(link){
 /**********************
 Globals
 **********************/
-var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
 //reload the view when the app boots up & this page connects
 socket.on('reload',function(){
@@ -302,6 +302,7 @@ var gameProjection = {
                         self.setStateAndTime('title', self.TimeTitle);
                       } else if(self.numberOfTimesGetDataHasRun > 15) {
                         self.setStateAndTime('title', self.TimeTitle);
+                        self.reset();
                         self.numberOfTimesGetDataHasRun = 0; // Maybe this should be self.reset();
                       } else {
                         self.setStateAndTime('get-number-of-connections-task-players', 100);
@@ -608,5 +609,3 @@ $(document).ready(function(){ //somethimes this fires twice for whatever reason.
   //gameProjection.setupDebugTimes();
   gameProjection.draw()
 });
-
-

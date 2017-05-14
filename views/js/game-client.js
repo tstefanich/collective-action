@@ -37,7 +37,7 @@
 // var noSleep = new NoSleep();
 // noSleep.enable();
 
-var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
 function currentUserInfo() {
     var ui = {

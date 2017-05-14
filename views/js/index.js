@@ -451,13 +451,20 @@ $(window).load(function(){
 
      // Links to slide additional info
      $('body').on('touchstart', '.more-details', function(e){
-        console.log('click')
+          console.log($(this).hasClass('logout'))
+                 if($(this).hasClass('logout')){
+                   login.logout();
+                 }
         moreDetails($(this));
      });
 
       $('body').on('tap', '.more-details', function(e){
         console.log('click')
+        if($(this).hasClass('logout')){
+          login.logout();
+        }
         moreDetails($(this));
+
      });
 
      // Close Panels
@@ -524,11 +531,12 @@ var login = {
                slideDownPanel($('.page.login .close'));
                slideDownPanel($('.page.intro .close'));
                login.setAvatarPageInfo();
+               console.log('logged in');
           } else {
 
           }
      },
-     checkIfFieldsAreFilled(){
+     checkIfFieldsAreFilled:function(){
           $('.form-control.email-address.login').on('keyup blur', function(event) {
                if($.trim($(this).val()) != ''){
                     login.emailTextFieldIsFilled = true;
@@ -541,7 +549,7 @@ var login = {
                     console.log('Input Email Empty');
                }
           });
-          $('.more-details.logout').on('touchstart', function(event) {
+          $('.more-details.logout').on('click touchstart', function(event) {
                login.logout();
           });
      },
@@ -550,9 +558,9 @@ var login = {
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                         // Break
-                        var email = $('input.email-address.login').val().trim();
+                        var email = $('input.email-address.login').val();
                         $.post("/get-user",{email: email}, function(data){
-                             console.log(data);   
+                             console.log(data);
                              if(data){ // Email is in the database already
 
                                   console.log('you have a login');
@@ -576,7 +584,10 @@ var login = {
      },
      setAvatarPageInfo:function(){
       var user = store.get('user');
-      $('.avatar-image').css('background-image','url(assets/images/avatars/'+user.avatar+'');
+      console.log('url(assets/images/avatars/'+user.avatar+'');
+      $('.avatar-image').css('background-image','url(assets/images/avatars/'+user.avatar+')');
+      $("body").addClass("dummyClass").removeClass("dummyClass");
+
      },
      retrieveFromDatabase:function(data){
           console.log(data)
@@ -588,7 +599,7 @@ var login = {
                     team: 'TEAM-TEST',
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
-                    
+
                     // METRICS
                     score: data.score,
                     locationsVisited: data.locationsVisited, // not required, but tyler wanted it
@@ -598,7 +609,8 @@ var login = {
      },
      logout:function(){
           store.clearAll();
-          location.reload();
+          window.location.replace('http://joinca.info');
+          console.log('madeit');
      },
 }
 /*************************
@@ -635,7 +647,7 @@ var signUp = {
      disableContinueButton:function(){
           $('.sign-up-button-container').addClass('disable')
      },
-     validateEmail(mail)
+     validateEmail:function(mail)
      {
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
        {
@@ -644,7 +656,7 @@ var signUp = {
          //alert("You have entered an invalid email address!")
          return (false)
      },
-     checkIfFieldsAreFilled(){
+     checkIfFieldsAreFilled:function(){
           $('.form-control.email-address').on('keyup blur', function(event) {
                var emailText = signUp.validateEmail($.trim($(this).val()))
                if(emailText){
@@ -674,7 +686,7 @@ var signUp = {
      },
      databaseHasEmail:function(){
           //put your cases here
-          var email_address = $.trim($('input.email-address').val());
+          var email_address = $('input.email-address').val();
           $.post("/check-email",{email: email_address.toLowerCase()}, function(data){
                if(data == true){ // Email is in the database already
                     $('#carousel-sign-up .item.email-sign-up').addClass('show-error');
@@ -690,7 +702,7 @@ var signUp = {
      },
      databaseHasUser:function(){
           //put your cases here
-          var user_name = $.trim($('input.username').val());
+          var user_name = $('input.username').val();
           $.post("/check-user",{userName: user_name}, function(data){
                console.log(data);
                if(data === 'blank'){ // Email is in the database already
@@ -719,13 +731,13 @@ var signUp = {
      saveToDatabase:function(button){
           //You clicked Save button
                var userObject = {
-                    userName: $.trim($('input.username').val()),
-                    email: $.trim($('input.email-address').val().toLowerCase()),
+                    userName: $('input.username').val(),
+                    email: $('input.email-address').val().toLowerCase(),
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
                     team: 'TEAM-TEST',
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
-                    
+
                     // METRICS
                     score: 0,
                     locationsVisited: [], // not required, but tyler wanted it
@@ -743,7 +755,7 @@ var signUp = {
                 },500);
              });
           // Slide up Main menu / Home
-        
+
      },
      eventListeners:function(){
        $('body').on('touchstart', '.generate-username-btn', function(e){
@@ -993,7 +1005,7 @@ function updateMarkerDistances(currentPos) {
               allMarkers[i].timer = Date.now(); // Save the current time to restart the timer!
             }
       } else {
-      	allMarkers[i].insideFence = false;
+        allMarkers[i].insideFence = false;
           $slug.addClass('outside-fence');
           $slug.removeClass('inside-fence');
       }

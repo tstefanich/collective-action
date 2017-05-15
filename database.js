@@ -82,7 +82,7 @@ var database = {
         self.Users = mongoose.model('Users', self.userSchema);
 
         //self.deleteAllUsers();
-        //self.fakeData();
+        // self.fakeData();
 
         //self.updateFields();
         // self.getUsers(self.Users);
@@ -176,6 +176,46 @@ database.getSortedUsers = function(limitNum, sortBy, callback){
 
 }
 
+
+/* THIS NEEDS STRESS TESTING! */
+database.calculateTeamScores = function(callback){
+  var scores = {
+    'team1': 0,
+    'team2': 0,
+    'team3': 0,
+    'team4': 0,
+  }
+
+  database.calculateSingleTeamScore(1,function(score){
+    scores.team1 = score
+    database.calculateSingleTeamScore(2,function(score){
+      scores.team2 = score
+      database.calculateSingleTeamScore(3,function(score){
+        scores.team3 = score
+        database.calculateSingleTeamScore(4,function(score){
+          scores.team4 = score
+            // console.log(scores);
+            callback(scores)
+        })
+      })
+    })
+  })
+
+}
+
+database.calculateSingleTeamScore = function(teamNumber,callback){
+  var score  = 0;
+  this.Users.find({'team':teamNumber}).exec(function(err, results) {
+    if (err) return console.error(err);
+    results.forEach(function(result){
+      score += result.score; //add this users score to the total
+    })
+    // console.log(scores);
+    // console.log('teamScore',results);
+    callback(score)
+  })
+
+}
 
 /************************************
 
@@ -291,7 +331,7 @@ database.fakeData = function(){
       userName: userNames[i],
       email: emails[i],
       avatar: Math.ceil(Math.random()*240) + '.png',
-      team: 1,
+      team: Math.ceil(Math.random()*4),
       // tasksPlayed: [rand(30),rand(30),rand(30)],
       // waitTime: rand(1000),
 

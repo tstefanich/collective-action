@@ -130,7 +130,8 @@ function slideDownPanel(link){
 /**********************
 Globals
 **********************/
-var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+// var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO LOCALHOST FOR LOCAL DEV!
 
 //reload the view when the app boots up & this page connects
 socket.on('reload',function(){
@@ -288,6 +289,7 @@ var gameProjection = {
                       break;
                   case 'highscores-players':
                       self.setStateAndTime('highscores-teams', self.TimeHighscoresTeams);
+                      self.writeTeamScoresToScreen()
                       break;
                   case 'highscores-teams':
                       self.setStateAndTime('get-number-of-connections-task-players', self.TimeGetNumberOfConnectionsTaskPlayers);
@@ -505,7 +507,7 @@ var gameProjection = {
         self.TimeEndScore = 1000;
         self.TimeReset = 250;
     },
-    writeHighScoresToScreen:function(number){
+    writeHighScoresToScreen:function(){
       socket.emit('getHighScoreUsers',function(results){
         // console.log('highScores',results);
         var appendData = ''
@@ -514,6 +516,18 @@ var gameProjection = {
         })
         // console.log(appendData);
         $('.scoreBoard').html(appendData)
+      })
+    },
+    writeTeamScoresToScreen:function(){
+      socket.emit('getTeamScores',function(results){
+
+        $('.teamScoreBoard').html(
+          '<p>Team 1 (Earth) --- ' + results.team1 + '</p>' +
+          '<p>Team 2 (Water) --- ' + results.team2 + '</p>' +
+          '<p>Team 3 (Wind) --- ' + results.team3 + '</p>' +
+          '<p>Team 4 (Fire) --- ' + results.team4 + '</p>'
+        )
+
       })
     },
     convertSpreadsheetToTasksObject:function(json){
@@ -550,52 +564,9 @@ var gameProjection = {
 
 
     },
-    scorePoints:function(){
-      //not implemented yet
-      socket.emit('scorePoints', {} );
-    },
-    // newGame:function(){
-    //     // if(new Date().getTime() - time >= this.wait){
-    //        console.log("tick");//if it is, do something
-    //
-    //        var currentTask = gameProjection.currentTask;
-    //        currentTask.location = GAME_LOCATION // attach the location of this game projection to each current task, we could do this in the json on each task too, but this might prevent us from easily re-using prompts at the commons/uniondepot endcaps.
-    //
-    //
-    //        console.log('currentTask',currentTask);
-    //        //  socket.emit('startNewGame', 'newGame') //reset all users mobile views && push to the database
-    //        socket.emit('getNewAndNotifyUsers', currentTask , function(chosenPlayers){ //this does not account for what happens if there are too few players for the selected task yet. This could also be broken out into a seperate emit message on the server to avoid callbacks if that seems like a style thing we might want to do.
-    //
-    //
-    //         //check to change the screen to wait for more players if there are less than 2.
-    //         //if(chosenPlayers.length < 2) {
-    //         //  //$('.currentTask').html('Waiting for more players to join...')
-    //         //  //gameProjection.setStateAndTime('we-need-more-players', gameProjection.wait)
-    //         //  return;
-    //         //}
-    //
-    //         //if(chosenPlayers.length < currentTask.players){
-    //         //    gameProjection.newGame()
-    //         //}
-    //
-    //          //console.log('chosenPlayers',chosenPlayers)
-    //
-    //          //var userlist = ""
-    //          //chosenPlayers.forEach(function(player){
-    //          //  $('.people ul').append('<li>'+player.userObject.userName+'<img src="assets/images/avatars/avatar_4.png"></li>');
-    //          //})
-    //
-    //          //$('.currentTask').html(
-    //          //  currentTask.task
-    //          //  + '<br>'
-    //          //  + userlist
-    //          //)
-    //
-    //           //time = new Date().getTime();//also update the stored time
-    //           //this.wait = currentTask.time;
-    //
-    //        }) // close getNewAndNotifyUsers
-    //
+    // scorePoints:function(){
+    //   //not implemented yet
+    //   socket.emit('scorePoints', {} );
     // }
 }
 

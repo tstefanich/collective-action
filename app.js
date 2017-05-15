@@ -170,6 +170,7 @@ app.get('/database-view', function(req, res, next) {
 
 
 
+
 /**************
 
 Sample how to link url with page temple
@@ -390,11 +391,18 @@ io.on('connection', function(socket) {
     });
 
     socket.on('getHighScoreUsers',function(callback){
-      database.getSortedUsers(10,'-score',function(results){
+      database.getSortedUsers(5,'-score',function(results){
         console.log('highscores',results);
         callback(results)
       });
     });
+
+    socket.on('getTeamScores',function(callback){
+      database.calculateTeamScores(function(results){
+        console.log('get scores',results);
+        callback(results)
+      });
+    })
 
     //reset mobile views to 'waiting screen'
     socket.on('resetViews', function(users){

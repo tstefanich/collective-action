@@ -170,7 +170,7 @@ database.getSortedUsers = function(limitNum, sortBy, callback){
   // sortby ex: '-score' to sort score decending
   this.Users.find({}).sort(sortBy).limit(limitNum).exec(function(err, results) {
     if (err) return handleError(err);
-    console.log(results);
+    // console.log(results);
     callback(results)
    });
 

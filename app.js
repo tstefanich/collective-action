@@ -392,14 +392,14 @@ io.on('connection', function(socket) {
 
     socket.on('getHighScoreUsers',function(callback){
       database.getSortedUsers(5,'-score',function(results){
-        console.log('highscores',results);
+        // console.log('highscores',results);
         callback(results)
       });
     });
 
     socket.on('getTeamScores',function(callback){
       database.calculateTeamScores(function(results){
-        console.log('get scores',results);
+        // console.log('get scores',results);
         callback(results)
       });
     })

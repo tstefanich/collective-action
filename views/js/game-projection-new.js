@@ -509,7 +509,7 @@ var gameProjection = {
     },
     writeHighScoresToScreen:function(){
       socket.emit('getHighScoreUsers',function(results){
-        console.log('highScores',results);
+        // console.log('highScores',results);
         var appendData = ''
         results.forEach(function(result){
           appendData += '<p>' + result.userName + ' --- ' + result.score + '</p>';
@@ -520,12 +520,12 @@ var gameProjection = {
     },
     writeTeamScoresToScreen:function(){
       socket.emit('getTeamScores',function(results){
-        console.log(results);
+        // console.log(results);
 
         results.sort(function(a, b) {
             return b.score - a.score
         })
-        console.log('😬',results);
+        // console.log('😬',results);
 
         var appendData = ''
         results.forEach(function(result){
@@ -542,7 +542,7 @@ var gameProjection = {
 
           appendData += teamString + result.score + '</p>'
         })
-        
+
         $('.teamScoreBoard').html(appendData)
 
       })

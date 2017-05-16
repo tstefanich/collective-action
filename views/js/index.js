@@ -172,6 +172,28 @@
 
 }(jQuery);
 
+
+
+var touch = 'ontouchstart' in document.documentElement
+            || navigator.maxTouchPoints > 0
+            || navigator.msMaxTouchPoints > 0;
+
+if (touch) { // remove all :hover stylesheets
+    try { // prevent exception on browsers not supporting DOM styleSheets properly
+        for (var si in document.styleSheets) {
+            var styleSheet = document.styleSheets[si];
+            if (!styleSheet.rules) continue;
+
+            for (var ri = styleSheet.rules.length - 1; ri >= 0; ri--) {
+                if (!styleSheet.rules[ri].selectorText) continue;
+
+                if (styleSheet.rules[ri].selectorText.match(':hover')) {
+                    styleSheet.deleteRule(ri);
+                }
+            }
+        }
+    } catch (ex) {}
+}
 /******************************************
 
 Globals
@@ -366,16 +388,21 @@ function resizeImages(){
       console.log('window loaded');
       var newHeight = $(window).height();
       newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) ;
+
+      // Intro Slide show & Signup
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
-      $('.page.intro .carousel-inner .item img').css('height', newHeight+'px')
-      $('.regenerate-avatar-image').css('height', newHeight-100+'px')
-      $('.regenerate-avatar-image').css('background-size', 'auto '+newHeight+'px' );
+      $('.page.intro .carousel-inner .item img').css('height', newHeight+'px');
+      $('.regenerate-avatar-image').css('height', newHeight-100+'px');
+      //$('.regenerate-avatar-image').css('background-size', 'auto '+newHeight+'px' );
+
+      // Homescreen
+      $('.avatar-image').css('height', newHeight-20+'px');
 }
 
 function generateAvatar(){
     var totalNumberOfAvatars = 294;
     var r = Math.ceil(Math.random()*totalNumberOfAvatars)
-    $('.regenerate-avatar-image').attr('src', 'assets/images/avatars/'+ r +'.png')
+    $('.regenerate-avatar-image').css('background-image', 'url(assets/images/avatars/'+ r +'.png)')
     $('.regenerate-avatar-image').attr('data-avatar-id', r );
 }
 

@@ -176,6 +176,15 @@ fieldset[disabled] .btn-default.focus {
     background-size: auto 90%;
 
 }
+
+
+
+.avatar-image {
+    margin-top:62px;padding-top:0;text-align: center;height:100%;background-repeat:no-repeat;background-position:center center;background-size: contain;
+}
+.regenerate-avatar-image{
+    background-repeat:no-repeat;background-position:center center;background-size: contain;
+}
 /******************
 
     Navigation

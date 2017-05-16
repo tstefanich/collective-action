@@ -509,7 +509,7 @@ var gameProjection = {
     },
     writeHighScoresToScreen:function(){
       socket.emit('getHighScoreUsers',function(results){
-        // console.log('highScores',results);
+        console.log('highScores',results);
         var appendData = ''
         results.forEach(function(result){
           appendData += '<p>' + result.userName + ' --- ' + result.score + '</p>';
@@ -520,13 +520,30 @@ var gameProjection = {
     },
     writeTeamScoresToScreen:function(){
       socket.emit('getTeamScores',function(results){
+        console.log(results);
 
-        $('.teamScoreBoard').html(
-          '<p>Team 1 (Earth) --- ' + results.team1 + '</p>' +
-          '<p>Team 2 (Water) --- ' + results.team2 + '</p>' +
-          '<p>Team 3 (Wind) --- ' + results.team3 + '</p>' +
-          '<p>Team 4 (Fire) --- ' + results.team4 + '</p>'
-        )
+        results.sort(function(a, b) {
+            return b.score - a.score
+        })
+        console.log('😬',results);
+
+        var appendData = ''
+        results.forEach(function(result){
+          var teamString =''
+          if(result.team == 1){
+           teamString = '<p>Team 1 (Earth) --- '
+          }else if(result.team == 2){
+            teamString = '<p>Team 2 (Water) --- '
+          }else if(result.team == 3){
+            teamString = '<p>Team 3 (Wind) --- '
+          }else if(result.team == 4){
+            teamString = '<p>Team 4 (Fire) --- '
+          }
+
+          appendData += teamString + result.score + '</p>'
+        })
+        
+        $('.teamScoreBoard').html(appendData)
 
       })
     },

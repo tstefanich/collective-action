@@ -179,21 +179,26 @@ database.getSortedUsers = function(limitNum, sortBy, callback){
 
 /* THIS NEEDS STRESS TESTING! */
 database.calculateTeamScores = function(callback){
-  var scores = {
-    'team1': 0,
-    'team2': 0,
-    'team3': 0,
-    'team4': 0,
-  }
+  var scores = []
+  // {
+  //   'team1': 0,
+  //   'team2': 0,
+  //   'team3': 0,
+  //   'team4': 0,
+  // }
 
-  database.calculateSingleTeamScore(1,function(score){
-    scores.team1 = score
-    database.calculateSingleTeamScore(2,function(score){
-      scores.team2 = score
-      database.calculateSingleTeamScore(3,function(score){
-        scores.team3 = score
-        database.calculateSingleTeamScore(4,function(score){
-          scores.team4 = score
+  database.calculateSingleTeamScore(1,function(scoreOut){
+    // scores.team1 = score
+    scores.push({'team':1,'score':scoreOut})
+    database.calculateSingleTeamScore(2,function(scoreOut){
+      // scores.team2 = score
+      scores.push({'team':2,'score':scoreOut})
+      database.calculateSingleTeamScore(3,function(scoreOut){
+        // scores.team3 = score
+        scores.push({'team':3,'score':scoreOut})
+        database.calculateSingleTeamScore(4,function(scoreOut){
+          // scores.team4 = score
+          scores.push({'team':4,'score':scoreOut})
             // console.log(scores);
             callback(scores)
         })

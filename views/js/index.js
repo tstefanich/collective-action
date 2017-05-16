@@ -565,7 +565,8 @@ var login = {
      },
      checkIfFieldsAreFilled:function(){
           $('.form-control.email-address.login').on('keyup blur', function(event) {
-               if($.trim($(this).val()) != ''){
+                var emailSlideActive = $('#carousel-sign-up .item.email-sign-up').hasClass('active');
+               if($.trim($(this).val()) != '' && emailSlideActive == true){
                     login.emailTextFieldIsFilled = true;
                     console.log('Input Email Filled');
                     login.enableContinueButton();
@@ -719,6 +720,14 @@ var signUp = {
                     $('#carousel-sign-up .item.email-sign-up').addClass('show-error');
                } else if(data == false){
                     signUp.goToNextSlide();
+                    //signUp.disableContinueButton();
+                    setTimeout(function(){
+                      // This is a fix for timing with keyup / blur problem
+                      if(!signUp.usernameTextFieldIsFilled){
+                        signUp.disableContinueButton();
+                        console.log('test');
+                      }
+                    }, 50);
                }
           });
      },
@@ -831,6 +840,10 @@ var signUp = {
                       break;
                  case $('#carousel-sign-up .item.username-sign-up').hasClass('active'):
                       //put your cases here
+                      setTimeout(function(){
+                              signUp.enableContinueButton();
+                              console.log('enable')
+                      },100)
                       break;
                  case $('#carousel-sign-up .item.avatar-sign-up.active').hasClass('active'):
                       //put your cases here

@@ -93,21 +93,6 @@ socket.on('newGame', function() {
 
 })
 
-socket.on('mySoon', function(data) {
-  // setTimeout(function(){
-    //if im a next user, change my status to reflect.
-    console.log('~~~~~~mySoon!');
-    var getUser = store.get('user')
-
-      // $('.waitingNext').html('')
-      window.parent.document.title = GAME_LOCATION + '⚠️' + socket.id
-      // $('.page').css('background-color','yellow')
-      $('.page').css('background-image','url(assets/images/client/mySoon.png)')
-      $('.bottomHalf').html( '')
-
-
-});
-
 socket.on('myTurn', function(taskToPlay) {
     //  console.log(data);
 

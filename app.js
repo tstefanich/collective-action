@@ -455,19 +455,6 @@ io.on('connection', function(socket) {
                   }
               })
           }
-          ////////////////////////////
-          // Notify users who are coming up soon after calculation
-          ///////////////////////////
-          var soonUsers = organizeUsersByWaitTime(currentTask.location)
-
-          var returnSoonUsers = soonUsers.slice(0, 3); //get the X off the top of the list
-          console.log('soon selections:', returnSoonUsers);
-
-          returnSoonUsers.forEach(function(element) {
-              // console.log(element.id);
-              socket.to(element.id).emit('mySoon', 'youre up soon');
-          });
-
         }
 
         //notify users that it's their turn!

@@ -75,7 +75,7 @@ socket.on('connect', function() {
       store.set('user', getUser)
 
     }
-    console.log('getUser2', getUser);
+    // console.log('getUser2', getUser);
 
 });
 
@@ -94,7 +94,6 @@ socket.on('newGame', function() {
 })
 
 socket.on('myTurn', function(taskToPlay) {
-    //  console.log(data);
 
     //Add Points to the client side user object.
     var getUser = store.get('user');
@@ -104,19 +103,15 @@ socket.on('myTurn', function(taskToPlay) {
         socket.emit('scorePoints', getUser)
       store.set('user', getUser)
 
-
     // $('.waitingNext').html( taskToPlay )
     window.parent.document.title = GAME_LOCATION + '✅' + socket.id
     // $('.page').css('background-color','green')
     $('.page').css('background-image','url(assets/images/client/myTurn.png)')
     $('.bottomHalf').html( taskToPlay )
 
-
-
     // trigger sound notification
     //  $('.myTurnAudio').get(0).play()
 });
-
 
 socket.on('disconnect', function() {
     console.log('disconnected from the server as: ' + socket.id);

@@ -87,7 +87,7 @@ input[type="color"]:focus,
 }
 
 .btn-default {
-  color: #333;
+  color: #a967ff;
   background-color: #fff;
   border-color: #ccc;
 }
@@ -98,14 +98,14 @@ input[type="color"]:focus,
   border-color: #8c8c8c;
 }
 .btn-default:hover {
-  color: inherit;
+  color:  #a967ff;
   background-color: transparent;
   border-color: transparent;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #333;
+  color:  #a967ff;
   background-color: transparent;
   border-color: transparent;
 }
@@ -710,7 +710,7 @@ Loading page
     background:transparent;
 }
 .btn-default:active {
-    color: inherit;
+    color: rgba(169, 103, 255, .3);
     opacity: 1;
     background:transparent;
     text-shadow: 0 0 0 transparent;
@@ -1077,8 +1077,8 @@ h2.project-title {
     padding-bottom: 10px;
     color: white;
     opacity: 1;
-
 }
+
 .project-slide-panel .nav .title {
     margin-top: 14px;
     margin-left: 51px;

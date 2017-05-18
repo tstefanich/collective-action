@@ -61,6 +61,7 @@ socket.on('connect', function() {
 
     //update locationsVisited
     var getUser = store.get('user');
+    // getUser.locationsVisited = []; // for testing...
     // console.log('getUser', getUser.locationsVisited);
     check = getUser.locationsVisited.map(function(e) { return e.location; }).indexOf(GAME_LOCATION);
     //getUser.locationsVisited.indexOf(GAME_LOCATION) // use this if we dont want to record connection time
@@ -70,7 +71,7 @@ socket.on('connect', function() {
         time: Date.now()
       }
       getUser.locationsVisited.push(locObj)
-      socket.emit('updateLocations',getUser)
+      socket.emit('updateLocationsVisited',getUser)
       store.set('user', getUser)
 
     }

@@ -27,8 +27,9 @@
                 <div class="col col-xs-2 col-sm-1 col-md-1">{{team}}</div>
                 <div class="col col-xs-2 col-sm-1 col-md-1">{{score}}</div>
                 <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{currentLocation}}</div> -->
-                <div class="col col-xs-0 col-sm-1 col-md-2 hidden-xs">
-                  {{locationsVisited}}
+                <div class="col col-xs-0 col-sm-1 col-md-3 hidden-xs">
+                  <!-- {{locationsVisited}} -->
+                  {{#listLocations locationsVisited}}{{/listLocations}}
                 </div>
                 <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{totalTasks}}</div> -->
                 <!-- <div class="col col-xs-2 col-sm-1 col-md-2">{{totalTaskTime}}</div> -->

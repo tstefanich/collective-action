@@ -271,6 +271,7 @@ database.updatePoints = function (searchEmail, newScore){
 }
 
 database.updateLocations = function (searchEmail, newLocations){
+  console.log(newLocations);
   var query = { email: searchEmail };
   this.Users.findOneAndUpdate(query, { locationsVisited: newLocations }, function(err){
       if (err) return handleError(err);

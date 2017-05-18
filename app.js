@@ -90,7 +90,16 @@ var hbs = exphbs.create({
                 return options.inverse(this);
             }
 
-        }
+        },
+        listLocations:function(locationsVisitedArray) {
+          var out = ''
+
+          for(var i=0, l=locationsVisitedArray.length; i<l; i++) {
+            out += locationsVisitedArray[i].location + ", ";
+          }
+
+          return out;
+        },
     }
 })
 
@@ -391,9 +400,9 @@ io.on('connection', function(socket) {
     });
 
     socket.on('updateLocationsVisited', function(user){
-      console.log('ULV', user.email);
-      console.log('ULV', user.locationsVisited);
-      database.updateLocation(user.email,user.locationsVisited)
+      // console.log('ULV', user.email);
+      // console.log('ULV', user.locationsVisited);
+      database.updateLocations(user.email,user.locationsVisited)
     })
 
     socket.on('getHighScoreUsers',function(callback){

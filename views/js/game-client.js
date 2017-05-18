@@ -37,7 +37,8 @@
 // var noSleep = new NoSleep();
 // noSleep.enable();
 
-var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+// var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+var socket = io('http://localhost:3000');
 
 function currentUserInfo() {
     var ui = {
@@ -54,10 +55,27 @@ socket.on('reload', function() {
 })
 
 socket.on('connect', function() {
+  //  console.log(socket);
     console.log('connected to the server as: ' + socket.id);
-    //  console.log(socket);
-
     socket.emit('updateUser', currentUserInfo())
+
+    //update locationsVisited
+    var getUser = store.get('user');
+    // console.log('getUser', getUser.locationsVisited);
+    check = getUser.locationsVisited.map(function(e) { return e.location; }).indexOf(GAME_LOCATION);
+    //getUser.locationsVisited.indexOf(GAME_LOCATION) // use this if we dont want to record connection time
+    if(check == -1){ //we havnt been here yet
+      var locObj = {
+        location:GAME_LOCATION,
+        time: Date.now()
+      }
+      getUser.locationsVisited.push(locObj)
+      socket.emit('updateLocations',getUser)
+      store.set('user', getUser)
+
+    }
+    console.log('getUser2', getUser);
+
 });
 
 socket.on('reconnect', function() {
@@ -66,8 +84,6 @@ socket.on('reconnect', function() {
 
 socket.on('newGame', function() {
     // $('.waitingNext').html('')
-    //upload user local storage to the database here (dont overwrite the user, only update the values incase something goes wrong)
-    // var getUser =  store.get('user')
     console.log('~~~~~~NEWGAME!');
     window.parent.document.title = GAME_LOCATION + '🚫' + socket.id
     // $('.page').css('background-color','red')
@@ -113,8 +129,6 @@ socket.on('myTurn', function(taskToPlay) {
 
     // trigger sound notification
     //  $('.myTurnAudio').get(0).play()
-    //  slideDownPanel($('.page.waiting-room .close'));
-
 });
 
 

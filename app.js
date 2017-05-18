@@ -160,7 +160,7 @@ app.get('/admin', function(req, res, next) {
 
 app.get('/database-view', function(req, res, next) {
     // database.dbInfo(function(results) {
-    database.getSortedUsers(10,'-score',function(results){
+    database.getSortedUsers(100,'-score',function(results){
         return res.render('database-view', {
             'users': results
         });
@@ -389,6 +389,12 @@ io.on('connection', function(socket) {
       // console.log('scorePoints',user.score);
       database.updatePoints(user.email, user.score)
     });
+
+    socket.on('updateLocationsVisited', function(user){
+      console.log('ULV', user.email);
+      console.log('ULV', user.locationsVisited);
+      database.updateLocation(user.email,user.locationsVisited)
+    })
 
     socket.on('getHighScoreUsers',function(callback){
       database.getSortedUsers(5,'-score',function(results){

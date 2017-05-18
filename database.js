@@ -264,9 +264,15 @@ database.saveUser = function (req,callback){
 
 
 database.updatePoints = function (searchEmail, newScore){
-
   var query = { email: searchEmail };
   this.Users.findOneAndUpdate(query, { score: newScore }, function(err){
+      if (err) return handleError(err);
+  })
+}
+
+database.updateLocations = function (searchEmail, newLocations){
+  var query = { email: searchEmail };
+  this.Users.findOneAndUpdate(query, { locationsVisited: newLocations }, function(err){
       if (err) return handleError(err);
   })
 }

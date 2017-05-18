@@ -512,7 +512,7 @@ var gameProjection = {
         // console.log('highScores',results);
         var appendData = ''
         results.forEach(function(result){
-          appendData += '<p>' + result.userName + ' --- ' + result.score + '</p>';
+          appendData += '<p>' + result.userName + ' &#8212; ' + result.score + '</p>';
         })
         // console.log(appendData);
         $('.scoreBoard').html(appendData)
@@ -531,13 +531,13 @@ var gameProjection = {
         results.forEach(function(result){
           var teamString =''
           if(result.team == 1){
-           teamString = '<p>Team 1 (Earth) --- '
+           teamString = '<p>Team 1 (Earth) &#8212; '
           }else if(result.team == 2){
-            teamString = '<p>Team 2 (Water) --- '
+            teamString = '<p>Team 2 (Water) &#8212; '
           }else if(result.team == 3){
-            teamString = '<p>Team 3 (Wind) --- '
+            teamString = '<p>Team 3 (Wind) &#8212; '
           }else if(result.team == 4){
-            teamString = '<p>Team 4 (Fire) --- '
+            teamString = '<p>Team 4 (Fire) &#8212; '
           }
 
           appendData += teamString + result.score + '</p>'

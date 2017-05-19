@@ -286,6 +286,7 @@ var gameProjection = {
                   case 'title':
                       self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
                       self.writeHighScoresToScreen();
+                      self.refreshConnectedBackgroundAvatars();
                       break;
                   case 'highscores-players':
                       self.setStateAndTime('highscores-teams', self.TimeHighscoresTeams);
@@ -548,7 +549,14 @@ var gameProjection = {
       })
     },
     refreshConnectedBackgroundAvatars:function(){
-
+      socket.emit('getAllUsers', GAME_LOCATION, function(connectedUsers) {
+        console.log('gau',connectedUsers);
+        compiledAvatars = ''
+        connectedUsers.forEach(function(user){
+          compiledAvatars+= '<img src="assets/images/avatars/'+ user.userObject.avatar +'">'
+        })
+        $('.tempAvatarStorage').html(compiledAvatars)
+      }); // close getNewAndNotifyUsers
     },
     convertSpreadsheetToTasksObject:function(json){
         //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json

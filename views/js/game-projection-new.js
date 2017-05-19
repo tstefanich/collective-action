@@ -436,7 +436,7 @@ var gameProjection = {
       }
     },
     checkNumberOfConnections:function(){
-      socket.emit('getNumberOfUsers', GAME_LOCATION, function(numberOfConnections) {
+      socket.emit('getAllUsers', GAME_LOCATION, function(numberOfConnections) {
         console.log(numberOfConnections);
         gameProjection.currentNumberOfConnections = numberOfConnections.length;
       }); // close getNewAndNotifyUsers
@@ -546,6 +546,9 @@ var gameProjection = {
         $('.teamScoreBoard').html(appendData)
 
       })
+    },
+    refreshConnectedBackgroundAvatars:function(){
+
     },
     convertSpreadsheetToTasksObject:function(json){
         //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json

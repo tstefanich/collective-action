@@ -388,7 +388,7 @@ io.on('connection', function(socket) {
         return decendingUsers;
     }
 
-    socket.on('getNumberOfUsers', function(roomName, callback) {
+    socket.on('getAllUsers', function(roomName, callback) {
         var users = allUsersInRoom(roomName);
         callback(users); //send the selected users back to the game-projection
     });

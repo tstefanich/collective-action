@@ -439,7 +439,7 @@ io.on('connection', function(socket) {
       // io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
       io.to(currentTask.location).emit('newGame'); //reset only to the players in the room on new game
 
-      console.log('!',currentTask);
+      // console.log('!',currentTask);
 
       ////////////////////////////
       // get the users who have waited the longest

@@ -439,6 +439,8 @@ io.on('connection', function(socket) {
       // io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.
       io.to(currentTask.location).emit('newGame'); //reset only to the players in the room on new game
 
+      console.log('!',currentTask);
+
       ////////////////////////////
       // get the users who have waited the longest
       ///////////////////////////
@@ -467,7 +469,7 @@ io.on('connection', function(socket) {
         //notify users that it's their turn!
         returnPriorityUsers.forEach(function(element) {
             // console.log(element.id);
-            socket.to(element.id).emit('myTurn', currentTask.task);
+            socket.to(element.id).emit('myTurn', currentTask);
         });
 
         callback(returnPriorityUsers) //send the selected users back to the game-projection

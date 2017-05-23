@@ -106,8 +106,15 @@ socket.on('myTurn', function(taskToPlay) {
     // $('.waitingNext').html( taskToPlay )
     window.parent.document.title = GAME_LOCATION + '✅' + socket.id
     // $('.page').css('background-color','green')
-    $('.page').css('background-image','url(assets/images/client/myTurn.png)')
-    $('.bottomHalf').html( taskToPlay )
+
+    if(taskToPlay.players == 'all'){
+      $('.page').css('background-image','url(assets/images/client/mySoon.png)') //for testing until this page exists
+
+    }else{
+      $('.page').css('background-image','url(assets/images/client/myTurn.png)')
+
+    }
+    $('.bottomHalf').html( taskToPlay.task )
 
     // trigger sound notification
     //  $('.myTurnAudio').get(0).play()

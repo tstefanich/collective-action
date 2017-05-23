@@ -124,6 +124,13 @@ app.get('/', function(req, res, next) {
 });
 
 
+
+app.get('/blank', function(req, res, next) {
+    // database.dbInfo(function(results) {
+        return res.render('blank', {});
+
+
+});
 // app.get('/p/:tagId', function(req, res) {
 //   res.send("tagId is set to " + req.params.tagId);
 // });

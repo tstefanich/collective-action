@@ -7,6 +7,8 @@
  */
 
 
+var searchResults;
+
 
 function search(array, key, prop){
     // Optional, but fallback to key['name'] if not selected
@@ -177,8 +179,8 @@ var gameProjection = {
      TimeSetupGame:500,
      TimeInviteToPerformanceArea: 5000,
      TimeWeNeedMorePlayers: 5000,
-     TimePrepForTask: 30000,
-     TimeStartTask: 60000,
+     TimePrepForTask: 15000,
+     TimeStartTask: 30000,
      TimeEndTask: 7000,
      TimeEndScore: 7000,
      TimeReset: 250,
@@ -205,17 +207,13 @@ var gameProjection = {
 
       switch (title) {
         case 'commons':
-            //titleElement.html('Commons');
-            titleElement.html('Gallery 1');
-
+            titleElement.html('Commons');
             break;
         case 'westbank':
-            //titleElement.html('Westbank');
-            titleElement.html('Gallery 2');
+            titleElement.html('Westbank');
             break;
         case 'littleafrica':
-            //titleElement.html('Little Africa');
-            titleElement.html('Gallery 3');
+            titleElement.html('Little Africa');
             break;
         case 'rondo':
             titleElement.html('Rondo');
@@ -465,7 +463,7 @@ var gameProjection = {
     },
     getTask:function(){
       var numberOfPlayers = gameProjection.currentNumberOfConnections;
-      var searchResults = null;
+      searchResults = null;
       if(gameProjection.currentNumberOfConnections < 2){
         // This need to be changed not to grab specific number of connections but only task that have a minimum number of connections
         searchResults = [];
@@ -561,24 +559,44 @@ var gameProjection = {
     convertSpreadsheetToTasksObject:function(json){
         //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json
         console.log('parsing Google Spreadsheet');
-        console.log(json);
+        //console.log(json);
 
         for (var i = 0; i < json.feed.entry.length; i++) {
           //  This is console.log for the each row in the spreadsheet
-          //  console.log( json.feed.entry[i]);
+          //console.log( json.feed.entry[i]);
           var task = json.feed.entry[i].gsx$prompt.$t;
           var timePrep =  5000;//json.feed.entry[i].gsx$bio.$t;
           var timePlay =  30000;//json.feed.entry[i].gsx$bio.$t;
-          var time = json.feed.entry[i].gsx$time.$t//10000;//json.feed.entry[i].gsx$bio.$t;
-          var players = json.feed.entry[i].gsx$numberofplayers.$t;
+          var players = json.feed.entry[i].gsx$highplayers.$t;
+          var playersMax = json.feed.entry[i].gsx$highplayers.$t;
+          
 
-          Object
+          var time;//10000;//json.feed.entry[i].gsx$bio.$t;
+           if(json.feed.entry[i].gsx$time.$t == ''){
+            time = '2';
+          } else {
+            playersMin = json.feed.entry[i].gsx$time.$t;
+          }
+          
+
+          var playersMin;
+          if(json.feed.entry[i].gsx$lowplayers.$t == ''){
+            playersMin = '2';
+          } else {
+            playersMin = json.feed.entry[i].gsx$lowplayers.$t;
+          }
+          
+          console.log(playersMin);
+
+          //Object
           var tempObject = {
             task: task.replace(/^\s+|\s+$/g, ""),
             timePrep: timePrep,
             timePlay: timePlay,
             time: time.replace(/^\s+|\s+$/g, ""),
-            players: players.replace(/^\s+|\s+$/g, "")
+            players: players.replace(/^\s+|\s+$/g, ""),
+            playersMin: playersMin.replace(/^\s+|\s+$/g, ""),
+            playersMax: playersMax.replace(/^\s+|\s+$/g, "")
 
           }
 

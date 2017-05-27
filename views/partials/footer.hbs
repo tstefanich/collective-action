@@ -18,15 +18,17 @@
     {{/compare}}
     {{#compare templateName 'game-client' operator="=="}}
     <script type="text/javascript">const GAME_LOCATION = '{{setLocation}}'</script>
-    <script src="assets/javascript/nosleep.min.js" charset="utf-8"></script>
-
      <script src="js/game-client.js" charset="utf-8"></script>
     {{/compare}}
     {{#compare templateName 'game-projection' operator="=="}}
+
+
      <script src="js/game-projection.js" charset="utf-8"></script>
     {{/compare}}
     {{#compare templateName 'game-projection-new' operator="=="}}
     <script type="text/javascript">const GAME_LOCATION = '{{setLocation}}'</script>
+        <script src="assets/javascript/p5.js" charset="utf-8"></script>
+        <script src="assets/javascript/p5.sound.js" charset="utf-8"></script>
      <script src="js/game-projection-new.js" charset="utf-8"></script>
      <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/od6/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
      <!--<script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/11AYV-VXjoorN01-ZJJ8EnaWS728YR2geLHOYMZ45h98/od6/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>-->

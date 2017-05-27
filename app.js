@@ -143,8 +143,6 @@ app.get('/game-client', function(req, res, next) {
             setLocation: req.query.location
         // });
     });
-
-
 });
 
 app.get('/game-projection', function(req, res, next) {
@@ -184,7 +182,17 @@ app.get('/database-view', function(req, res, next) {
 });
 
 
-
+app.get('/get-team', function(req, res, next) {
+    database.checkTeamsAndSetTeam(function(err, response) {
+        if (err) {
+            return res.status(422).json({
+                error: err.message
+            });
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+});
 
 
 /**************

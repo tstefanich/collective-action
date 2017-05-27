@@ -177,6 +177,20 @@ database.getSortedUsers = function(limitNum, sortBy, callback){
 }
 
 
+database.checkTeamsAndSetTeam = function(callback){
+  this.Users.aggregate(
+    { $group: 
+      { _id: '$team', total: { $sum: 1 } } 
+    },
+    function (err, results) {
+      if (err) return handleError(err);
+      console.log(results);
+      callback(results);
+    });
+}
+
+
+
 /* THIS NEEDS STRESS TESTING! */
 database.calculateTeamScores = function(callback){
   var scores = []
@@ -241,7 +255,7 @@ database.saveUser = function (req,callback){
       userName: req.body.userName,
       email: req.body.email,
       avatar: req.body.avatar,
-      team: 1,
+      team: req.body.team,
       // tasksPlayed: [rand(30),rand(30),rand(30)],
       // waitTime: rand(1000),
 
@@ -259,6 +273,7 @@ database.saveUser = function (req,callback){
     // doc.test(); // maybe run the function if you feel like it
   });
 }
+
 
 
 

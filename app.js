@@ -344,14 +344,19 @@ setTimeout(function() {
 }, 2000)
 
 io.on('connection', function(socket) {
-    console.log('socket connected:', socket);
+    // console.log('socket connected:', socket);
 
     socket.on('updateUser', function(userInfo) {
-        // console.log(userInfo);
         socket.join(userInfo.room)
         // store the username in the socket session for this client socket
         socket.userObject = userInfo.userObject;
         socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
+        console.log("userInfo", userInfo);
+        var user = {
+            id: socket.id,
+            userObject: socket.userObject
+        }
+        io.emit('addAvatar', user)
     });
 
 ////////////////////////////
@@ -487,6 +492,12 @@ io.on('connection', function(socket) {
 
     socket.on('disconnect', function() {
         console.log('client disconnected: ' + socket.id);
+        var user = {
+            id: socket.id,
+            userObject: socket.userObject
+        }
+        io.emit('removeAvatar', user)
+
 
     });
 

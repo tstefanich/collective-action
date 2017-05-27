@@ -105,8 +105,9 @@ body,html{font-size: 50px;background:url(assets/images/projections/background.pn
 }
 
 .ticker{
-	animation: moveAcross 10s linear infinite;
+	/*animation: moveAcross 10s linear infinite;*/
 	position:absolute;
+	text-align: center;
 	width:100vw;
 }
 
@@ -393,7 +394,7 @@ body,html{font-size: 50px;background:url(assets/images/projections/background.pn
 	<!-- Delete me and move to a real place :) -->
 
 </div>
-
+<!--
 <script type="text/javascript">
 var avatars = []
 // var count = 0
@@ -410,10 +411,10 @@ function setup() {
   soundReverse = loadSound('popReverse.mp3');
 
   createCanvas(windowWidth,windowHeight)
-  for (var i = 0; i < 30; i++) {
+  // for (var i = 0; i < 30; i++) {
     // var a = loadImage('avatars/'+ Math.ceil(Math.random()*294)+'.png')
-    
-  }
+
+  // }
 
 
 }
@@ -476,11 +477,11 @@ function draw() {
 }
 
 function perlin() {
-  let i = 0; 
+  let i = 0;
   let n = random(100);
   return ()=>{
     n += 0.0004;
-    
+
     //i = (i + 1) % 2;
 
     let noiseT = i + n;
@@ -580,12 +581,12 @@ function avatar(path,x,y){
   this.angleCounter = 0;
   this.currentValue = 0;
   this.readyRemove = false;
- 
+
   sound.playbackRate = random(.8,1.5);
   sound.play();
 
   this.avatarGrow = function(){
-    if (this.time >= this.endTime) 
+    if (this.time >= this.endTime)
     {
       this.state = 'normal';
     }
@@ -593,12 +594,12 @@ function avatar(path,x,y){
     var elapsed =  this.time - this.startTime;
     var value = easeOutBounce(elapsed, .001, totChange, duration);
     this.currentValue =value; // this is needed to reverse the tween.
-   
+
     this.avatarWidth = (this.image.width) * value/2;
     this.avatarHeight = (this.image.height) * value/2;//
   },
   this.avatarShrink = function(){
-    if (this.time >= this.endTime) 
+    if (this.time >= this.endTime)
     {
       this.state = 'normal';
       this.readyRemove = true;
@@ -606,7 +607,7 @@ function avatar(path,x,y){
 
     var elapsed =  this.time - this.startTime;
     var value = easeInOutElastic(elapsed, this.currentValue, -this.currentValue, duration2);
-    
+
     if(value < 0){ value = 0.000001; } // This is required from keep the tween from reversing too far
 
     this.avatarWidth = (this.image.width) * (value/2);
@@ -622,19 +623,19 @@ function avatar(path,x,y){
   this.display = function(){
 
     this.time = performance.now();
-    
+
     this.x = map(this.random(),0,1, -.5,1.5) * width;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
     this.y = map(this.yRandom(), 0, 1, -.5, 1.5) * height;//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
 
     if(this.image.width != 1){ // this necessary until the image is loaded
-    
+
       switch(this.state) {
         case 'avatarIsGrowing':
-          this.avatarGrow(); 
-          break; 
+          this.avatarGrow();
+          break;
         case 'avatarIsShrinking':
           this.avatarShrink();
-          break; 
+          break;
       }
 
       this.calculateSpeed();
@@ -652,15 +653,15 @@ function avatar(path,x,y){
       rotate(radians(angle));
       image(this.image,0-(this.avatarWidth/2),0-(this.avatarHeight),this.avatarWidth,this.avatarHeight);
       pop();
-          
+
 
       var dT = (1/30.0); //delta time
       //console.log(speed);
       var animSpeed = map(this.speed, 0, 1, .6, .75);
       this.angleCounter = (this.angleCounter + dT * animSpeed);
-        
 
-          
+
+
     }
   }
 }
@@ -678,7 +679,7 @@ function mousePressed() {
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
      for (var i = 0; i < avatars.length; i++) {
-        
+
         if(avatars[i].id == 'aaa'){
           avatars[i].state = 'avatarIsShrinking';
           avatars[i].startTime = performance.now();
@@ -690,6 +691,6 @@ function keyPressed() {
   }
 }
 
-</script>
+</script> -->
 
 {{> footer}}

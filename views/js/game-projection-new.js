@@ -200,6 +200,27 @@ var gameProjection = {
           //     console.log('disconnected from the server as: ' + socket.id);
           //});
 
+          socket.on('addAvatar',function(user){
+            console.log('addAvatar',user);
+            var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width), random(0,height))
+            avatars.push(a)
+          })
+          socket.on('removeAvatar',function(user){
+            console.log('removeAvatar',user);
+
+            for (var i = 0; i < avatars.length; i++) {
+
+               if(avatars[i].id == user.id){
+                 avatars[i].state = 'avatarIsShrinking';
+                 avatars[i].startTime = performance.now();
+                 avatars[i].endTime = avatars[i].startTime + duration2;
+                 soundReverse.playbackRate = random(.8,1.5);
+                 soundReverse.play();
+               }
+            }
+
+          })
+
      },
      parseTitleUrlParamater:function(){
       var title = $('.location-title').text();
@@ -284,7 +305,7 @@ var gameProjection = {
                   case 'title':
                       self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
                       self.writeHighScoresToScreen();
-                      self.refreshConnectedBackgroundAvatars();
+                      // self.refreshConnectedBackgroundAvatars();
                       break;
                   case 'highscores-players':
                       self.setStateAndTime('highscores-teams', self.TimeHighscoresTeams);
@@ -546,23 +567,23 @@ var gameProjection = {
 
       })
     },
-    refreshConnectedBackgroundAvatars:function(){
-      socket.emit('getAllUsers', GAME_LOCATION, function(connectedUsers) {
-        console.log('gau',connectedUsers);
-        compiledAvatars = ''
-        connectedUsers.forEach(function(user){
-          //compiledAvatars+= '<img src="assets/images/avatars/'+  +'">'
-            var id = user.userObject.id;
-            if(avatars.filter(function(e) { return e.id == id }).length > 0){
-              // Do nothing
-            } else {
-              var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'',user.userObject.id, random(0,width),random(0,height),  )
-              avatars.push(a)
-            }
-        })
-        //$('.tempAvatarStorage').html(compiledAvatars)
-      }); // close getNewAndNotifyUsers
-    },
+    // refreshConnectedBackgroundAvatars:function(){
+    //   socket.emit('getAllUsers', GAME_LOCATION, function(connectedUsers) {
+    //     console.log('gau',connectedUsers);
+    //     compiledAvatars = ''
+    //     connectedUsers.forEach(function(user){
+    //       //compiledAvatars+= '<img src="assets/images/avatars/'+  +'">'
+    //         var id = user.userObject.id;
+    //         if(avatars.filter(function(e) { return e.id == id }).length > 0){
+    //           // Do nothing
+    //         } else {
+    //           var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'',user.userObject.id, random(0,width),random(0,height),  )
+    //           avatars.push(a)
+    //         }
+    //     })
+    //     //$('.tempAvatarStorage').html(compiledAvatars)
+    //   }); // close getNewAndNotifyUsers
+    // },
     convertSpreadsheetToTasksObject:function(json){
         //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json
         console.log('parsing Google Spreadsheet');
@@ -616,11 +637,7 @@ var gameProjection = {
         console.log('parsed Google Spreadsheet');
 
 
-    },
-    // scorePoints:function(){
-    //   //not implemented yet
-    //   socket.emit('scorePoints', {} );
-    // }
+    }
 }
 
 
@@ -666,7 +683,7 @@ function setup() {
   createCanvas(windowWidth,windowHeight)
   for (var i = 0; i < 30; i++) {
     // var a = loadImage('avatars/'+ Math.ceil(Math.random()*294)+'.png')
-    
+
   }
 
 }
@@ -729,11 +746,11 @@ function draw() {
 }
 
 function perlin() {
-  let i = 0; 
+  let i = 0;
   let n = random(100);
   return ()=>{
     n += 0.0004;
-    
+
     //i = (i + 1) % 2;
 
     let noiseT = i + n;
@@ -833,12 +850,12 @@ function avatar(path,id,x,y){
   this.angleCounter = 0;
   this.currentValue = 0;
   this.readyRemove = false;
- 
+
   sound.playbackRate = random(.8,1.5);
   sound.play();
 
   this.avatarGrow = function(){
-    if (this.time >= this.endTime) 
+    if (this.time >= this.endTime)
     {
       this.state = 'normal';
     }
@@ -846,12 +863,12 @@ function avatar(path,id,x,y){
     var elapsed =  this.time - this.startTime;
     var value = easeOutBounce(elapsed, .001, totChange, duration);
     this.currentValue =value; // this is needed to reverse the tween.
-   
+
     this.avatarWidth = (this.image.width) * value/2;
     this.avatarHeight = (this.image.height) * value/2;//
   },
   this.avatarShrink = function(){
-    if (this.time >= this.endTime) 
+    if (this.time >= this.endTime)
     {
       this.state = 'normal';
       this.readyRemove = true;
@@ -859,7 +876,7 @@ function avatar(path,id,x,y){
 
     var elapsed =  this.time - this.startTime;
     var value = easeInOutElastic(elapsed, this.currentValue, -this.currentValue, duration2);
-    
+
     if(value < 0){ value = 0.000001; } // This is required from keep the tween from reversing too far
 
     this.avatarWidth = (this.image.width) * (value/2);
@@ -875,19 +892,19 @@ function avatar(path,id,x,y){
   this.display = function(){
 
     this.time = performance.now();
-    
+
     this.x = map(this.random(),0,1, -.5,1.5) * width;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
     this.y = map(this.yRandom(), 0, 1, -.5, 1.5) * height;//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
 
     if(this.image.width != 1){ // this necessary until the image is loaded
-    
+
       switch(this.state) {
         case 'avatarIsGrowing':
-          this.avatarGrow(); 
-          break; 
+          this.avatarGrow();
+          break;
         case 'avatarIsShrinking':
           this.avatarShrink();
-          break; 
+          break;
       }
 
       this.calculateSpeed();
@@ -905,15 +922,15 @@ function avatar(path,id,x,y){
       rotate(radians(angle));
       image(this.image,0-(this.avatarWidth/2),0-(this.avatarHeight),this.avatarWidth,this.avatarHeight);
       pop();
-          
+
 
       var dT = (1/30.0); //delta time
       //console.log(speed);
       var animSpeed = map(this.speed, 0, 1, .6, .75);
       this.angleCounter = (this.angleCounter + dT * animSpeed);
-        
 
-          
+
+
     }
   }
 }
@@ -931,7 +948,7 @@ function mousePressed() {
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
      for (var i = 0; i < avatars.length; i++) {
-        
+
         if(avatars[i].id == 'aaa'){
           avatars[i].state = 'avatarIsShrinking';
           avatars[i].startTime = performance.now();

@@ -193,6 +193,17 @@ var gameProjection = {
 
           socket.on('connect', function(){
               console.log('connected to the server as: ' + socket.id);
+
+              //reset state on page refresh / re-connect of game-projection
+              socket.emit('resetRoomClients', GAME_LOCATION);
+              socket.emit('getAllUsers',GAME_LOCATION, function(users){
+                setTimeout(function(){
+                  users.forEach(function(user){
+                    var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width), random(0,height))
+                    avatars.push(a)
+                  })
+                },2000);
+              })
           });
 
           gameProjection.parseTitleUrlParamater();

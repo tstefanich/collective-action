@@ -77,10 +77,18 @@ socket.on('connect', function() {
     }
     // console.log('getUser2', getUser);
 
+    //resetViews
+    $('.page').css('background-image','url(assets/images/client/newGame.png)')
+    $('.bottomHalf').html( '')
+
 });
 
 socket.on('reconnect', function() {
     socket.emit('updateUser', currentUserInfo())
+
+    $('.page').css('background-image','url(assets/images/client/newGame.png)')
+    $('.bottomHalf').html( '')
+    
 })
 
 socket.on('newGame', function() {

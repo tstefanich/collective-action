@@ -344,20 +344,19 @@ setTimeout(function() {
 }, 2000)
 
 io.on('connection', function(socket) {
-    // console.log('socket connected:', socket);
-
     socket.on('updateUser', function(userInfo) {
         socket.join(userInfo.room)
         // store the username in the socket session for this client socket
         socket.userObject = userInfo.userObject;
         socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
-        console.log("userInfo", userInfo);
+        // console.log("userInfo", userInfo);
         var user = {
             id: socket.id,
             userObject: socket.userObject
         }
         io.emit('addAvatar', user)
     });
+    console.log('socket connected:', socket);
 
 ////////////////////////////
 // This queue version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
@@ -447,6 +446,12 @@ io.on('connection', function(socket) {
           socket.to(element.id).emit('newGame', 'newGame');
       });
     });
+
+    //reset mobile views to 'waiting screen'
+    socket.on('resetRoomClients', function(roomName){
+      console.log('REFRESH PROJECTION | resetRoomClients');
+      io.to(roomName).emit('newGame');
+    })
 
     socket.on('getNewAndNotifyUsers', function(currentTask, callback) { // should prob be renamed to 'getNewAndNotifyUsers' or something like that.
       // io.emit('newGame', 'newGame') //reset all users to default waiting status on their view.

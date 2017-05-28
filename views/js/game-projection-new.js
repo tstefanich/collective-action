@@ -906,8 +906,8 @@ function avatar(path,id,x,y){
 
     this.time = performance.now();
 
-    this.x = map(this.random(),0,1, -.5,1.5) * width;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
-    this.y = map(this.yRandom(), 0, 1, -.5, 1.5) * height;//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
+    this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
+    this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
 
     if(this.image.width != 1){ // this necessary until the image is loaded
 

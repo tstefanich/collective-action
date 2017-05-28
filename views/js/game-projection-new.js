@@ -873,6 +873,8 @@ function avatar(path,id,x,y){
 
     var elapsed =  this.time - this.startTime;
     var value = easeOutBounce(elapsed, .001, totChange, duration);
+
+    if(value > .99){ value = 0.99; } // This is required from keep the tween from increasing too far
     this.currentValue =value; // this is needed to reverse the tween.
 
     this.avatarWidth = (this.image.width) * value/2;

@@ -624,7 +624,7 @@ var login = {
                     userName: data.userName,
                     email: data.email,
                     avatar: data.avatar, // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: 'TEAM-TEST',
+                    team: data.team,
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
 
@@ -637,7 +637,7 @@ var login = {
      },
      logout:function(){
           store.clearAll();
-          window.location.replace('http://joinca.info');
+          window.location.replace('http://joincollectiveaction.com');
           console.log('madeit');
      },
 }
@@ -677,12 +677,8 @@ var signUp = {
      },
      validateEmail:function(mail)
      {
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
-       {
-         return (true)
-       }
-         //alert("You have entered an invalid email address!")
-         return (false)
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(mail);
      },
      checkIfFieldsAreFilled:function(){
           $('.form-control.email-address').on('keyup blur', function(event) {
@@ -770,7 +766,7 @@ var signUp = {
                     userName: $('input.username').val(),
                     email: $('input.email-address').val().toLowerCase(),
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: 'TEAM-TEST',
+                    team: 1,
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
 
@@ -792,6 +788,14 @@ var signUp = {
              });
           // Slide up Main menu / Home
 
+     },
+     checkTeamsAndSetTeam:function(){
+      $.get("/get-team", function(data){
+           console.log(data);
+           if(data.isEmpty()){
+              $()
+           }
+      });
      },
      eventListeners:function(){
        $('body').on('touchstart', '.generate-username-btn', function(e){
@@ -824,6 +828,7 @@ var signUp = {
                          //put your cases here
                          signUp.goToNextSlide();
                          signUp.styleButtonToSave();
+                         signUp.checkTeamsAndSetTeam();
                          break;
                     case $('#carousel-sign-up .item.confirmation-sign-up').hasClass('active'):
                          //put your cases here

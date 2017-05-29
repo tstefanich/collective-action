@@ -610,12 +610,12 @@ var gameProjection = {
           var playersMax = json.feed.entry[i].gsx$highplayers.$t;
 
 
-          var time;//10000;//json.feed.entry[i].gsx$bio.$t;
-           if(json.feed.entry[i].gsx$time.$t == ''){
-            time = '2';
-          } else {
-            playersMin = json.feed.entry[i].gsx$time.$t;
-          }
+          //var time;//10000;//json.feed.entry[i].gsx$bio.$t;
+          // if(json.feed.entry[i].gsx$time.$t == ''){
+          //  time = '2';
+          //} else {
+          //  playersMin = json.feed.entry[i].gsx$time.$t;
+          //}
 
 
           var playersMin;
@@ -632,7 +632,7 @@ var gameProjection = {
             task: task.replace(/^\s+|\s+$/g, ""),
             timePrep: timePrep,
             timePlay: timePlay,
-            time: time.replace(/^\s+|\s+$/g, ""),
+            time: timePlay.replace(/^\s+|\s+$/g, ""),
             players: players.replace(/^\s+|\s+$/g, ""),
             playersMin: playersMin.replace(/^\s+|\s+$/g, ""),
             playersMax: playersMax.replace(/^\s+|\s+$/g, "")

@@ -25,6 +25,7 @@ input, textarea {
 body {
     font-family: 'GTWalsheim', monospace, helvetica, sans-serif;
     background: white;
+    color:#0caaff;
 }
 
 a {
@@ -302,11 +303,22 @@ button:focus {
     display: block;
 }
 .page.menu a{
-     display:block;border-bottom:2px solid #f15a29;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
+     display:block;border-bottom:2px solid #f05a28;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
 }
 
 .page.playtest-menu a{
-     display:block;border-bottom:2px solid #f15a29;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
+     display:block;border-bottom:2px solid #f05a28;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
+}
+
+
+.alert {
+  
+    border-radius: 0px;
+}
+.alert-danger {
+    color: white;
+    background-color: #f05a28;
+    border-color: #f05a28;
 }
 /******************
 
@@ -550,7 +562,7 @@ Global page styling
     background: white;
     color: black;
     margin-bottom: 10px;
-    border-bottom: 2px solid #f15a29;
+    border-bottom: 2px solid #f05a28;
     left: 15px;
     right: 15px;
     text-align: center;
@@ -581,7 +593,7 @@ Global page styling
     display: inline-block;
     padding-left: 10px;
     padding-right: 10px;
-    color:#f15a29;
+    color:#f05a28;
     font-size:16px;
     text-transform: uppercase;
 }
@@ -743,7 +755,7 @@ Loading page
 }
 
 .nav .nav-divider {    
-    border-right: 2px solid #f15a29;
+    border-right: 2px solid #f05a28;
     height: 35px;
     width: 0px;
     float: left;
@@ -781,14 +793,14 @@ Intro page
     bottom: 0;
     right: 15px;
     left: 15px;
-    border-top:2px solid #f15a29;
+    border-top:2px solid #f05a28;
 }
 .intro-footer .row {
     padding-bottom: 6px;
     padding-top: 0;
 }
 .intro-footer .nav-divider {    
-    border-right: 2px solid #f15a29;
+    border-right: 2px solid #f05a28;
     height: 35px;
     width: 0px;
     float: left;
@@ -803,7 +815,7 @@ Intro page
     top: 0;
     right: 15px;
     left: 15px;
-    border-bottom:0px solid #f15a29;
+    border-bottom:0px solid #f05a28;
 
 }
 /*******************************

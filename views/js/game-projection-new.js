@@ -189,7 +189,7 @@ var gameProjection = {
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           gameProjection.addLocationClassToBody();
-          
+
           time = new Date().getTime();//store the current time
           // this.getNewTask();
           // this.newGame()
@@ -511,7 +511,9 @@ var gameProjection = {
       }
       // console.log(ameProjection.currentTask.time);
       gameProjection.currentTask = searchResults[getRandomInt(0,searchResults.length)];
+      console.log(gameProjection.currentTask.time);
       gameProjection.TimeStartTask = parseInt(gameProjection.currentTask.time);
+      console.log(gameProjection.TimeStartTask);
     },
     writeTaskToScreen:function(){
       var task = gameProjection.currentTask.task;

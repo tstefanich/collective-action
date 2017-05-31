@@ -242,24 +242,31 @@ var gameProjection = {
      parseTitleUrlParamater:function(){
       var title = $('.location-title').text();
       var titleElement = $('.location-title')
-
+      var titleIcon = $('.location-icon')
+      var urlForIcons = 'assets/images/projections/location-icons/'
       switch (title) {
         case 'commons':
+            titleIcon.attr('src',urlForIcons+'icon_commons.png');
             titleElement.html('Commons');
             break;
         case 'westbank':
+            titleIcon.attr('src',urlForIcons+'icon_cedarriverside.png');
             titleElement.html('Westbank');
             break;
         case 'littleafrica':
+            titleIcon.attr('src',urlForIcons+'icon_littleafrica.png');
             titleElement.html('Little Africa');
             break;
         case 'rondo':
+            titleIcon.attr('src',urlForIcons+'icon_rondo.png');
             titleElement.html('Rondo');
             break;
         case 'littlemekong':
+            titleIcon.attr('src',urlForIcons+'icon_littlemekong.png');
             titleElement.html('Little Mekong');
             break;
         case 'lowertown':
+            titleIcon.attr('src',urlForIcons+'icon_lowertown.png');
             titleElement.html('Lowertown');
             break;
       }

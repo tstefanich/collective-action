@@ -222,20 +222,33 @@ body,html{font-size: 50px;background:url(assets/images/projections/background.pn
     transition: opacity 0.5s;
 }
 
+/*********
+Custom Location CSS
+*********/
+body.littleafrica{color:#f4891e;}
+body.littleafrica .title-bar {border-bottom: 3px solid  #f4891e; color: #f4891e;}
+body.littleafrica .footer-bar {border-top: 3px solid  #f4891e; color: #f4891e;}
+body.littleafrica .page .container { border: 3px solid  #f4891e; color:#8bc53f;}
+body.littleafrica .page .container .prep-time-text { color:#f4891e;}
+body.littleafrica .page .container .prep-time-text .prep-time {color: #ffaaaa;}
+body.littleafrica .page .container .prep-time-text .task-time {color: #ffaaaa;}
+body.littleafrica .page .container .currentTask{color:#8bc53f;}
+body.littleafrica .page .container .title{color:#f4891e;}
+
+body.westbank{color:#f05a28;}
+body.westbank .title-bar {border-bottom: 3px solid  #f05a28; color: #f05a28;}
+body.westbank .footer-bar {border-top: 3px solid  #f05a28; color: #f05a28;}
+body.westbank .page .container { border: 3px solid  #f05a28; color:#8c99ff;}
+body.westbank .page .container .prep-time-text { color:#f05a28;}
+body.westbank .page .container .prep-time-text .prep-time {color: #c6b700;}
+body.westbank .page .container .prep-time-text .task-time {color: #c6b700;}
+body.westbank .page .container .currentTask{color:#8c99ff;}
+body.westbank .page .container .title{color:#f05a28;}
 
 
 body.commons { color:#ef5928; }
 body.westbank {}
 
-
-body.littleafrica{color:#ef5928;}
-body.littleafrica .title-bar {border-bottom: 3px solid  #f05a28; color: #ef5928;}
-body.littleafrica .footer-bar {border-top: 3px solid  #f05a28; color: #ef5928;}
-body.littleafrica .page .container { border: 3px solid  #f05a28; color:#8c99ff;}
-body.littleafrica .page .container .prep-time-text { color:#ef5928;}
-body.littleafrica .page .container .prep-time-text .prep-time {color: #c6b700;}
-body.littleafrica .page .container .prep-time-text .task-time {color: #c6b700;}
-body.littleafrica .page .container .currentTask{color:#8c99ff;}
 
 
 body.rondo {}
@@ -283,7 +296,7 @@ body.lowertown {}
      </div>
      <div class="container" style="padding-top:0;">
         <div class="inner-container">
-	    	<h2 style="margin-top:0;">Team Scores</h2>
+	    	<h2 style="margin-top:0;" class="title">Team Scores</h2>
 				<div class="teamScoreBoard">calculating scores...</div>
 	    </div>
      </div>
@@ -291,7 +304,7 @@ body.lowertown {}
 </div>
 
 <div class="title-bar">
-  <div class="col-lg-4" style="font-size: 20px;margin-top: 13px;"><span class="location-title">{{setLocation}}</spam></div>
+  <div class="col-lg-4" style="font-size: 20px;margin-top: 13px;"><img class="location-icon" src="" style="    height: 24px;margin-right: 7px;top:-3px;"><span class="location-title">{{setLocation}}</span></div>
 	<div class="col-lg-4">Collective Action!</div>
   <div class="col-lg-4" style="font-size: 20px;margin-top: 13px;">#collectiveaction</div>
 </div>

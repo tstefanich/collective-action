@@ -16,6 +16,7 @@ function search(array, key, prop){
     var tempArray = [];
     for (var i=0; i < array.length; i++) {
         // console.log(array[i][prop]);
+        //if (array[i][prop] <= Maxkey && array[i][prop] >= minkey) {
         if (array[i][prop] <= key) {
             tempArray.push(array[i]);
         } else if(array[i][prop] == 'all'){
@@ -187,6 +188,8 @@ var gameProjection = {
 
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
+          gameProjection.addLocationClassToBody();
+          
           time = new Date().getTime();//store the current time
           // this.getNewTask();
           // this.newGame()
@@ -232,6 +235,9 @@ var gameProjection = {
 
           })
 
+     },
+     addLocationClassToBody:function(){
+      $('body').addClass(GAME_LOCATION);
      },
      parseTitleUrlParamater:function(){
       var title = $('.location-title').text();

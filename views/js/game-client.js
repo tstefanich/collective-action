@@ -62,7 +62,7 @@ socket.on('connect', function() {
     //update locationsVisited
     var getUser = store.get('user');
     // getUser.locationsVisited = []; // for testing...
-    // console.log('getUser', getUser.locationsVisited);
+    console.log('getUser', getUser);
     check = getUser.locationsVisited.map(function(e) { return e.location; }).indexOf(GAME_LOCATION);
     //getUser.locationsVisited.indexOf(GAME_LOCATION) // use this if we dont want to record connection time
     if(check == -1){ //we havnt been here yet
@@ -71,7 +71,8 @@ socket.on('connect', function() {
         time: Date.now()
       }
       getUser.locationsVisited.push(locObj)
-      socket.emit('updateLocationsVisited',getUser)
+      socket.emit('updateLocationsVisited',getUser) //database call
+
       store.set('user', getUser)
 
     }
@@ -88,7 +89,7 @@ socket.on('reconnect', function() {
 
     $('.page').css('background-image','url(assets/images/client/newGame.png)')
     $('.bottomHalf').html( '')
-    
+
 })
 
 socket.on('newGame', function() {
@@ -116,7 +117,7 @@ socket.on('myTurn', function(taskToPlay) {
     // $('.page').css('background-color','green')
 
     if(taskToPlay.players == 'all'){
-      $('.page').css('background-image','url(assets/images/client/mySoon.png)') //for testing until this page exists
+      $('.page').css('background-image','url(assets/images/client/everyone.png)') 
 
     }else{
       $('.page').css('background-image','url(assets/images/client/myTurn.png)')

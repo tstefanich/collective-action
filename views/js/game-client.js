@@ -117,12 +117,11 @@ socket.on('myTurn', function(taskToPlay) {
     // $('.page').css('background-color','green')
 
     if(taskToPlay.players == 'all'){
-      $('.page').css('background-image','url(assets/images/client/everyone.png)') 
-
+      $('.page').css('background-image','url(assets/images/client/everyone.png)')
     }else{
       $('.page').css('background-image','url(assets/images/client/myTurn.png)')
-
     }
+
     $('.bottomHalf').html( taskToPlay.task )
 
     // trigger sound notification

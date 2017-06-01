@@ -393,10 +393,11 @@ var gameProjection = {
                       $('#sound-cheers')[0].play();
                       break;
                   case 'end-task':
-                      self.setStateAndTime('end-score', self.TimeEndScore);
+                      //self.setStateAndTime('end-score', self.TimeEndScore);
+                      self.setStateAndTime('reset', self.TimeReset);
                       break;
                   case 'end-score':
-                      self.setStateAndTime('reset', self.TimeReset);
+                      //self.setStateAndTime('reset', self.TimeReset);
                       break;
                   case 'reset':
                       socket.emit('resetViews', self.currentPlayers)
@@ -577,16 +578,16 @@ var gameProjection = {
         results.forEach(function(result){
           var teamString =''
           if(result.team == 1){
-           teamString = '<p> <img style="height:70px" src="assets/images/teamicons/1.png"> Team 1 (Earth) &#8212; '
+           teamString = '<div style="color:#97c355"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/3.png"> Earth</p> '
           }else if(result.team == 2){
-            teamString = '<p> <img style="height:70px" src="assets/images/teamicons/2.png"> Team 2 (Water) &#8212; '
+            teamString = '<div style="color:#4baaf8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/1.png"> Water</p> '
           }else if(result.team == 3){
-            teamString = '<p> <img style="height:70px" src="assets/images/teamicons/3.png"> Team 3 (Wind) &#8212; '
+            teamString = '<div style="color:#e88f3d"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/4.png"> Fire</p> '
           }else if(result.team == 4){
-            teamString = '<p> <img style="height:70px" src="assets/images/teamicons/4.png"> Team 4 (Fire) &#8212; '
+            teamString = '<div style="color:#8e98f8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/2.png"> Air</p> '
           }
 
-          appendData += teamString + result.score + '</p>'
+          appendData += teamString+'<p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>'
         })
 
         $('.teamScoreBoard').html(appendData)

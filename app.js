@@ -95,7 +95,7 @@ var hbs = exphbs.create({
           var out = ''
 
           for(var i=0, l=locationsVisitedArray.length; i<l; i++) {
-            out += locationsVisitedArray[i].location + ", ";
+            out += locationsVisitedArray[i].location + " ";
           }
 
           return out;
@@ -354,8 +354,12 @@ io.on('connection', function(socket) {
             id: socket.id,
             userObject: socket.userObject
         }
-        io.emit('addAvatar', user)
     });
+
+    socket.on('addAvatarClient', function(user){
+      user.id = socket.id;
+      io.emit('addAvatar', user)
+    })
     console.log('socket connected:', socket);
 
 ////////////////////////////
@@ -390,7 +394,9 @@ io.on('connection', function(socket) {
                 // console.log(connections[socketID]);
                 var user = {
                     id: socketID,
-                    calculatedWaitTime: Date.now() - connections[socketID].userObject.locationWaitTime,
+                    //toggle the below for local vs servertime
+                    // calculatedWaitTime: Date.now() - connections[socketID].userObject.locationWaitTime,
+                    calculatedWaitTime: connections[socketID].userObject.totalLocalWaitTime,
                     userObject: connections[socketID].userObject
                 }
                 decendingUsers.push(user)
@@ -406,6 +412,7 @@ io.on('connection', function(socket) {
 
         return decendingUsers;
     }
+
 
     socket.on('getAllUsers', function(roomName, callback) {
         var users = allUsersInRoom(roomName);
@@ -502,8 +509,6 @@ io.on('connection', function(socket) {
             userObject: socket.userObject
         }
         io.emit('removeAvatar', user)
-
-
     });
 
 });

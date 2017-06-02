@@ -48,6 +48,21 @@ function currentUserInfo() {
     return ui;
 }
 
+function updateWaitTime(resetToggle){
+  var getUser = store.get('user')
+  if(resetToggle == 'reset' || getUser.totalLocalWaitTime == undefined){
+    getUser.totalLocalWaitTime = 0; //reset to 0
+  }else{
+    getUser.totalLocalWaitTime += (Date.now() - getUser.connectionTime)
+  }
+  getUser.connectionTime = Date.now(); // always reset this time so its fair for everyone...
+  console.log('getUser',getUser);
+  store.set('user', getUser)
+
+  socket.emit('updateUser', currentUserInfo()) //send updated userinfo to the server to store on the socket object
+
+}
+
 //reload the view when the app boots up & this page connects
 socket.on('reload', function() {
     location.reload();
@@ -58,11 +73,12 @@ socket.on('connect', function() {
   //  console.log(socket);
     console.log('connected to the server as: ' + socket.id);
     socket.emit('updateUser', currentUserInfo())
+    socket.emit('addAvatarClient', currentUserInfo())
 
-    //update locationsVisited
     var getUser = store.get('user');
-    // getUser.locationsVisited = []; // for testing...
-    console.log('getUser', getUser);
+
+    getUser.connectionTime = Date.now();
+
     check = getUser.locationsVisited.map(function(e) { return e.location; }).indexOf(GAME_LOCATION);
     //getUser.locationsVisited.indexOf(GAME_LOCATION) // use this if we dont want to record connection time
     if(check == -1){ //we havnt been here yet
@@ -73,10 +89,10 @@ socket.on('connect', function() {
       getUser.locationsVisited.push(locObj)
       socket.emit('updateLocationsVisited',getUser) //database call
 
-      store.set('user', getUser)
-
     }
-    // console.log('getUser2', getUser);
+    console.log('getUser prestore', getUser);
+    store.set('user', getUser)
+
 
     //resetViews
     $('.page').css('background-image','url(assets/images/client/newGame.png)')
@@ -92,7 +108,9 @@ socket.on('reconnect', function() {
 
 })
 
+
 socket.on('newGame', function() {
+    updateWaitTime();
     // $('.waitingNext').html('')
     console.log('~~~~~~NEWGAME!');
     window.parent.document.title = GAME_LOCATION + '🚫' + socket.id
@@ -103,6 +121,7 @@ socket.on('newGame', function() {
 })
 
 socket.on('myTurn', function(taskToPlay) {
+    updateWaitTime('reset');
 
     //Add Points to the client side user object.
     var getUser = store.get('user');

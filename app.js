@@ -336,6 +336,7 @@ socket.io && Queue
 **************************************/
 var server = require('http').createServer();
 var io = require('socket.io')(server);
+var connections;
 
 //liveReload views on nodemon auto server reboot
 setTimeout(function() {
@@ -344,32 +345,10 @@ setTimeout(function() {
 }, 2000)
 
 io.on('connection', function(socket) {
-    socket.on('updateUser', function(userInfo) {
-        socket.join(userInfo.room)
-        // store the username in the socket session for this client socket
-        socket.userObject = userInfo.userObject;
-        socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
-        // console.log("userInfo", userInfo);
-        var user = {
-            id: socket.id,
-            userObject: socket.userObject
-        }
-    });
-
-    socket.on('addAvatarClient', function(user){
-      user.id = socket.id;
-      io.emit('addAvatar', user)
-    })
-    console.log('socket connected:', socket);
-
-////////////////////////////
-// This queue version is based on the temp property 'locationWaitTime' in the user object which is attached to the socket above. This is used instead ofthe io.sockets.socket.handshake time so it can be reset to Date.now() if that user is called to play.
-///////////////////////////
-
-    var connections = io.sockets.sockets //all connections global, below functions are reliant on this.
+    connections = io.sockets.sockets //all connections global, below functions are reliant on this.
     // console.log('all connections:',connections);
 
-    function allUsersInRoom(roomName){
+    function allUsersInRoom(roomName){ //list all the users in the room with socket ID
       var roomUsers = []
       for (var socketID in connections) { //loop over all the user objects
         if (connections[socketID].userObject != null && connections[socketID].rooms[roomName]) { //make sure were not looking at the projection and make sure we are looking at users logged into location
@@ -413,6 +392,23 @@ io.on('connection', function(socket) {
         return decendingUsers;
     }
 
+
+    socket.on('updateUser', function(userInfo) { //update the userObject attached to the users socket connection && join a specific location
+        socket.join(userInfo.room)
+        // store the username in the socket session for this client socket
+        socket.userObject = userInfo.userObject; //attach the userObject to the socket
+        // socket.userObject.locationWaitTime = Date.now(); //add a temp key/value to track how long they have been waiting at this location.
+        // console.log("userInfo", userInfo);
+        // var user = {
+        //     id: socket.id,
+        //     userObject: socket.userObject
+        // }
+    });
+
+    socket.on('addAvatarClient', function(user){ //forward the add onto the projection.
+      user.id = socket.id;
+      io.emit('addAvatar', user)
+    })
 
     socket.on('getAllUsers', function(roomName, callback) {
         var users = allUsersInRoom(roomName);
@@ -466,7 +462,6 @@ io.on('connection', function(socket) {
 
       // console.log('!',currentTask);
 
-      ////////////////////////////
       // get the users who have waited the longest
       ///////////////////////////
         var returnPriorityUsers;
@@ -480,15 +475,15 @@ io.on('connection', function(socket) {
 
           returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
           console.log('play selections:', returnPriorityUsers);
-          //reset the waittime to Date.now() if we were chosen.
-          for (var socketID in connections) {
-              // console.log(connections[socketID].id);
-              returnPriorityUsers.forEach(function(element) { //this could be more efficent.
-                  if (connections[socketID].id == element.id) {
-                      connections[socketID].userObject.locationWaitTime = Date.now();
-                  }
-              })
-          }
+          //reset the waittime to Date.now() if we were chosen. ( no longer needed if doing it by local wait time)
+          // for (var socketID in connections) {
+          //     // console.log(connections[socketID].id);
+          //     returnPriorityUsers.forEach(function(element) { //this could be more efficent.
+          //         if (connections[socketID].id == element.id) {
+          //             connections[socketID].userObject.locationWaitTime = Date.now();
+          //         }
+          //     })
+          // }
         }
 
         //notify users that it's their turn!
@@ -511,19 +506,15 @@ io.on('connection', function(socket) {
         io.emit('removeAvatar', user)
     });
 
+console.log('socket connected:', socket);
 });
 server.listen(3000, function() {
     console.log('socket.io server listening on port 3000')
 });
 
-
-
 /************************************
-
 MISC
-
 ************************************/
-
 
 module.exports = {
     app: function(db) {

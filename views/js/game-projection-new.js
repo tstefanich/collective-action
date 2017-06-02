@@ -186,6 +186,7 @@ var gameProjection = {
      TimeEndScore: 7000,
      TimeReset: 250,
 
+     avatarLimit:300,
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           gameProjection.addLocationClassToBody();
@@ -202,8 +203,12 @@ var gameProjection = {
               socket.emit('getAllUsers',GAME_LOCATION, function(users){
                 setTimeout(function(){
                   users.forEach(function(user){
-                    var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width), random(0,height))
-                    avatars.push(a)
+                    if(avatars.length >= gameProjection.avatarLimit){
+                      return;
+                    } else {
+                      var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+                      avatars.push(a)
+                    }
                   })
                 },2000);
               })
@@ -216,8 +221,12 @@ var gameProjection = {
 
           socket.on('addAvatar',function(user){
             console.log('addAvatar',user);
-            var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width), random(0,height))
-            avatars.push(a)
+            if(avatars.length >= gameProjection.avatarLimit){
+              return;
+            } else {
+              var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+              avatars.push(a)
+            }
           })
           socket.on('removeAvatar',function(user){
             console.log('removeAvatar',user);
@@ -885,7 +894,7 @@ function avatar(path,id,x,y){
   this.avatarGrow = function(){
     if (this.time >= this.endTime)
     {
-      this.state = 'normal';
+      this.state = 'avatarIsWalking';
     }
 
     var elapsed =  this.time - this.startTime;
@@ -900,7 +909,7 @@ function avatar(path,id,x,y){
   this.avatarShrink = function(){
     if (this.time >= this.endTime)
     {
-      this.state = 'normal';
+      this.state = 'avatarIsWalking';
       this.readyRemove = true;
     }
 
@@ -920,12 +929,14 @@ function avatar(path,id,x,y){
       this.previousY = this.y;
   },
   this.display = function(){
+    console.log()
 
     this.time = performance.now();
 
     this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
     this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
 
+   
     if(this.image.width != 1){ // this necessary until the image is loaded
 
       switch(this.state) {
@@ -934,6 +945,9 @@ function avatar(path,id,x,y){
           break;
         case 'avatarIsShrinking':
           this.avatarShrink();
+          break;
+        case 'avatarIsWalking':
+          //this.avatarShrink();
           break;
       }
 

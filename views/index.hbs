@@ -173,6 +173,9 @@ Homescreen Page
           <div class="close " style="display:none;"></div>
           <div class="title" style="margin-left: 0;text-align: center;">Collective Action!</div>
           <a class="main-menu more-details" href="#menu"></a>
+          <a class="main-menu-share more-details" href="#menu-share"></a>
+
+
      </div>
 
      <!-- Content -->
@@ -181,6 +184,23 @@ Homescreen Page
           <!--<a id="playGame" class="project-launcher btn btn-default more-details artwork" data-project-url="game-client" href="#ucla-game" role="button">Play Now!</a>-->
 
      </div>
+     <div class="stats">
+          <div class="top">
+               <div class="col-xs-3"></div>
+               <div class="col-xs-3">236</div>
+               <div class="col-xs-3">8</div>
+               <div class="col-xs-3">2</div>
+          </div>
+          <div>
+               <div class="col-xs-3">Air<br>Team</div>
+               <div class="col-xs-3">Team<br>Actions</div>
+               <div class="col-xs-3">My<br>Actions</div>
+               <div class="col-xs-3">Locations<br>Visited</div>
+          </div>
+
+
+     </div>
+
 
      <!-- Footer -->
      <div class="intro-footer">
@@ -225,8 +245,27 @@ Menu Page
           <!--<a class="more-details" href="#map">Locations</a>-->
           <!--<a class="more-details" href="#game-scores">Scoreboard</a>-->
           <a class="more-details" href="#how-to-play">How to Play</a>
+          <a class="more-details" href="#game-scores">Scoreboard</a>
           <a class="more-details" href="#about">About</a>
           <a class="more-details logout" href="#log-out">Log Out</a>
+     </div>
+
+</div>
+
+
+<!--////////////
+Menu Share Page
+///////////--->
+<div class="page menu-share">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close "></div><div class="title">Share Your Avatar</div></div>
+
+     <!-- Content -->
+     <div class="container" style="padding-top: 50px;">
+          <a id="email" class="social-media" href="mailto: ?subject=<?php echo $title; ?>&amp;body=<?php echo $permalink ?>" target="_blank" >Email</a>
+          <a id="twitter" class="social-media" href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $permalink ?>&amp;source=" target="_blank" >Twitter</a>
+          <a id="facebook" class="social-media" href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $permalink ?>&amp;t=<?php echo $title ?>" target="_blank" >Facebook</a>
+          <a href="http://www.tumblr.com/share?v=3&amp;u=<?php echo $permalink ?>&amp;t=<?php echo $title; ?>&amp;s=" target="_blank" id="tumblr" class="social-media" >Tumblr</a>
      </div>
 
 </div>
@@ -237,7 +276,7 @@ Menu For Playtest Page
 ///////////--->
 <div class="page playtest-menu">
      <!-- Top Nav Bar -->
-     <div class="nav"><div class="close "></div><div class="title">Which room are you in?</div></div>
+     <div class="nav"><div class="close "></div><div class="title">Which location are you at?</div></div>
 
      <!-- Content -->
      <div class="container" style="padding-top: 50px;">
@@ -285,13 +324,13 @@ About Page
 
      <!-- Content -->
      <div class="container">
-          <img style="width: 100%;" src="assets/images/projections/title.png">
+          <img style="width: 100%;" src="assets/images/about/collectiveaction_avatars-2.jpg">
           <p><i>Collective Action!</i> invites you to work together with other participants to perform creative, collective actions responding to climate change issues. Start by using your phone to explore the Collective Action! mobile website, create a unique avatar, join a team, navigate to our physical game sites (located at multiple Northern Spark hubs), and prepare to perform! For every action you perform over the course of the night, you’ll earn a point for yourself and your team, which you can track on the website’s game leaderboard.</p>
           <p>&nbsp;</p>
-          <p><img style="width: 100%;" src="assets/images/about/sketch.jpg"></p>
+          <p><img style="width: 100%;" src="assets/images/about/spark_playtest_red.jpg"></p>
           <p>Each <i>Collective Action!</i> game site will activate the climate change theme for its given Northern Spark location, making each instance of Collective Action! a completely unique experience in performance and play. At the <i>Collective Action!</i> site in the water-themed location Little Mekong, you might work together with the entire audience to perform a rainstorm, or with two or three other players to envision a futuristic water-filtration system! </p>
           <p>&nbsp;</p>
-          <p><img style="width: 100%;" src="assets/images/about/gameplay.jpg"></p>
+          <p><img style="width: 100%;" src="assets/images/about/spark_playtest_red2.jpg"></p>
           <p></i>Collective Action!</i> draws inspiration from the expansive history of non-competitive group games ranging from the New Games Foundation, to fluxus experiments and performances, and earth day activities. Explore: how can your actions as an individual have a larger impact when they are performed in collaboration with others?</p>
           <p>&nbsp;</p>
           <h2 style="color:#f05a28">The Team</h2>

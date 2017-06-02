@@ -181,7 +181,7 @@ fieldset[disabled] .btn-default.focus {
 
 
 .avatar-image {
-    margin-top:62px;padding-top:0;text-align: center;height:100%;background-repeat:no-repeat;background-position:center center;background-size: contain;
+   margin-bottom: 17px; margin-top:62px;padding-top:0;text-align: center;height:100%;background-repeat:no-repeat;background-position:center center;background-size: contain;
 }
 .regenerate-avatar-image{
     background-repeat:no-repeat;background-position:center center;background-size: contain;
@@ -292,7 +292,7 @@ button:focus {
 
 .main-menu{
     position:absolute;
-    right:0;
+    left: 0;
     top:3px;
     background-position: center center;
     background-image:url('/assets/images/menu.png') ;
@@ -302,10 +302,32 @@ button:focus {
     width:40px;
     display: block;
 }
-.page.menu a{
+
+.main-menu-share{
+    position:absolute;
+    right: 0;
+    top:5px;
+    background-position: center center;
+    background-image:url('/assets/images/menu-share.png') ;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height:40px;
+    width:40px;
+    display: block;
+}
+.page.menu a, .page.menu-share a{
      display:block;border-bottom:2px solid #f05a28;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
 }
 
+.stats{
+    line-height: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+
+}
+.stats .top{    font-size: 28px;
+    line-height: 40px;}
 .page.playtest-menu a{
      display:block;border-bottom:2px solid #f05a28;padding-top:15px;padding-bottom:15px;text-align:center;width:100%;text-transform:uppercase;
 }
@@ -836,8 +858,8 @@ Map
     height: 100%
 }
 .info-window {
-    font-size: 12px;
-    color: white;
+    font-size: 16px;
+    color: #0caaff;
     width: 151px;
 }
 .info-window-image {

@@ -220,7 +220,7 @@ var allCircles = [];
 
 // This could be a json that gets loaded in but I'm not sure if its needed anywhere else besides on the phone...
 var allLocations = [
-  {
+ /* {
     url:"location-1",
     name: "Ben's House",
     lat: 44.957124,
@@ -229,7 +229,8 @@ var allLocations = [
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
     googleMapsLink: "https://www.google.com/maps/place/2438+Grand+Ave+S,+Minneapolis,+MN+55405/",
     description: "Ben Moren is a Minneapolis based media artist working at the intersection of filmmaking, performance, and creative coding. His projects investigate the disappearing separation between the digital and natural worlds. He has created site specific and mixed reality projects for the Northern Spark Festival in Minneapolis, Kultur Park in Berlin, and the Weisman Art Museum. He has exhibited at the Soap Factory, the Minneapolis Institute of Arts, the Chicago Artists Coalition, and the Beijing Film Academy. He co-founded and facilitates the WZFR, an experimental rural filmmaking residency in western Wisconsin. He is an Assistant Professor at the Minneapolis College of Art and Design teaching in the Media Arts department and the Web+Multimedia Environments major.",
-    image:'bens-house.jpg'
+    image:'bens-house.jpg',
+    icon:'white-pin.png',
 
   },
   {
@@ -241,7 +242,8 @@ var allLocations = [
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
     googleMapsLink:"https://www.google.com/maps/place/1641+La+Fayette+Rd,+Los+Angeles,+CA+90019/",
     description: "Tyler Stefanich (b.1985) is an artist and designer. His work, through installations and performances, uses software-based systems to explore issues related to history, memory and identity. Stefanich received a BFA in Interactive Media from the Minneapolis College of Art and Design, and earned an MFA from UCLA in Media Art. Currently he lives and works in Los Angeles, California, as manager of the UCLA Game Lab, a creative research center that combines art and technology as well as Web Director at Northern Lights.mn, a media arts organization based in Minnesota.",
-    image:'tylers-house.jpg'
+    image:'tylers-house.jpg',
+    icon:'white-pin.png',
   },
   {
     url:"location-3",
@@ -252,7 +254,8 @@ var allLocations = [
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
     googleMapsLink: "https://www.google.com/maps/place/2501+Stevens+Ave,+Minneapolis,+MN+55404/",
     description: "The Minneapolis College of Art and Design (MCAD) is a private, nonprofit four-year and postgraduate college specializing in the visual arts. Located in the Whittier neighborhood of Minneapolis, Minnesota, United States, MCAD currently enrolls more than 700 students offering education in painting, drawing, animation, entrepreneurial studies, sculpture, printmaking, papermaking, photography, filmmaking, illustration, graphic design, book arts, furniture design, liberal arts, comic art, web design, and sustainable design. MCAD is one of just a few major art schools to offer a major in comic art.",
-    image:'mcad.jpg'
+    image:'mcad.jpg',
+    icon:'white-pin.png',
   },
   {
     url:"location-4",
@@ -263,8 +266,97 @@ var allLocations = [
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
     googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
     description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
-    image:'ucla.jpg'
+    image:'ucla.jpg',
+    icon:'white-pin.png',
+
+  },
+*/
+
+
+
+  {
+    url:"commons",
+    name: "Commons",
+    lat:  44.975785, 
+    lon: -93.261513,
+    radius: .16,
+    timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
+    googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
+    description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
+    image:'ucla.jpg',
+    icon:'icon_commons.png',
+  },
+  {
+    url:"westbank",
+    name: "Westbank",
+    lat:  44.969050, 
+    lon: -93.246891,
+    radius: .16,
+    timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
+    googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
+    description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
+    image:'ucla.jpg',
+    icon:'icon_cedarriverside.png',
+  },
+  {
+    url:"littleafrica",
+    name: "Little Africa",
+    lat:  44.956528, 
+    lon: -93.166645,
+    radius: .16,
+    timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
+    googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
+    description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
+    image:'ucla.jpg',
+    icon:'icon_littleafrica.png',
+  },
+  {
+    url:"rondo",
+    name: "Rondo",
+    lat:  44.954729, 
+    lon: -93.149774,
+    radius: .16,
+    timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
+    googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
+    description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
+    image:'ucla.jpg',
+    icon:'icon_rondo.png',
+  },
+  {
+    url:"littlemekong",
+    name: "Little Mekong",
+    lat:  44.955431, 
+    lon: -93.116884,
+    radius: .16,
+    timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
+    googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
+    description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
+    image:'ucla.jpg',
+    icon:'icon_littlemekong.png',
+  },
+  {
+    url:"Lowertown",
+    name: "Lowertown",
+    lat:  44.949736,  
+    lon: -93.084645,
+    radius: .16,
+    timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
+    googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
+    description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
+    image:'ucla.jpg',
+    icon:'icon_lowertown.png',
   }
+
+
+
+
+
+//commons:
+//Westbank: 44.969050, -93.246891
+//Little Africa: 44.956528, -93.166645
+//Rondo: 44.954729, -93.149774
+//Little Mekong: 44.955431, -93.116884
+//Lowertown: 44.949736, -93.084645
 ]
 
 function showArtworkClose(){
@@ -387,7 +479,7 @@ if (navigator.geolocation) {
 function resizeImages(){
       console.log('window loaded');
       var newHeight = $(window).height();
-      newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) ;
+      newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) - 36 -60 ;
 
       // Intro Slide show & Signup
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
@@ -1132,13 +1224,13 @@ function initMap() {
         position: new google.maps.LatLng(-35, 151),
         shadowStyle: 0,
         padding: 12,
-        backgroundColor: 'rgb(0,0,0)',
+        backgroundColor: 'rgb(255,255,255)',
         borderRadius: 4,
         maxWidth: 183,
         minWidth: 183,
         //arrowSize: 10,
         borderWidth: 2,
-        borderColor: '#ffffff',
+        borderColor: '#f05a28',
         disableAutoPan: true,
         hideCloseButton: true,
         //maxheight:'auto',
@@ -1186,10 +1278,10 @@ function initMap() {
             locationName: allProjects[i].locationName,
             //content: data.name,
             icon: {
-                url: './assets/images/maps/white-pin.png', // url
-                scaledSize: new google.maps.Size(50, 50), // scaled size
+                url: './assets/images/maps/'+allProjects[i].icon, // url
+                scaledSize: new google.maps.Size(36, 50), // scaled size
                 origin: new google.maps.Point(0,0), // origin
-                anchor: new google.maps.Point(25,50) // anchor
+                anchor: new google.maps.Point(18,50) // anchor
                },
             //zone:data.zone,
             zIndex: 9,
@@ -1267,6 +1359,7 @@ function parseLocations(json) {
            locationRadius: json[i].radius,
            googleMapsLink: json[i].googleMapsLink,
            description:json[i].description,
+           icon:json[i].icon,
            distance: 9999,
        }
 

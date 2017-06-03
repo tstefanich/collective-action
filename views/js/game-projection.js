@@ -523,7 +523,7 @@ var gameProjection = {
         // This need to be changed not to grab specific number of connections but only task that have a minimum number of connections
         searchResults = [];
       } else {
-        searchResults = search(allTasks, gameProjection.currentNumberOfConnections,'players')
+        searchResults = search(allTasks, gameProjection.currentNumberOfConnections,'playersMin')
         //searchResults = allTasks[getRandomInt(0,allTasks.length)];
       }
       // console.log(ameProjection.currentTask.time);
@@ -714,14 +714,14 @@ function preload(){
 }
 
 function setup() {
+  pixelDensity(1);
   sound = loadSound('assets/audio/pop.mp3');
   soundReverse = loadSound('assets/audio/popReverse.mp3');
 
   createCanvas(windowWidth,windowHeight)
-  for (var i = 0; i < 30; i++) {
+  //for (var i = 0; i < 30; i++) {
     // var a = loadImage('avatars/'+ Math.ceil(Math.random()*294)+'.png')
-
-  }
+  //}
 
 }
 
@@ -737,47 +737,6 @@ function draw() {
     avatars[i].display();
     if(avatars[i].readyRemove == true){avatars.splice(i, 1); }
   }
-
-
-
-
-
-
-
-  // noLoop();
-
-  // if(count >= numAvatars) return;
-
-  // for (var x = cell/5; x < width-cell; x+= cell ) {
-  //   for (var y = cell/5; y < height - cell; y+= cell) {
-  //
-  //     if(Math.random() > 0.5){
-  //       count++
-  //       console.log(count);
-  //       image(avatars[count], x,y,cell*0.75,cell*0.75)
-  //     }
-  //
-  //
-  //   }
-  // }
-
-
-  // for (var i = 0; i < numAvatars; i++) {
-  //   pos = {}
-  //
-  //   pos.x = random(0,width - numAvatars*6)
-  //   pos.y = random(0, height - numAvatars*6)
-  //
-  //   positions.push(pos)
-  // }
-  //
-  // positions.sort(function(a, b) {
-  //   return a.y - b.y
-  // })
-  //
-  // for (var i = 0; i < numAvatars ; i++) {
-  //   image(avatars[i],positions[i].x,positions[i].y, numAvatars*6,numAvatars*6)
-  // }
 
 
 }

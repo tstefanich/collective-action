@@ -457,14 +457,18 @@ io.on('connection', function(socket) {
       ///////////////////////////
         var returnPriorityUsers;
 
-        if(currentTask.players == 'all'){
+        if(currentTask.playersMax == 'all'){
             //choose all
             returnPriorityUsers = allUsersInRoom(currentTask.location) //this prevents the users who have been waiting the longest from being reset when an all player game happens, if we want to reset them, we can use organizeUsersByWaitTime() here instead.
           } else {
           // choose some
           var priorityUsers = organizeUsersByWaitTime(currentTask.location)
 
-          returnPriorityUsers = priorityUsers.slice(0, currentTask.players);
+          if(current.Task.playersMax > returnPriorityUsers.length){
+              returnPriorityUsers = priorityUsers.slice(0, returnPriorityUsers.length);
+          } else {
+            returnPriorityUsers = priorityUsers.slice(0, currentTask.playersMax);
+          }
           console.log('play selections:', returnPriorityUsers);
           //reset the waittime to Date.now() if we were chosen. ( no longer needed if doing it by local wait time)
           // for (var socketID in connections) {

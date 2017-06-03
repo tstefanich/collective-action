@@ -464,8 +464,8 @@ io.on('connection', function(socket) {
           // choose some
           var priorityUsers = organizeUsersByWaitTime(currentTask.location)
 
-          if(current.Task.playersMax > returnPriorityUsers.length){
-              returnPriorityUsers = priorityUsers.slice(0, returnPriorityUsers.length);
+          if(currentTask.playersMax > priorityUsers.length){
+              returnPriorityUsers = priorityUsers;
           } else {
             returnPriorityUsers = priorityUsers.slice(0, currentTask.playersMax);
           }

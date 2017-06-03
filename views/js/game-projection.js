@@ -887,6 +887,7 @@ function avatar(path,id,x,y){
   this.angleCounter = 0;
   this.currentValue = 0;
   this.readyRemove = false;
+  this.avatarSetup = true;
 
   sound.playbackRate = random(.8,1.5);
   sound.play();
@@ -932,6 +933,16 @@ function avatar(path,id,x,y){
     console.log()
 
     this.time = performance.now();
+
+    while (this.avatarSetup){
+      this.x = constrain( map(this.random() ,0,1, -.5,1.5) * width, 0 , width ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
+      this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 + this.avatarHeight , height );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
+
+      if(!collidePointRect(this.x,this.y,500,0,680,860) ){
+        console.log('x:'+this.x + ' y:'+this.y )
+        this.avatarSetup =false;
+        break;
+    } 
 
     this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
     this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));

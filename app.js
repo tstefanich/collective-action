@@ -149,16 +149,7 @@ app.get('/game-projection', function(req, res, next) {
     database.dbInfo(function(results) {
         return res.render('game-projection', {
             'users': results,
-            templateName: 'game-projection'
-        });
-    });
-});
-
-app.get('/game-projection-new', function(req, res, next) {
-    database.dbInfo(function(results) {
-        return res.render('game-projection-new', {
-            'users': results,
-            templateName: 'game-projection-new',
+            templateName: 'game-projection',
             setLocation: req.query.location
         });
     });

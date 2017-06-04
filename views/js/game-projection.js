@@ -199,18 +199,20 @@ var gameProjection = {
 
               //reset state on page refresh / re-connect of game-projection
               socket.emit('resetRoomClients', GAME_LOCATION);
-              socket.emit('getAllUsers',GAME_LOCATION, function(users){
-                setTimeout(function(){
-                  users.forEach(function(user){
-                    if(avatars.length >= gameProjection.avatarLimit){
-                      return;
-                    } else {
-                      var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
-                      avatars.push(a)
-                    }
-                  })
-                },2000);
-              })
+                              
+              setTimeout(function(){
+                socket.emit('getAllUsers',GAME_LOCATION, function(users){
+                    users.forEach(function(user){
+                      if(avatars.length >= gameProjection.avatarLimit){
+                        return;
+                      } else {
+                        var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+                        avatars.push(a)
+                      }
+                    })
+               
+                })
+              },5000);
           });
 
           gameProjection.parseTitleUrlParamater();

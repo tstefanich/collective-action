@@ -1183,3 +1183,13 @@ h2.project-title {
     -webkit-user-select: none;
     /* Disable selection/copy in UIWebView */
 }
+
+
+@media (max-width: 380px) {
+  .stats div .team-scores {
+    display: none;
+  }
+  .stats div div{
+    width:33.33333%;
+  }
+}

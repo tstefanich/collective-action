@@ -479,13 +479,22 @@ if (navigator.geolocation) {
 function resizeImages(){
       console.log('window loaded');
       var newHeight = $(window).height();
-      newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) - 36 -60 ;
+      newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) ;
 
       // Intro Slide show & Signup
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
       $('.page.intro .carousel-inner .item img').css('height', newHeight+'px');
       $('.regenerate-avatar-image').css('height', newHeight-100+'px');
       //$('.regenerate-avatar-image').css('background-size', 'auto '+newHeight+'px' );
+
+      // Homescreen
+      $('.avatar-image').css('height', newHeight-20+'px');
+}
+
+function resizeAvatar(){
+      console.log('window loaded');
+      var newHeight = $(window).height();
+      newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) - 36 -60 ;
 
       // Homescreen
       $('.avatar-image').css('height', newHeight-20+'px');
@@ -499,15 +508,27 @@ function generateAvatar(){
 }
 
 
+
+$(document).ready(function(){
+    shareMenu.writeSocialMediaImageToTempCanvas();
+
+});
+
 $(window).resize(function(){
   resizeImages();
+  resizeAvatar();
 
 })
 $(window).load(function(){
+      //shareMenu.onLoadCreateFileIfItDoesNotExsist();
+
       generateAvatar();
 
       // Message for Window Loaded
       resizeImages();
+      resizeAvatar();
+
+      shareMenu.writeSocialMediaLinks();
 
       // setTimeout(function(){
       //  $('#playGame').click() //for testing
@@ -967,12 +988,6 @@ var signUp = {
 
 }
 
-$(document).ready(function(){
-
-
-
-
-});
 
 
 
@@ -1498,6 +1513,114 @@ function zoomInOnMyLocation(){
 }
 
 
+
+function drawImageScaled(img, ctx) {
+   var canvas = ctx.canvas ;
+   var hRatio = canvas.width*.7  / img.width    ;
+   var vRatio =  canvas.height*.7 / img.height  ;
+   var ratio  = Math.min ( hRatio, vRatio );
+   var centerShift_x = ( canvas.width - img.width*ratio ) / 2;
+   var centerShift_y = ( canvas.height - img.height*ratio ) / 2;  
+   //ctx.clearRect(0,0,canvas.width, canvas.height);
+   ctx.drawImage(img, 0,0, img.width, img.height,
+                      centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);  
+}
+
+var shareMenu = {
+  canvas: null,
+  writeSocialMediaImageToTempCanvas: function(){
+    var getUser = store.get('user');
+    if(getUser == undefined){
+        // You are not logged in
+    } else if(!getUser.hasOwnProperty('socialMediaImageSave')){
+
+          var f = new Image();
+          var userAvatar = new Image();
+
+              this.canvas = document.createElement("canvas");
+              var tCtx = this.canvas.getContext("2d");
+              this.canvas.width = 1600;
+              this.canvas.height = 1600;
+
+          tCtx.fillStyle = "white";
+          tCtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+          f.onload = function() {
+             tCtx.drawImage(f, 0,0, 3333, 3333, 0, 0, 1600, 1600);
+
+              userAvatar.onload = function() {
+                  var offsetX = 0.5;   // center x
+                    var offsetY = 0.5;   // center y
+                  //drawImageProp(tCtx, userAvatar, 0, 0, shareMenu.canvas.width, shareMenu.canvas.height, offsetX, offsetY);
+                  drawImageScaled(userAvatar, tCtx );
+                  //tCtx.drawImage(userAvatar,shareMenu.canvas.width/2-userAvatar.width/4,shareMenu.canvas.height/2-userAvatar.height/4, userAvatar.width/2, userAvatar.height/2);
+
+                  console.log('!!!!!');
+                  shareMenu.onLoadCreateFileIfItDoesNotExsist();
+                  shareMenu.writeSocialMediaLinks();
+              };
+              userAvatar.src = '/assets/images/avatars/'+getUser.avatar;
+          };
+          f.src = '/assets/images/share/frame/1.png';
+
+
+    }
+  },
+  onLoadCreateFileIfItDoesNotExsist:function(){
+    var getUser = store.get('user');
+
+    if(getUser == undefined){
+        // You are not logged in
+    } else if(!getUser.hasOwnProperty('socialMediaImageSave')){
+      
+      var img = this.canvas.toDataURL("image/png");
+      $.ajax({
+        type: "POST",
+        url: "share-save",
+        data: { 
+           image: img,
+           userName: getUser.userName
+        }
+      }).done(function(o) {
+        //console.log('saved'); 
+        //console.log(o);
+        getUser = store.get('user');
+        getUser.socialMediaImageSave = 'true';
+        store.set('user', getUser);
+        // If you want the file to be visible in the browser 
+        // - please modify the callback in javascript. All you
+        // need is to return the url to the file, you just saved 
+        // and than put the image in your browser.
+      
+    });
+      
+    } // End if
+  },
+  writeSocialMediaLinks:function(){
+    var getUser = store.get('user')
+
+    var title = encodeURI('#CollectiveAction at #NorthernSpark. Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act');
+    var titleEmail = encodeURI('#CollectiveAction at #NorthernSpark');
+
+    var permalink = encodeURI('http://joincollectiveaction.com/share/FlippyFishFort');
+    var permalinkSave = encodeURI('http://joincollectiveaction.com/assets/images/social-media/ns2017/FlippyFishFort.png');
+    
+    var emailHref = 'mailto:?subject='+ titleEmail + '&body=Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act';
+    var twitterHref = 'https://twitter.com/intent/tweet?text='+ title + '&amp;url='+ permalink +'&amp;source=';
+    var facebookHref = 'http://www.facebook.com/sharer/sharer.php?u='+ permalink +'&amp;t='+ title + '';
+    var tumblrHref = 'http://www.tumblr.com/share/link?url='+ permalink +'&amp;name='+ title + '&amp;s=';
+
+    $('.menu-share .container #email').attr('href' , emailHref);
+    $('.menu-share .container #twitter').attr('href' , twitterHref);
+    $('.menu-share .container #facebook').attr('href' , facebookHref);
+    $('.menu-share .container #tumblr').attr('href' , tumblrHref);
+    $('.menu-share .container #save-button').attr('href' , permalinkSave);
+    $('.menu-share .container #save-button').attr('download' , getUser.unserName);
+
+
+  },
+
+}
 
 
 

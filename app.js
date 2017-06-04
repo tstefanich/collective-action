@@ -34,10 +34,14 @@ require('string.prototype.startswith');
 
 app.use(express.static(__dirname + '/bower_components'));
 app.use(express.static(__dirname + '/views'));
-app.use(express.static(__dirname + '/data'));
+app.use(express.static(__dirname + '/views/assets'));
+
+app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({
+    limit: '5mb',
     extended: true
 }))
+
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 //app.engine('html', require('ejs').renderFile);
 
@@ -132,10 +136,24 @@ app.get('/blank', function(req, res, next) {
 
 });
 
-app.get('/share', function(req, res, next) {
+
+app.get('/share/:avatar', function(req, res, next) {
+        var avatar = req.params.avatar;
+        console.log(avatar);
+
         return res.render('share', {
             templateName: 'share',
-            setAvatar: req.query.avatar
+            setAvatar: avatar
+        });
+});
+
+app.get('/share-test', function(req, res, next) {
+        var avatar = req.params.avatar;
+        console.log(avatar);
+
+        return res.render('share-test', {
+            templateName: 'share',
+            setAvatar: avatar
         });
 });
 // app.get('/p/:tagId', function(req, res) {
@@ -287,6 +305,21 @@ app.post('/check-email', function(req, res) {
     // This was need for successful callback for ajax
     // This should probably be in a callback maybe inside the restoreFile request.... maybe....
     //res.send(req.body);
+});
+
+app.post('/share-save', function(req, res, next) {
+       req.body.image = req.body.image.replace(/^data:image\/png+;base64,/, "");
+       var userName = req.body.userName;
+        //req.body.image = req.body.image.replace(/ /g, '+');
+        if (fs.existsSync('views/assets/images/social-media/ns2017/'+userName+'.png')) {
+            console.log('found file')
+            res.status(200).send('found file'); ;
+        } else {
+            fs.writeFile('views/assets/images/social-media/ns2017/'+userName+'.png', req.body.image, 'base64', function(err) {
+                console.log(err);
+                res.status(200).send("file created"); ;
+            });
+        }
 });
 
 app.post('/get-user', function(req, res) {

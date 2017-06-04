@@ -277,7 +277,7 @@ var allLocations = [
   {
     url:"commons",
     name: "Commons",
-    lat:  44.975785, 
+    lat:  44.975785,
     lon: -93.261513,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
@@ -289,7 +289,7 @@ var allLocations = [
   {
     url:"westbank",
     name: "Westbank",
-    lat:  44.969050, 
+    lat:  44.969050,
     lon: -93.246891,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
@@ -301,7 +301,7 @@ var allLocations = [
   {
     url:"littleafrica",
     name: "Little Africa",
-    lat:  44.956528, 
+    lat:  44.956528,
     lon: -93.166645,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
@@ -313,7 +313,7 @@ var allLocations = [
   {
     url:"rondo",
     name: "Rondo",
-    lat:  44.954729, 
+    lat:  44.954729,
     lon: -93.149774,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
@@ -325,7 +325,7 @@ var allLocations = [
   {
     url:"littlemekong",
     name: "Little Mekong",
-    lat:  44.955431, 
+    lat:  44.955431,
     lon: -93.116884,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
@@ -337,7 +337,7 @@ var allLocations = [
   {
     url:"Lowertown",
     name: "Lowertown",
-    lat:  44.949736,  
+    lat:  44.949736,
     lon: -93.084645,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
@@ -567,6 +567,15 @@ $(window).load(function(){
        generateAvatar();
      });
 
+     // Regenerate Avatar Image
+     $('body').on('tap', '.regenerate-avatar-image', function(e){
+      generateAvatar();
+     });
+      // Regenerate Avatar Image
+     $('body').on('touchstart', '.regenerate-avatar-image', function(e){
+       generateAvatar();
+     });
+
 
      // Links to slide additional info
      $('body').on('touchstart', '.more-details', function(e){
@@ -750,9 +759,10 @@ var signUp = {
      usernameTextFieldIsFilled:false,
      init:function(){
           $("#carousel-sign-up").carousel();
+          // $('.form-control.username').val(generateUsername());
           signUp.eventListeners();
           signUp.checkIfFieldsAreFilled();
-          $('.form-control.username').attr('placeholder', generateUsername())
+          // $('.form-control.username').attr('placeholder', generateUsername())
      },
      goToNextSlide:function(){
           signUp.hideErrorMessages();
@@ -1497,9 +1507,9 @@ function generateUsername(){
   var first = ['Kooky','Sunny','Happy','Rainy','Light','Heavy','Windy','Cloudy','Chipper','Wild','Grumpy','Silly','Active','Sneaky','Jumpy','Flippy','Smelly','Wierd','Strange','Odd', 'Normal', 'Plain', 'Squishy', 'Green','Magenta','Blue','Purple','Nice','Magic','Orange','Cool','Sloppy','Slow','Fast','Hungry','Sleepy','Short','Tall','Peppy','Standing','Sitting','Shiny','Loud', 'Quiet', 'Chirpy','Good','Lumpy','Old', 'Young', 'Big', 'Little', 'Lovely', 'Loopy', 'Floppy', 'Hip', 'Cold', 'Icy', 'Droopy', 'Spotted', 'Stripey', 'Small', 'Huge', 'Tiny', 'Wavy', 'Fun', 'Boring', 'Speedy' ];
 
   var second =
-  ['Worm','Bug','Bird','River','Mountain','Owl','Canoe','Boat','Tree','Turtle','Lake','Otter','Bee','Fly','Wolf','Leaf','Pollen','Pants','Cloud','Raindrop','Iceberg','Heatwave','Backpack','Shoe','Oar','Sail','Grass','Sand','Rock','Water','Sky','Sun','Moon','Planet','Ocean','Nest','Moose','Bear','Ant','Spider','Fish','Plant','Snack','Bike','Earth','Snail', 'Hill', 'Valley', 'Reef', 'Coral', 'Snowshoe', 'Tent', 'Glacier', 'Ice', 'Sea', 'Ship', 'Stone', 'Sandal', 'Root', 'Puddle', 'Lightning', 'Thunder', 'Data', 'Flower' ];
+  ['Worm','Bug','Bird','River','Mountain','Owl','Canoe','Boat','Tree','Turtle','Lake','Otter','Bee','Fly','Wolf','Leaf','Pollen','Pants','Cloud','Raindrop','Iceberg','Heatwave','Shoe','Oar','Sail','Grass','Sand','Rock','Water','Sky','Sun','Moon','Planet','Ocean','Nest','Moose','Bear','Ant','Spider','Fish','Plant','Snack','Bike','Earth','Snail', 'Hill', 'Valley', 'Reef', 'Coral', 'Snowshoe', 'Tent', 'Glacier', 'Ice', 'Sea', 'Ship', 'Stone', 'Sandal', 'Root', 'Puddle', 'Lightning', 'Thunder', 'Data', 'Flower' ];
 
-  var third = ['Dance','Party','Jump','Paddle','Trip','Skip','Walk','Run','Stand','Shout','Stampede','Parade','Event','Race','Commute','Highfive','Hug','Snooze','Nap','Hike','Garden','Friend','Popsicle','Flag','Chant', 'Flight', 'Roll', 'Storm', 'Drawing', 'Painting', 'Sketch', 'Book', 'Farm', 'Song', 'Border', 'Race', 'Activist', 'Action', 'Sign', 'Print', 'Talk', 'Machine', 'System', 'Season', 'Time', 'Task', 'Project', 'Movie', 'Sport', 'Geyser', 'Flow', 'Puddle', 'Group', 'Team', 'Den', 'Fort', 'Thought', 'Journey' ];
+  var third = ['Dance','Party','Jump','Paddle','Trip','Skip','Walk','Run','Stand','Shout','Stampede','Parade','Race','Commute','Highfive','Hug','Snooze','Nap','Hike','Garden','Friend','Popsicle','Flag','Chant', 'Flight', 'Roll', 'Storm', 'Drawing', 'Painting', 'Sketch', 'Book', 'Farm', 'Song', 'Border', 'Race', 'Activist', 'Action', 'Sign', 'Print', 'Talk', 'Machine', 'System', 'Season', 'Time', 'Task', 'Project', 'Movie', 'Sport', 'Geyser', 'Flow', 'Puddle', 'Group', 'Team', 'Den', 'Fort', 'Thought', 'Journey' ];
 
   // console.log('ll',first.length,second.length,third.length);
   r1 = Math.floor(Math.random()*first.length)

@@ -558,7 +558,7 @@ var gameProjection = {
     setupDebugTimes:function(){
         var self = this;
         self.TimeTitle = 1000;
-        self.TimeHighscoresPlayers = 999000;
+        self.TimeHighscoresPlayers = 9999900;
         self.TimeHighscoresTeams = 1000;
         self.TimeGetNumberOfConnectionsTaskPlayers = 500;
         self.TimeSetupGame = 500;

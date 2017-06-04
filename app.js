@@ -419,7 +419,7 @@ io.on('connection', function(socket) {
     })
 
     socket.on('getHighScoreUsers',function(callback){
-      database.getSortedUsers(5,'-score',function(results){
+      database.getSortedUsers(7,'-score',function(results){
         // console.log('highscores',results);
         callback(results)
       });

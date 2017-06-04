@@ -109,9 +109,9 @@ function slideDownPanel(link){
                 $iframe.removeClass('white'); // This is a fix for some of the projects
                 $('.close.artwork').removeClass('black'); // This is a fix for some of the projects
                 $iframe.css('opacity','1');
-              },250);
+              },1);
 
-            }, 750);
+            }, 1);
 
 
 
@@ -185,7 +185,6 @@ var gameProjection = {
      TimeEndTask: 7000,
      TimeEndScore: 7000,
      TimeReset: 250,
-
      avatarLimit:300,
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
@@ -327,11 +326,18 @@ var gameProjection = {
 
       self.numberOfTimesGetDataHasRun = 0;
      },
-
+     writeInvitionToScreen:function(){
+        var textBox = $('.invite-to-performance-area .container .inner-container p');
+        var self = this;
+        var text = 'Players: Come on up!'
+        if(self.currentTask.playersMax == 'all'){
+          text = 'Everyone: Get Ready!'
+        } 
+        textBox.html(text);
+     },
       checkTimer:function(){
            var self = this;
-           if(new Date().getTime())
-           if(new Date().getTime() - time >= self.wait){
+           if(new Date().getTime() - time >= self.wait) {
                 console.log("tick2");//if it is, do something
                 time = new Date().getTime();//also update the stored time
                 switch (self.state) {
@@ -367,6 +373,7 @@ var gameProjection = {
                   case 'setup-game':
                       // self.newGame();
                       self.writeTaskToScreen();
+                      self.writeInvitionToScreen();
                       $('#sound-ding')[0].play();
                       self.setStateAndTime('invite-to-performance-area', self.TimeInviteToPerformanceArea);
                       break;
@@ -551,7 +558,7 @@ var gameProjection = {
     setupDebugTimes:function(){
         var self = this;
         self.TimeTitle = 1000;
-        self.TimeHighscoresPlayers = 1000;
+        self.TimeHighscoresPlayers = 999000;
         self.TimeHighscoresTeams = 1000;
         self.TimeGetNumberOfConnectionsTaskPlayers = 500;
         self.TimeSetupGame = 500;
@@ -563,12 +570,26 @@ var gameProjection = {
         self.TimeEndScore = 1000;
         self.TimeReset = 250;
     },
+    setupDebugPrompts(){
+      var numberOfPlayers = gameProjection.currentNumberOfConnections;
+      searchResults = null;
+      searchResults = search(allTasks, 999,'playersMin')
+      var currentTaskIndex = 0;
+
+      gameProjection.setStateAndTime('start-task',  99999999999999);
+      // console.log(ameProjection.currentTask.time);
+      setInterval(function(){
+        gameProjection.currentTask = searchResults[currentTaskIndex];
+        gameProjection.writeTaskToScreen();
+        currentTaskIndex++;
+      }, 1500);
+    },
     writeHighScoresToScreen:function(){
       socket.emit('getHighScoreUsers',function(results){
         console.log('highScores',results);
         var appendData = ''
         results.forEach(function(result){
-          appendData += '<p> <img style="height:70px" src="assets/images/avatars/'+ result.avatar +'">' + result.userName + ' &#8212; ' + result.score + '</p>';
+          appendData += '<div><p class="align-left" ><img style="height:70px" src="assets/images/avatars/'+ result.avatar +'">' + result.userName + '</p><p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>';
         })
         // console.log(appendData);
         $('.scoreBoard').html(appendData)
@@ -684,7 +705,8 @@ var gameProjection = {
 $(document).ready(function(){ //somethimes this fires twice for whatever reason...
   console.log('load');
   gameProjection.init();
-  //gameProjection.setupDebugTimes();
+  gameProjection.setupDebugTimes();
+  //gameProjection.setupDebugPrompts();
   gameProjection.draw()
 });
 
@@ -911,6 +933,7 @@ function avatar(path,id,x,y){
         console.log('x:'+this.x + ' y:'+this.y )
         this.avatarSetup =false;
         break;
+      }
     } 
 
     this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
@@ -969,17 +992,4 @@ function mousePressed() {
     //avatars.push(a)
 }
 
-function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-     for (var i = 0; i < avatars.length; i++) {
 
-        if(avatars[i].id == 'aaa'){
-          avatars[i].state = 'avatarIsShrinking';
-          avatars[i].startTime = performance.now();
-          avatars[i].endTime = avatars[i].startTime + duration2;
-          soundReverse.playbackRate = random(.8,1.5);
-          soundReverse.play();
-      }
-        }
-  }
-}

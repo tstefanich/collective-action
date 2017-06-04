@@ -1,0 +1,63 @@
+{{> header-game}}
+
+
+<style> body {padding: 0; margin: 0;} </style>
+
+
+
+
+
+
+<script src="assets/javascript/p5.js" charset="utf-8"></script>
+<script src="assets/javascript/p5.sound.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+var count = 1
+var s;
+var frame = []
+var ava = []
+var userAvatar; 
+function preload(){
+  //for (var i = 1; i < 340 ; i++) {
+  //  a = loadImage('avatars/' + i + '.png')
+  //  ava.push(a);
+  //}
+  userAvatar = loadImage('assets/images/avatars/1.png');
+
+
+  for (var i = 1; i < 5; i++) {
+    f = loadImage('assets/images/share/frame/' + i + '.png')
+    frame.push(f)
+  }
+
+}
+
+function setup() {
+  createCanvas(windowWidth,windowHeight)
+  imageMode(CENTER);
+  noLoop(0);
+}
+
+function draw() {
+  background(255);
+
+  f = frame[floor(random(frame.length))]
+  image(f, width/2,height/2,800,800)
+  first = userAvatar;
+  image(first,width/2,height/2, first.width/3, first.height/3);
+  createImageElementOfCanvas();
+
+}
+
+function createImageElementOfCanvas(){
+    var canvas = document.getElementsByTagName("canvas");
+          // // canvas context
+    var context = canvas[0].getContext("2d");
+    var img = canvas[0].toDataURL("image/png");
+    // write on screen
+    document.write('<a href="'+img+'"><img style="border:1px solid red" src="'+img+'"/></a>');
+}
+
+
+</script>
+{{> footer}}

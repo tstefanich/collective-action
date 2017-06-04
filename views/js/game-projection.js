@@ -558,7 +558,7 @@ var gameProjection = {
     setupDebugTimes:function(){
         var self = this;
         self.TimeTitle = 1000;
-        self.TimeHighscoresPlayers = 9999900;
+        self.TimeHighscoresPlayers = 1000;
         self.TimeHighscoresTeams = 1000;
         self.TimeGetNumberOfConnectionsTaskPlayers = 500;
         self.TimeSetupGame = 500;
@@ -705,7 +705,7 @@ var gameProjection = {
 $(document).ready(function(){ //somethimes this fires twice for whatever reason...
   console.log('load');
   gameProjection.init();
-  gameProjection.setupDebugTimes();
+  //gameProjection.setupDebugTimes();
   //gameProjection.setupDebugPrompts();
   gameProjection.draw()
 });
@@ -926,14 +926,26 @@ function avatar(path,id,x,y){
     this.time = performance.now();
 
     while (this.avatarSetup){
-      this.x = constrain( map(this.random() ,0,1, -.5,1.5) * width, 0 , width ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
-      this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 + this.avatarHeight , height );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
+      this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
+      this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
 
-      if(!collidePointRect(this.x,this.y,500,0,680,860) ){
-        console.log('x:'+this.x + ' y:'+this.y )
-        this.avatarSetup =false;
-        break;
-      }
+      if(!collidePointRect(this.x,this.y,(500-100),0,(680+100),860)) {
+            /*
+            After it checks to see if the position is in the middle 
+            it then checks to see if the x and y are inside the screen
+            I offset the detection by 100 for x and 200 for y 
+            We could not use the avatar width or height because 
+            of the animation they start at 0 or 1 pixel so the offset is so small 
+            // that they would still appear offscreen
+            */
+            if(this.x > 100 && this.x < windowWidth - 100 &&
+              this.y > 200 && (this.y) < windowHeight - 200){
+            console.log('x:'+this.x + ' y:'+this.y )
+
+            this.avatarSetup =false;
+            break;
+          }
+       }
     } 
 
     this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));

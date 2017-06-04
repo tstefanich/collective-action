@@ -131,6 +131,13 @@ app.get('/blank', function(req, res, next) {
 
 
 });
+
+app.get('/share', function(req, res, next) {
+        return res.render('share', {
+            templateName: 'share',
+            setAvatar: req.query.avatar
+        });
+});
 // app.get('/p/:tagId', function(req, res) {
 //   res.send("tagId is set to " + req.params.tagId);
 // });

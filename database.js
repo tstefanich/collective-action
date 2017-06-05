@@ -176,6 +176,11 @@ database.getSortedUsers = function(limitNum, sortBy, callback){
 
 }
 
+Array.prototype.hasMin = function(attrib) {
+    return this.reduce(function(prev, curr){ 
+        return prev[attrib] < curr[attrib] ? prev : curr; 
+    });
+ }
 
 database.checkTeamsAndSetTeam = function(callback){
   this.Users.aggregate(
@@ -185,7 +190,11 @@ database.checkTeamsAndSetTeam = function(callback){
     function (err, results) {
       if (err) return handleError(err);
       console.log(results);
-      callback(results);
+
+      var temp = results.hasMin('total');
+      console.log(temp);
+      return callback(null, temp);
+      //callback(JSON.stringify(results));
     });
 }
 

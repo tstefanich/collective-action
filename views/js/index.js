@@ -489,6 +489,9 @@ function resizeImages(){
 
       // Homescreen
       $('.avatar-image').css('height', newHeight-20+'px');
+
+      //Team Singup Page
+      $('.confirmation-sign-up .container').css('height', $(window).height()+'px');
 }
 
 function resizeAvatar(){
@@ -523,6 +526,7 @@ $(window).load(function(){
       //shareMenu.onLoadCreateFileIfItDoesNotExsist();
 
       generateAvatar();
+      updateStatsAndScores();
 
       // Message for Window Loaded
       resizeImages();
@@ -891,7 +895,7 @@ var signUp = {
                     userName: $('input.username').val(),
                     email: $('input.email-address').val().toLowerCase(),
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: 1,
+                    team: $('.confirmation-sign-up .container').attr('data-team-id'),
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
 
@@ -916,13 +920,45 @@ var signUp = {
           // Slide up Main menu / Home
 
      },
+     setAndWriteTeamInfo(teamID){
+        // Add image to 
+        var teamContainer = $('.confirmation-sign-up .container');
+        teamContainer.attr('data-team-id',teamID);
+        teamContainer.css('background-image' , 'url(assets/images/team/'+teamID+'.png)');
+        teamContainer.css('background-position' , 'center center');
+        teamContainer.css('background-size' , 'contain');
+        teamContainer.css('background-repeat' , 'no-repeat');
+
+        // HomeScreen
+        $('.stats .top .team-id').html('<img style="height:30px;margin-top:-8px;margin-bottom:4px;" src="assets/images/teamicons/'+teamID+'.png">')
+
+        var teamText = '';
+        if(teamID == 1){
+          teamText = 'Water<br>Team';
+        } else if(teamID == 2) {
+          teamText = 'Air<br>Team';
+        } else if(teamID == 3) {
+          teamText = 'Earth<br>Team';
+        } else if(teamID == 4) {
+          teamText = 'Fire<br>Team';
+        }
+
+        $('.stats .bottom .team-id').html(teamText)
+
+
+
+     },
      checkTeamsAndSetTeam:function(){
-      $.get("/get-team", function(data){
-           console.log(data);
-           if(data.isEmpty()){
-              $()
-           }
-      });
+      $.ajax({
+        type: "GET",
+        url: "get-team",
+        dataType: 'json'
+
+      }).done(function(data) {
+        //console.log('saved'); 
+        signUp.setAndWriteTeamInfo(data._id);
+    });
+     
      },
      preFillInUserName:function(){
       $('.form-control.username').val(generateUsername());
@@ -946,6 +982,7 @@ var signUp = {
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                          signUp.databaseHasEmail();
                          signUp.preFillInUserName();
+                         signUp.checkTeamsAndSetTeam();
                          if(!signUp.usernameTextFieldIsFilled){
                               signUp.disableContinueButton();
                          }
@@ -1648,13 +1685,48 @@ writeSocialMediaLinks:function(){
     $('.menu-share .container #email').attr('href' , emailHref);
     $('.menu-share .container #save-button').attr('href' , permalinkSave);
     $('.menu-share .container #save-button').attr('download' , getUser.userName);
+
+    $('.menu-share .container #save-button-instagram').attr('href' , permalinkSave);
+    $('.menu-share .container #save-button-instagram').attr('download' , getUser.userName);
     console.log('SOCIALK MEDIA')
     }
   },
 
 }
 
+function updateStatsAndScores(){
+  var getUser = store.get('user');
+  if(getUser){
+    // Team ID 
+    var teamID = getUser.team;
+    signUp.setAndWriteTeamInfo(teamID);
 
+    // My Score
+    var myScore = getUser.score;
+    updateMyScore(myScore);
+
+    // Locations Visited 
+    var locationsVisited = getUser.locationsVisited.length;
+    updateLocationsVisited(locationsVisited);
+
+    //Team score....
+    //var locationsVisited = getUser.locationsVisited.length;
+    //updateLocationsVisited(locationsVisited);
+
+
+
+
+
+  }
+}
+function updateLocationsVisited(numberOfLocations){
+    $('.stats .top .locations-visited').html(numberOfLocations+'/6');
+    //$('.stats .bottom .my-score').html(teamText);
+}
+function updateMyScore(myScore){
+    $('.stats .top .my-score').html(myScore);
+    //$('.stats .bottom .my-score').html(teamText);
+}
 
 function generateUsername(){
 //way of being, things, action

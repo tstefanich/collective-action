@@ -200,6 +200,7 @@ app.get('/database-view', function(req, res, next) {
 
 app.get('/get-team', function(req, res, next) {
     database.checkTeamsAndSetTeam(function(err, response) {
+        console.log(response);
         if (err) {
             return res.status(422).json({
                 error: err.message

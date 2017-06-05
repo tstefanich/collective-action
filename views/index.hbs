@@ -262,11 +262,13 @@ Menu Share Page
 
      <!-- Content -->
      <div class="container" style="padding-top: 50px;">
-          <a id="email" class="social-media" href="mailto: ?subject=<?php echo $title; ?>&amp;body=<?php echo $permalink ?>" target="_blank" >Email</a>
-          <a id="twitter" class="social-media" href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $permalink ?>&amp;source=" target="_blank" >Twitter</a>
+          <a id="save-button" class="social-media" href="/images/myw3schoolsimage.jpg" download="w3logo"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Save Avatar Image</a>
           <a id="facebook" class="social-media" href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $permalink ?>&amp;t=<?php echo $title ?>" target="_blank" >Facebook</a>
-          <a href="http://www.tumblr.com/share?v=3&amp;u=<?php echo $permalink ?>&amp;t=<?php echo $title; ?>&amp;s=" target="_blank" id="tumblr" class="social-media" >Tumblr</a>
-           <a id="save-button" class="social-media" href="/images/myw3schoolsimage.jpg" download="w3logo">Save Avatar Image</a>
+          <a id="twitter" class="social-media" href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $permalink ?>&amp;source=" target="_blank" >Twitter</a>      
+          <!--<a href="http://www.tumblr.com/share?v=3&amp;u=<?php echo $permalink ?>&amp;t=<?php echo $title; ?>&amp;s=" target="_blank" id="tumblr" class="social-media" >Tumblr</a>-->
+          <a href="sms:/* phone number here */&body=/* body text here */" target="_blank" id="text-message" class="social-media" >Text Message</a>
+          <a id="email" class="social-media" href="mailto: ?subject=<?php echo $title; ?>&amp;body=<?php echo $permalink ?>" target="_blank" >Email</a>
+          
      </div>
 
 </div>
@@ -457,6 +459,24 @@ Scoreboard
 
 
 <!--////////////
+Scoreboard
+///////////--->
+<div class="page scrollable contact">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close "></div><div class="title">Scoreboard</div></div>
+
+     <!-- Content -->
+     <div class="container">
+          <p>
+              Please contact us for any Media, technical or general inguires about Collective Action! at <a href="mailto:hello@collectiveaction.info">hello@collectiveaction.info</a>
+            </p>
+     </div>
+</div>
+
+
+
+
+<!--////////////
 Map Page
 ///////////--->
 <div class="page map">
@@ -503,7 +523,22 @@ Log out Page
 <!--////////////
 Iframe to Games
 ///////////--->
-<div class="artwork close glyphicon glyphicon glyphicon-remove"></div>
+ <div class="nav artwork close" style="position:relative;width:100%;height:50px;background:white;z-index: 999999;"><div class=" artwork close" style="position: absolute;
+    padding-left: 16px;
+    padding-top: 14px;
+    left: 15px;
+    padding-right: 68px;
+    z-index: 9;
+    padding-bottom: 10px;
+    opacity: 1;
+    background-image: url(/assets/images/backarrow/backarrow.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 100% auto;
+    overflow: hidden;
+    height: 50px;"></div><div class="title"></div></div>
+<!--<div class="artwork close glyphicon glyphicon glyphicon-remove"></div>-->
+
 <iframe class="iframe project-slide-panel" data-fake-src="blank" src="blank" >
      <!--<video id="vimeoVideo" loop>
      <source src="https://player.vimeo.com/external/178906480.hd.mp4?s=6ecece6b3a4588df24840ee1cc0d9ff11dcabe89&profile_id=174" type="video/mp4">

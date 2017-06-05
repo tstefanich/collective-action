@@ -200,7 +200,7 @@ var gameProjection = {
               //reset state on page refresh / re-connect of game-projection
               socket.emit('resetRoomClients', GAME_LOCATION);
                               
-              setTimeout(function(){
+              setTimeout(function(){ // This is here for a weird problem for when the projections crashes and you need to reload the page this is here to make sure it gets the already connected users. 
                 socket.emit('getAllUsers',GAME_LOCATION, function(users){
                     users.forEach(function(user){
                       if(avatars.length >= gameProjection.avatarLimit){
@@ -897,8 +897,8 @@ function avatar(path,id,x,y){
     if(value > .99){ value = 0.99; } // This is required from keep the tween from increasing too far
     this.currentValue =value; // this is needed to reverse the tween.
 
-    this.avatarWidth = (this.image.width) * value/2;
-    this.avatarHeight = (this.image.height) * value/2;//
+    this.avatarWidth = (this.image.width) * value/4.5;
+    this.avatarHeight = (this.image.height) * value/4.5;//
   },
   this.avatarShrink = function(){
     if (this.time >= this.endTime)
@@ -912,8 +912,8 @@ function avatar(path,id,x,y){
 
     if(value < 0){ value = 0.000001; } // This is required from keep the tween from reversing too far
 
-    this.avatarWidth = (this.image.width) * (value/2);
-    this.avatarHeight = (this.image.height) * (value/2);//
+    this.avatarWidth = (this.image.width) * (value/4.5);
+    this.avatarHeight = (this.image.height) * (value/4.5);//
   },
   this.calculateSpeed = function(){
       this.speed = abs(this.x - this.previousX) + abs(this.y - this.previousY);
@@ -1003,7 +1003,22 @@ function lerp(t, minn, maxx)
 
 function mousePressed() {
     //var a = new avatar('avatars/'+ Math.ceil(Math.random()*294)+'.png', random(0,width),random(0,height) )
-    //avatars.push(a)
+    a//vatars.push(a)
+}
+
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+     for (var i = 0; i < avatars.length; i++) {
+        
+       // if(avatars[i].id == 'aaa'){
+          avatars[i].state = 'avatarIsShrinking';
+          avatars[i].startTime = performance.now();
+          avatars[i].endTime = avatars[i].startTime + duration2;
+          soundReverse.playbackRate = random(.8,1.5);
+          soundReverse.play();
+      //}
+        }
+  }
 }
 
 

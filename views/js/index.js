@@ -362,7 +362,7 @@ var allLocations = [
 function showArtworkClose(){
    var closeButton = $('.close.artwork');
    closeButton.css('display','block');
-   closeButton.velocity({opacity: 1}, 500);
+   closeButton.delay(500).velocity({opacity: 1}, 500);
   }
 
   function hideArtworkClose(){
@@ -924,9 +924,8 @@ var signUp = {
            }
       });
      },
-     eventListeners:function(){
-       $('body').on('touchstart', '.generate-username-btn', function(e){
-         $('.form-control.username').val(generateUsername());
+     preFillInUserName:function(){
+      $('.form-control.username').val(generateUsername());
          if($.trim($('.form-control.username').val()) != ''){
               signUp.usernameTextFieldIsFilled = true;
               signUp.enableContinueButton();
@@ -936,12 +935,17 @@ var signUp = {
               signUp.disableContinueButton();
               console.log('Input username empty');
          }
+     },
+     eventListeners:function(){
+       $('body').on('touchstart', '.generate-username-btn', function(e){
+         signUp.preFillInUserName();
        });
 
           $('body').on('touchstart', '.sign-up-continue-btn', function(e){
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                          signUp.databaseHasEmail();
+                         signUp.preFillInUserName();
                          if(!signUp.usernameTextFieldIsFilled){
                               signUp.disableContinueButton();
                          }
@@ -1319,7 +1323,7 @@ function initMap() {
 
 
         allCircles[i] = new google.maps.Circle({
-            strokeColor: '#000',
+            strokeColor: '#f05a28',
             strokeOpacity: 1,
             strokeWeight: 2,
             fillColor: '#ffffff',
@@ -1479,7 +1483,16 @@ function displayLocation( position ) {
   // build entire marker first time thru
   if ( !myMarker ) {
    // define our custom marker image
-
+   var getUser = store.get('user');
+   var markerImage;
+   if(getUser){
+      var avatar = getUser.avatar.split('.');
+      avatarID = avatar[0];
+      markerImage = avatarID+'-head.png'
+      console.log('/assets/images/avatars/'+markerImage);
+   } else {
+      //return; 
+   }
    // then create the new marker
    myMarker = new google.maps.Marker({
       //flat: true,
@@ -1488,11 +1501,11 @@ function displayLocation( position ) {
       position: myLatLng,
       zIndex:9999,
       icon: {
-         url: '/assets/images/avatars/68.svg',
+         url: '/assets/images/avatars/'+markerImage,
         //size: new google.maps.Point( 16, 16 ),
-              scaledSize: new google.maps.Size(17, 17), // scaled size
+              scaledSize: new google.maps.Size(36, 36), // scaled size
               origin: null, // origin
-              //anchor: new google.maps.Point(25,50) // anchor
+              anchor: new google.maps.Point(18,18) // anchor
       },
       optimized: false,
       // visible: true
@@ -1600,45 +1613,43 @@ var shareMenu = {
       
     } // End if
   },
-  writeSocialMediaLinks:function(){
+writeSocialMediaLinks:function(){
+    
     var getUser = store.get('user')
+    if(getUser){
 
 
-    var title = encodeURIComponent('Meet '+getUser.userName+' from #CollectiveAction at #NorthernSpark');
+    var title = encodeURIComponent('Meet '+getUser.userName+' from #CollectiveAction at #NorthernSpark.');
     //var titleEmail = encodeURIComponent('#CollectiveAction at #NorthernSpark');
     var description = encodeURIComponent('Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act');
     var image = encodeURIComponent('http://joincollectiveaction.com/assets/images/social-media/ns2017/FlippyFishFort.png');
 
 
     var permalink = encodeURIComponent('http://collectiveaction.info');
-    var permalinkSave = encodeURIComponent('http://joincollectiveaction.com/assets/images/social-media/ns2017/FlippyFishFort.png');
+    var permalinkSave = 'http://joincollectiveaction.com/assets/images/social-media/ns2017/'+getUser.userName+'.png';
     
     var emailHref = 'mailto:?subject='+ title + '&body='+description;
     var twitterHref = 'https://twitter.com/intent/tweet?text='+ title + '&amp;url='+ permalink +'&amp;source=';
     var facebookHref = 'https://www.facebook.com/sharer/sharer.php?u='+ permalink +'&picture='+ image +'&title='+ title + '&caption=&quote=&description='+ description;
-    var textMessageHref = 'sms:?body='+title+'' ;
-    //var tumblrHref = 'https://www.tumblr.com/share/link?url='+ permalink +'&title=#CollectiveAction at #NorthernSpark&content='+ title + '&amp;s=';
-    /*
-    var ua = navigator.userAgent.toLowerCase();
-var url;
-        
-if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1)
-    url = "sms:;body=" + encodeURIComponent("I'm at " + mapUrl + " @ " + pos.Address);
-else
-    url = "sms:?body=" + encodeURIComponent("I'm at " + mapUrl + " @ " + pos.Address);
+    var textMessageHref = 'sms:?body='+encodeURIComponent(title + ' ' +description)+'' ;
 
-location.href = url;*/
-    //var tumblrHref = 'https://www.tumblr.com/share/link?url='+ permalink +'&title=#CollectiveAction at #NorthernSpark&content='+ title + '&amp;s=';
+    
+    var ua = navigator.userAgent.toLowerCase();    
+    if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1){
+        textMessageHref = 'sms:&body='+encodeURIComponent(title + ' ' +description)+'' ;
+    }
 
+    //var tumblrHref = 'https://www.tumblr.com/share/link?url='+ permalink +'&title=#CollectiveAction at #NorthernSpark&content='+ title + '&amp;s=';
+    console.log(permalinkSave);
     $('.menu-share .container #twitter').attr('href' , twitterHref);
     $('.menu-share .container #facebook').attr('href' , facebookHref);
     $('.menu-share .container #text-message').attr('href' , textMessageHref);
     //$('.menu-share .container #tumblr').attr('href' , tumblrHref);
     $('.menu-share .container #email').attr('href' , emailHref);
     $('.menu-share .container #save-button').attr('href' , permalinkSave);
-    $('.menu-share .container #save-button').attr('download' , getUser.unserName);
-
-
+    $('.menu-share .container #save-button').attr('download' , getUser.userName);
+    console.log('SOCIALK MEDIA')
+    }
   },
 
 }

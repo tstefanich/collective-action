@@ -715,8 +715,10 @@ var login = {
 
                                   console.log('you have a login');
                                   login.retrieveFromDatabase(data);
-                                  login.setAvatarPageInfo()
+                                  login.setAvatarPageInfo();
+                                  shareMenu.writeSocialMediaImageToTempCanvas();
                                   setTimeout(function(){
+                                        shareMenu.writeSocialMediaLinks();
                                        slideDownPanel($('.page.login .close'));
                                        slideDownPanel($('.page.intro .close'));
                                   },500);
@@ -902,9 +904,11 @@ var signUp = {
           $.post("/save-user",userObject, function(data){
                  console.log(data);
                  login.setAvatarPageInfo();
+                 shareMenu.writeSocialMediaImageToTempCanvas();
                  moreDetails(button);
                 //Slide Down Signup page
                 setTimeout(function(){
+                      shareMenu.writeSocialMediaLinks();
                      slideDownPanel($('.page.sign-up .close'));
                      slideDownPanel($('.page.intro .close'));
                 },500);
@@ -1599,21 +1603,38 @@ var shareMenu = {
   writeSocialMediaLinks:function(){
     var getUser = store.get('user')
 
-    var title = encodeURI('#CollectiveAction at #NorthernSpark. Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act');
-    var titleEmail = encodeURI('#CollectiveAction at #NorthernSpark');
 
-    var permalink = encodeURI('http://joincollectiveaction.com/share/FlippyFishFort');
-    var permalinkSave = encodeURI('http://joincollectiveaction.com/assets/images/social-media/ns2017/FlippyFishFort.png');
+    var title = encodeURIComponent('Meet '+getUser.userName+' from #CollectiveAction at #NorthernSpark');
+    //var titleEmail = encodeURIComponent('#CollectiveAction at #NorthernSpark');
+    var description = encodeURIComponent('Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act');
+    var image = encodeURIComponent('http://joincollectiveaction.com/assets/images/social-media/ns2017/FlippyFishFort.png');
+
+
+    var permalink = encodeURIComponent('http://collectiveaction.info');
+    var permalinkSave = encodeURIComponent('http://joincollectiveaction.com/assets/images/social-media/ns2017/FlippyFishFort.png');
     
-    var emailHref = 'mailto:?subject='+ titleEmail + '&body=Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act';
+    var emailHref = 'mailto:?subject='+ title + '&body='+description;
     var twitterHref = 'https://twitter.com/intent/tweet?text='+ title + '&amp;url='+ permalink +'&amp;source=';
-    var facebookHref = 'http://www.facebook.com/sharer/sharer.php?u='+ permalink +'&amp;t='+ title + '';
-    var tumblrHref = 'http://www.tumblr.com/share/link?url='+ permalink +'&amp;name='+ title + '&amp;s=';
+    var facebookHref = 'https://www.facebook.com/sharer/sharer.php?u='+ permalink +'&picture='+ image +'&title='+ title + '&caption=&quote=&description='+ description;
+    var textMessageHref = 'sms:?body='+title+'' ;
+    //var tumblrHref = 'https://www.tumblr.com/share/link?url='+ permalink +'&title=#CollectiveAction at #NorthernSpark&content='+ title + '&amp;s=';
+    /*
+    var ua = navigator.userAgent.toLowerCase();
+var url;
+        
+if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1)
+    url = "sms:;body=" + encodeURIComponent("I'm at " + mapUrl + " @ " + pos.Address);
+else
+    url = "sms:?body=" + encodeURIComponent("I'm at " + mapUrl + " @ " + pos.Address);
 
-    $('.menu-share .container #email').attr('href' , emailHref);
+location.href = url;*/
+    //var tumblrHref = 'https://www.tumblr.com/share/link?url='+ permalink +'&title=#CollectiveAction at #NorthernSpark&content='+ title + '&amp;s=';
+
     $('.menu-share .container #twitter').attr('href' , twitterHref);
     $('.menu-share .container #facebook').attr('href' , facebookHref);
-    $('.menu-share .container #tumblr').attr('href' , tumblrHref);
+    $('.menu-share .container #text-message').attr('href' , textMessageHref);
+    //$('.menu-share .container #tumblr').attr('href' , tumblrHref);
+    $('.menu-share .container #email').attr('href' , emailHref);
     $('.menu-share .container #save-button').attr('href' , permalinkSave);
     $('.menu-share .container #save-button').attr('download' , getUser.unserName);
 

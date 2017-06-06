@@ -438,13 +438,15 @@ Getting Geolocation from Phone
 *******************************************/
 
 
-function handleLocationError(browserHasGeolocation, locationWindow, pos) {
-  //console.log(pos);
+function handleLocationError(err, locationWindow, pos) {
+  console.log(err);
   //locationWindow.setPosition(pos);
   //locationWindow.setContent(browserHasGeolocation ?
   //                      'Error: The Geolocation service failed.' :
   //                      'Error: Your browser doesn\'t support geolocation.');
 }
+
+
 
 
 if (navigator.geolocation) {
@@ -455,6 +457,7 @@ if (navigator.geolocation) {
           lng: position.coords.longitude
         };
 
+        $('.geolocation-warning').hide();
         // Update arrays and webpages with current distance data
         updateMarkerDistances(currentPosition);
 
@@ -464,8 +467,8 @@ if (navigator.geolocation) {
         // Update arrays and webpages with current distance data
         redirectUserToProperPage(currentPosition);
 
-      }, function() {
-        handleLocationError(true, locationWindow, currentPosition);
+      }, function(err) {
+        handleLocationError(err, locationWindow, currentPosition);
       }, {
         enableHighAccuracy: true,
         timeout: 1000,

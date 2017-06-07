@@ -6,6 +6,15 @@
  * @param {string} [prop] - The property name to find it in
  */
 
+ var DEBUG = false;
+if(!DEBUG){
+    if(!window.console) window.console = {};
+    var methods = ["log", "debug", "warn", "info"];
+    for(var i=0;i<methods.length;i++){
+        console[methods[i]] = function(){};
+    }
+}
+
 
 var searchResults;
 

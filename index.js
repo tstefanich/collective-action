@@ -1,3 +1,7 @@
+
+//console.log = function() {}
+
+
 var schedule = require('node-schedule');
 var cp = require('child_process');
 

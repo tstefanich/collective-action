@@ -174,8 +174,8 @@ var gameProjection = {
 
      // Time Variables
      TimeTitle: 5000,
-     TimeHighscoresPlayers:5000,
-     TimeHighscoresTeams:5000,
+     TimeHighscoresPlayers:10000,
+     TimeHighscoresTeams:10000,
      TimeGetNumberOfConnectionsTaskPlayers:500,
      TimeSetupGame:500,
      TimeInviteToPerformanceArea: 5000,
@@ -591,7 +591,7 @@ var gameProjection = {
         console.log('highScores',results);
         var appendData = ''
         results.forEach(function(result){
-          appendData += '<div><p class="align-left" ><img style="height:70px" src="assets/images/avatars/'+ result.avatar +'">' + result.userName + '</p><p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>';
+          appendData += '<div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatars/'+ result.avatar +');background-repeat:no-repeat;background-position:center center;background-size:contain;" ></div><p class="align-left" >' + result.userName + '</p><p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>';
         })
         // console.log(appendData);
         $('.scoreBoard').html(appendData)

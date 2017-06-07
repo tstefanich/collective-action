@@ -134,18 +134,19 @@ body,html{font-size: 50px;background-repeat:no-repeat;background-size:contain;ba
 }
 
 .ticker{
-	/*animation: moveAcross 10s linear infinite;*/
+	animation: moveAcross 25s linear infinite;
 	position:absolute;
-	text-align: center;
+	/*text-align: center;*/
+	text-align: left;
 	width:100vw;
 }
 
 @keyframes moveAcross {
 	0%{
-		left:0px;
+		left:6px;
 	}
 	50%{
-		left:30vw;
+		left:61vw;
 	}
 	100%{
 		left:0px;
@@ -234,6 +235,8 @@ body.littleafrica .page .container { border: 3px solid  #f4891e; color:#8bc53f;}
 body.littleafrica .page .container .prep-time-text { color:#f4891e;}
 body.littleafrica .page .container .prep-time-text .prep-time {color: #ffaaaa;}
 body.littleafrica .page .container .prep-time-text .task-time {color: #ffaaaa;}
+body.littleafrica .page .container .prep-time-text .task-time-seconds {color: #ffaaaa;}
+
 body.littleafrica .page .container .currentTask{color:#8bc53f;}
 body.littleafrica .page .container .title{color:#f4891e;}
 
@@ -244,6 +247,8 @@ body.westbank .page .container { border: 3px solid  #f05a28; color:#8c99ff;}
 body.westbank .page .container .prep-time-text { color:#f05a28;}
 body.westbank .page .container .prep-time-text .prep-time {color: #c6b700;}
 body.westbank .page .container .prep-time-text .task-time {color: #c6b700;}
+body.westbank .page .container .prep-time-text .task-time-seconds {color: #c6b700;}
+
 body.westbank .page .container .currentTask{color:#8c99ff;}
 body.westbank .page .container .title{color:#f05a28;}
 
@@ -254,6 +259,8 @@ body.commons .page .container { border: 3px solid  #8c99ff; color:#8c99ff;}
 body.commons .page .container .prep-time-text { color:#8c99ff;}
 body.commons .page .container .prep-time-text .prep-time {color: #f4891e;}
 body.commons .page .container .prep-time-text .task-time {color: #f4891e;}
+body.commons .page .container .prep-time-text .task-time-seconds {color: #f4891e;}
+
 body.commons .page .container .currentTask{color:#28b572;}
 body.commons .page .container .title{color:#8c99ff;}
 
@@ -264,6 +271,7 @@ body.littlemekong .page .container { border: 3px solid  #0caaff; color:#0caaff;}
 body.littlemekong .page .container .prep-time-text { color:#0caaff;}
 body.littlemekong .page .container .prep-time-text .prep-time {color: #ffaaaa;}
 body.littlemekong .page .container .prep-time-text .task-time {color: #ffaaaa;}
+body.littlemekong .page .container .prep-time-text .task-time-seconds {color: #ffaaaa;}
 body.littlemekong .page .container .currentTask{color:#c6b700;}
 body.littlemekong .page .container .title{color:#0caaff;}
 
@@ -274,6 +282,7 @@ body.lowertown .page .container { border: 3px solid  #8bc53f; color:#8bc53f;}
 body.lowertown .page .container .prep-time-text { color:#8bc53f;}
 body.lowertown .page .container .prep-time-text .prep-time {color: #f4891e;}
 body.lowertown .page .container .prep-time-text .task-time {color: #f4891e;}
+body.lowertown .page .container .prep-time-text .task-time-seconds {color: #f4891e;}
 body.lowertown .page .container .currentTask{color:#0caaff;}
 body.lowertown .page .container .title{color:#8bc53f;}
 
@@ -285,6 +294,8 @@ body.rondo .page .container { border: 3px solid  #28b572; color:#28b572;}
 body.rondo .page .container .prep-time-text { color:#28b572;}
 body.rondo .page .container .prep-time-text .prep-time {color: #f9bc00;}
 body.rondo .page .container .prep-time-text .task-time {color: #f9bc00;}
+body.rondo .page .container .prep-time-text .task-time-seconds {color: #f9bc00;}
+
 body.rondo .page .container .currentTask{color:#8c99ff;}
 body.rondo .page .container .title{color:#28b572;}
 
@@ -432,7 +443,7 @@ body.lowertown {}
      	<div class="close glyphicon glyphicon-menu-left"></div>
     </div>
      <div class="container" style="padding-top:0;">
-     <p class="prep-time-text" style="position: absolute;top: 25px;left: 0;width: 100%;">   Act: <span class="task-time">60</span></p>
+     <p class="prep-time-text" style="position: absolute;top: 25px;left: 0;width: 100%;">   Act: <span class="task-time">60</span> <span class="task-time-seconds">Seconds</span</p>
         <div class="inner-container">
           <p class="currentTask"></p>
         </div>

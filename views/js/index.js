@@ -491,7 +491,7 @@ function resizeImages(){
       //$('.regenerate-avatar-image').css('background-size', 'auto '+newHeight+'px' );
 
       // Homescreen
-      $('.avatar-image').css('height', newHeight-20+'px');
+      //$('.avatar-image').css('height', newHeight-20+'px');
 
       //Team Singup Page
       $('.confirmation-sign-up .container').css('height', $(window).height()+'px');
@@ -503,7 +503,7 @@ function resizeAvatar(){
       newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) - 36 -60 ;
 
       // Homescreen
-      $('.avatar-image').css('height', newHeight-20+'px');
+      $('.avatar-image').css('height', newHeight-2+'px');
 }
 
 function generateAvatar(){
@@ -1347,7 +1347,7 @@ function initMap() {
             name: allProjects[i].name,
             insideFence: false,
             slug: allProjects[i].slug,
-            locationImage: '<div class="info-window-image" style="background-image:url(./assets/images/locations/' + allProjects[i].locationImage + ');background-position:no-repeat;background-size:cover;background-position:center;"></div>',
+            locationImage: '<div class="info-window-image" style="display:none;background-image:url(./assets/images/locations/' + allProjects[i].locationImage + ');background-position:no-repeat;background-size:cover;background-position:center;"></div>',
             locationName: allProjects[i].locationName,
             //content: data.name,
             icon: {
@@ -1505,7 +1505,7 @@ function createModalsForEachLocation(){
 
 
 function openInfoWindow(marker) {
-        title.innerHTML = '' + marker.locationImage + '<strong>' + marker.locationName + '</strong><br><div class="more-details-container" ><a class="btn btn-default more-details" id="'+marker.slug+'-more-details-maps" href="#'+marker.slug+'" onclick="moreDetails(this);">More Details</a></div>';
+        title.innerHTML = '' + marker.locationImage + '<strong style="color:#f05a28;text-transform:uppercase;width:100%;display:inline-block;text-align:center;" >' + marker.locationName + '</strong><br><div class="more-details-container" ><a class="btn btn-default more-details" id="'+marker.slug+'-more-details-maps" style="display:none" href="#'+marker.slug+'" onclick="moreDetails(this);">More Details</a></div>';
         infowindow.open(googleMap, marker);
 }
 

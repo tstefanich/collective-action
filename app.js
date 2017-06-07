@@ -25,7 +25,25 @@ var upload = multer({
 });
 require('string.prototype.startswith');
 
+/************************************
 
+Password protect admin page
+
+************************************/
+var auth = require('http-auth');
+var basic = auth.basic({
+        realm: "Web."
+    }, function (username, password, callback) { // Custom authentication method.
+        callback(username === "admin" && password === "risingsealevels");
+    }
+);
+
+//app.get('/the_url', );
+
+
+app.get('/admin', auth.connect(basic), function(req, res, next) {
+        return res.render('admin', {});
+});
 /************************************
 
  EXPRESS CONFIG
@@ -180,13 +198,7 @@ app.get('/game-projection', function(req, res, next) {
     });
 });
 
-app.get('/admin', function(req, res, next) {
-    database.dbInfo(function(results) {
-        return res.render('admin', {
-            'users': results
-        });
-    });
-});
+
 
 app.get('/database-view', function(req, res, next) {
     // database.dbInfo(function(results) {

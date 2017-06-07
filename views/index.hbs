@@ -126,20 +126,26 @@ Signup Page
                               <input type="text" class="form-control username" placeholder="Username" maxlength="20">
                                 <a class="btn btn-default generate-username-btn"> <div class="glyphicon glyphicon-repeat"></div> Generate Username</a>
                               <div class="alert alert-danger alert-profane" style="text-align:center">This username looks to contain profanity. Please try a new one.</div>
+
                               <div class="alert alert-danger alert-regular" style="text-align:center">Username is unavailable.</div>
+
+
+                              <div class="alert alert-danger alert-special-characters" style="text-align:center">Username is invalid. Only letters and numbers are allowed.</div>
+
+                               <div class="alert alert-danger alert-spaces" style="text-align:center">Username is invalid. No Spaces. Only letters and numbers are allowed.</div>
                          </div>
                     </div>
                </div>
                <div class="item avatar-sign-up">
                     <div class="container">
                          <p>Generate your character.</p>
-                         <div class="regenerate-avatar-image" src="assets/images/avatars/15.png" alt="..."></div>
+                         <div class="regenerate-avatar-image"></div>
                          <div class="row">
-                              <div class="col-xs-1">&nbsp;</div>
-                              <div class="col-xs-10">
+                              <!--<div class="col-xs-1">&nbsp;</div>-->
+                              <div class="col-xs-12">
                                    <a class="btn btn-default regenerate-avatar-btn"> <div class="glyphicon glyphicon-repeat"></div> Regenerate your avatar</a>
                               </div>
-                              <div class="col-xs-1">&nbsp;</div>
+                              <!--<div class="col-xs-1">&nbsp;</div>-->
                          </div>
                     </div>
                </div>
@@ -147,7 +153,8 @@ Signup Page
 
                </div>-->
                <div class="item confirmation-sign-up">
-                    <div class="container">                    
+                    <div class="container">
+                         <div class="image" ></div>
                     </div>
                </div>
           </div>

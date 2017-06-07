@@ -149,16 +149,23 @@ database.checkIfEmailExists = function (req,callback)
 database.checkIfUserExists = function (req,callback)
 {
   var userName = req.body.userName;
+  var pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/); //unacceptable chars
+
   this.Users.find({userName : userName}, function (err, docs) {
-       if(userName == ''){
+    if(userName == ''){
          console.error('blank');
          return callback(null, 'blank');
     } else if(swearjar.profane(userName)){
         console.error('Name exists already');
         return callback(null, 'profane');
+     } else if(pattern.test(userName)) {
+      return callback(null, 'specialCharacters');
+     } else if(userName.indexOf(' ') >= 0) {
+      return callback(null, 'spaces');
      } else if (docs.length){
         console.error('Name exists already');
         return callback(null, true);
+
      }else{
         console.error('Go ahead!! No Name Found. ');
         return callback(null, false);

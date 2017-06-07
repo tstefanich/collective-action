@@ -139,6 +139,11 @@ body,html{font-size: 50px;background-repeat:no-repeat;background-size:contain;ba
 	/*text-align: center;*/
 	text-align: left;
 	width:100vw;
+
+	/* Trick to force GPU */
+	-webkit-transform: translate3d(0, 0, 0);
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
 }
 
 @keyframes moveAcross {

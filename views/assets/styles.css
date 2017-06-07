@@ -644,9 +644,12 @@ Global page styling
     transition: .25s, ease-in-out, all;
     margin-top:16px;
 }
-.carousel .item .alert {opacity:0}
-.carousel .item.show-error .alert-regular {opacity:1}
-.carousel .item.show-error-profane .alert-profane {opacity:1}
+.carousel .item .alert {opacity:0; display:none;}
+.carousel .item.show-error .alert-regular {opacity:1;display:block;}
+.carousel .item.show-error-profane .alert-profane {opacity:1;display:block;}
+.carousel .item.show-error-special-characters .alert-special-characters {opacity:1;display:block;}
+.carousel .item.show-error-spaces .alert-spaces {opacity:1;display:block;}
+
 
 .carousel-caption {
     position: initial;

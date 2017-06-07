@@ -450,6 +450,9 @@ function handleLocationError(err, locationWindow, pos) {
 
 
 if (navigator.geolocation) {
+
+      $('.geolocation-warning').hide();
+      
       navigator.geolocation.watchPosition(function(position) {
         // Set as global variable for other functions to use
         currentPosition = {
@@ -457,7 +460,6 @@ if (navigator.geolocation) {
           lng: position.coords.longitude
         };
 
-        $('.geolocation-warning').hide();
         // Update arrays and webpages with current distance data
         updateMarkerDistances(currentPosition);
 
@@ -494,7 +496,9 @@ function resizeImages(){
       //$('.avatar-image').css('height', newHeight-20+'px');
 
       //Team Singup Page
-      $('.confirmation-sign-up .container').css('height', $(window).height()+'px');
+      var newHeight = $(window).height();
+      newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) - 21 ;
+      $('.confirmation-sign-up .container .image').css('height', newHeight+'px');
 }
 
 function resizeAvatar(){
@@ -869,10 +873,20 @@ var signUp = {
           var user_name = $('input.username').val();
           $.post("/check-user",{userName: user_name}, function(data){
                console.log(data);
+
+              $('#carousel-sign-up .item.username-sign-up').removeClass('show-error-profane');
+              $('#carousel-sign-up .item.username-sign-up').removeClass('show-error-special-characters');
+              $('#carousel-sign-up .item.username-sign-up').removeClass('show-error');
+
+
                if(data === 'blank'){ // Email is in the database already
                     //$('#carousel-sign-up .item.username-sign-up').addClass('show-error-profane');
                } else if(data === 'profane'){ // Email is in the database already
                     $('#carousel-sign-up .item.username-sign-up').addClass('show-error-profane');
+               } else if(data === 'specialCharacters') {
+                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error-special-characters');
+               } else if(data === 'spaces') {
+                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error-spaces');
                } else if(data == true){ // Email is in the database already
                     $('#carousel-sign-up .item.username-sign-up').addClass('show-error');
                } else if(data == false){
@@ -898,7 +912,7 @@ var signUp = {
                     userName: $('input.username').val(),
                     email: $('input.email-address').val().toLowerCase(),
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: $('.confirmation-sign-up .container').attr('data-team-id'),
+                    team: $('.confirmation-sign-up .container image').attr('data-team-id'),
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
 
@@ -925,7 +939,9 @@ var signUp = {
      },
      setAndWriteTeamInfo(teamID){
         // Add image to 
-        var teamContainer = $('.confirmation-sign-up .container');
+
+        console.log(teamID);
+        var teamContainer = $('.confirmation-sign-up .container .image');
         teamContainer.attr('data-team-id',teamID);
         teamContainer.css('background-image' , 'url(assets/images/team/'+teamID+'.png)');
         teamContainer.css('background-position' , 'center center');
@@ -1659,19 +1675,21 @@ writeSocialMediaLinks:function(){
     if(getUser){
 
 
-    var title = encodeURIComponent('Meet '+getUser.userName+' from #CollectiveAction at #NorthernSpark.');
+    var title = encodeURIComponent('Meet '+getUser.userName+' from #CollectiveAction at ');
+    var titleFacebook = encodeURIComponent('Meet '+getUser.userName+' from #CollectiveAction');
+
     //var titleEmail = encodeURIComponent('#CollectiveAction at #NorthernSpark');
-    var description = encodeURIComponent('Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act');
-    var image = encodeURIComponent('http://joincollectiveaction.com/assets/images/social-media/ns2017/FlippyFishFort.png');
+    var description = encodeURIComponent('Sign up and play at http://collectiveaction.info #ClimateChangeIsReal #act #NorthernSpark');
+    var image = encodeURIComponent('http://joincollectiveaction.com/assets/images/social-media/ns2017/'+getUser.userName+'.png');
 
 
-    var permalink = encodeURIComponent('http://collectiveaction.info');
+    var permalink = encodeURIComponent('http://joincollectiveaction.com/share/'+getUser.userName);
     var permalinkSave = 'http://joincollectiveaction.com/assets/images/social-media/ns2017/'+getUser.userName+'.png';
     
-    var emailHref = 'mailto:?subject='+ title + '&body='+description;
-    var twitterHref = 'https://twitter.com/intent/tweet?text='+ title + '&amp;url='+ permalink +'&amp;source=';
-    var facebookHref = 'https://www.facebook.com/sharer/sharer.php?u='+ permalink +'&picture='+ image +'&title='+ title + '&caption=&quote=&description='+ description;
-    var textMessageHref = 'sms:?body='+encodeURIComponent(title + ' ' +description)+'' ;
+    var emailHref = 'mailto:?subject='+ title + '&body='+title + ' '+ permalink +' ' +description;
+    var twitterHref = 'https://twitter.com/intent/tweet?text='+ titleFacebook + '&amp;url='+ permalink +'&amp;source=';
+    var facebookHref = 'https://www.facebook.com/sharer/sharer.php?u='+ permalink +'&picture='+ image +'&title='+ titleFacebook + '&caption=&quote=&description='+ description;
+    var textMessageHref = 'sms:?body='+encodeURIComponent(title + ' '+ permalink +' ' +description)+'' ;
 
     
     var ua = navigator.userAgent.toLowerCase();    
@@ -1741,13 +1759,19 @@ function generateUsername(){
 
   var third = ['Dance','Party','Jump','Paddle','Trip','Skip','Walk','Run','Stand','Shout','Stampede','Parade','Race','Commute','Highfive','Hug','Snooze','Nap','Hike','Garden','Friend','Popsicle','Flag','Chant', 'Flight', 'Roll', 'Storm', 'Drawing', 'Painting', 'Sketch', 'Book', 'Farm', 'Song', 'Border', 'Race', 'Activist', 'Action', 'Sign', 'Print', 'Talk', 'Machine', 'System', 'Season', 'Time', 'Task', 'Project', 'Movie', 'Sport', 'Geyser', 'Flow', 'Puddle', 'Group', 'Team', 'Den', 'Fort', 'Thought', 'Journey' ];
 
+// StrangeMountainStampede
   // console.log('ll',first.length,second.length,third.length);
   r1 = Math.floor(Math.random()*first.length)
   r2 = Math.floor(Math.random()*second.length)
   r3 = Math.floor(Math.random()*third.length)
 
   if(Math.random() < 0.6){
-    return first[r1]+second[r2]+third[r3];
+    if(first[r1].length +second[r2].length +third[r3].length >= 20){
+      return first[r1]+third[r3];
+    } else {
+      return first[r1]+second[r2]+third[r3];
+    }
+    
   }else{
     return first[r1]+second[r2];
   }

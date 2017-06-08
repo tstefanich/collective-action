@@ -26,6 +26,7 @@ body {
     font-family: 'GTWalsheim', monospace, helvetica, sans-serif;
     background: white;
     color:#0caaff;
+    counter-reset: sources; 
 }
 
 a {
@@ -903,6 +904,19 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
 }
 .gm-style-iw .btn-default {
     background: black;
+}
+
+.source-container::before { 
+
+       font-weight: bold;
+    width: 30px;
+    counter-increment: sources;
+    content: "[" counter(sources) "] ";
+    display: block;
+    position: absolute;
+    left: -39px;
+
+
 }
 /**********************************
 

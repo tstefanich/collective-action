@@ -19,6 +19,8 @@ if(!DEBUG){
 var searchResults;
 
 
+
+
 function search(array, key, prop){
     // Optional, but fallback to key['name'] if not selected
     prop = (typeof prop === 'undefined') ? 'name' : prop;
@@ -177,12 +179,12 @@ var gameProjection = {
      prepFrameCounter:0,
      taskFrameCounter:0,
      numberOfTimesGetDataHasRun: 0,
-     wait:5000,
+     wait:15000,
      state:'title',
      gameStateIndex:0,
 
      // Time Variables
-     TimeTitle: 5000,
+     TimeTitle: 15000,
      TimeHighscoresPlayers:10000,
      TimeHighscoresTeams:10000,
      TimeGetNumberOfConnectionsTaskPlayers:500,
@@ -194,10 +196,12 @@ var gameProjection = {
      TimeEndTask: 8000,
      TimeEndScore: 7000,
      TimeReset: 250,
-     avatarLimit:300,
+     avatarLimit:175,
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           gameProjection.addLocationClassToBody();
+
+           $('#movie-intro').get(0).play()
 
           time = new Date().getTime();//store the current time
           // this.getNewTask();
@@ -223,7 +227,7 @@ var gameProjection = {
                     })
 
                 })
-              },5000);
+              },1500);
           });
 
           gameProjection.parseTitleUrlParamater();
@@ -355,11 +359,14 @@ var gameProjection = {
                 time = new Date().getTime();//also update the stored time
                 switch (self.state) {
                   case 'title':
+                      self.hideIntroVideo();
                       self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
                       self.writeHighScoresToScreen();
+
                       // self.refreshConnectedBackgroundAvatars();
                       break;
                   case 'highscores-players':
+
                       self.setStateAndTime('highscores-teams', self.TimeHighscoresTeams);
                       self.writeTeamScoresToScreen()
                       break;
@@ -433,6 +440,9 @@ var gameProjection = {
                       socket.emit('resetViews', self.currentPlayers)
                       self.reset();
                       self.setStateAndTime('title', self.TimeTitle);
+                      self.playerIntroVideo();
+
+
                       break;
                 }
                 //self.state = self.gameStates[self.gameStateIndex % 5];
@@ -440,12 +450,24 @@ var gameProjection = {
                 //gameProjection.getNewTask();
            }
       },
+      hideIntroVideo:function(){
+        $('#movie-intro').css('display','none');
+      },
+      playerIntroVideo:function(){
+        $('#movie-intro').css('display','block');
+        $('#movie-intro').get(0).play();
+      },
       draw:function(){
           var self = gameProjection;
           requestAnimationFrame(self.draw);
           switch (self.state) {
             case 'title':
                 console.log('title');
+                console.log();
+                //if($('#movie-intro').get(0).currentTime > 15){
+                //  
+                //  
+                //}
                 self.checkTimer();
                 //slideDownPanel($('.page.sign-up .close'));
                 break;

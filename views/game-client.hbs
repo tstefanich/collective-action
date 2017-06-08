@@ -16,54 +16,134 @@ body, html{
 }
 
 .page.queue.waiting-room {
-    animation: fadein 2s linear infinite;
-    -moz-animation: fadein 2s linear infinite; /* Firefox */
-    -webkit-animation: fadein 2s linear infinite; /* Safari and Chrome */
-    -o-animation: fadein 2s linear infinite; /* Opera */
+    animation: fadein 2s ease-in-out infinite;
+    -moz-animation: fadein 2s ease-in-out infinite;/* Firefox */
+    -webkit-animation: fadein 2s ease-in-out infinite; /*Safari and Chrome */
+    -o-animation: fadein 2s ease-in-out infinite;/* Opera */
 }
 
 @keyframes fadein {
      0%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
   }
   50%{
-    opacity:1;
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
+  }
+  60%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 105%;
+
+  }
+  70%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
   }
   100%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
+
   }
 }
-@-moz-keyframes fadein { /* Firefox */
+@-moz-keyframes ffadein {
      0%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
   }
   50%{
-    opacity:1;
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
+  }
+  60%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 105%;
+
+  }
+  70%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
   }
   100%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
+
   }
 }
-@-webkit-keyframes fadein { /* Safari and Chrome */
+@-webkit-keyframes fadein {
      0%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
   }
   50%{
-    opacity:1;
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
+  }
+  60%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 105%;
+
+  }
+  70%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
   }
   100%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
+
   }
 }
-@-o-keyframes fadein { /* Opera */
+@-o-keyframes fadein {
      0%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
   }
   50%{
-    opacity:1;
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
+  }
+  60%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 105%;
+
+  }
+  70%{
+    /*opacity:1;*/
+    /*background-size: 80%*/
+    background-position:center 115%;
+
   }
   100%{
-    opacity: .5;
+    /*opacity: .5;*/
+    /*background-size: 85%*/
+    background-position:center bottom;
+
   }
 }
 .page {

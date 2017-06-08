@@ -1,4 +1,4 @@
-var DEBUG = false;
+var DEBUG = true;
 if(!DEBUG){
     if(!window.console) window.console = {};
     var methods = ["log", "debug", "warn", "info"];
@@ -205,6 +205,33 @@ if (touch) { // remove all :hover stylesheets
             }
         }
     } catch (ex) {}
+}
+
+
+
+function convertSpreadsheetToSources(json){
+   //https://stackoverflow.com/questions/30082277/accessing-a-new-style-public-google-sheet-as-json
+        console.log('parsing Google Spreadsheet');
+        //console.log(json);
+
+        for (var i = 0; i < json.feed.entry.length; i++) {
+          //  This is console.log for the each row in the spreadsheet
+          //console.log( json.feed.entry[i]);
+          var title = json.feed.entry[i].gsx$title.$t;
+          var authors = json.feed.entry[i].gsx$authors.$t;
+          var org = json.feed.entry[i].gsx$org.$t;
+          var link = json.feed.entry[i].gsx$sources.$t;
+
+          // Make a newly formatted Master List/Array
+          // of all of the projects
+          var source = '<div class="source-container" style="text-indent:0px;margin-left:40px;"><a href="'+link+'">'+title+'</a> - '+ authors+ ' - '+org+'</div>';
+          $('.page.about .container p:last-child').append(source);
+
+        //marker.setVisible(true);
+        }
+        console.log('parsed Google Spreadsheet');
+
+
 }
 /******************************************
 
@@ -597,8 +624,9 @@ $(window).load(function(){
 
 
      $('body').on('touchstart', '.btn', function(e){
-        e.preventDefault()
+       e.stopPropagation(); e.preventDefault();
        $(this).blur();
+       console.log('test');
      });
 
 
@@ -920,11 +948,19 @@ var signUp = {
      },
      saveToDatabase:function(button){
           //You clicked Save button
+          // If Team is null give random number // COuld delete after playing 
+          var team;
+          if($('.confirmation-sign-up .container .image').attr('data-team-id') == null){
+            team = Math.ceil(Math.random() * 4);
+          } else {
+            team = $('.confirmation-sign-up .container .image').attr('data-team-id');
+          }
+
                var userObject = {
                     userName: $('input.username').val(),
                     email: $('input.email-address').val().toLowerCase(),
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: $('.confirmation-sign-up .container image').attr('data-team-id'),
+                    team: team,
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
 
@@ -1004,23 +1040,30 @@ var signUp = {
          }
      },
      eventListeners:function(){
+      console.log('test');
        $('body').on('touchstart', '.generate-username-btn', function(e){
          signUp.preFillInUserName();
        });
 
           $('body').on('touchstart', '.sign-up-continue-btn', function(e){
+                        console.log('pushed forward!!');
+
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                          signUp.databaseHasEmail();
-                         signUp.preFillInUserName();
+                         
                          signUp.checkTeamsAndSetTeam();
-                         if(!signUp.usernameTextFieldIsFilled){
-                              signUp.disableContinueButton();
+                         if(signUp.usernameTextFieldIsFilled){
+
+                              //signUp.disableContinueButton();
+
+                         } else {
+                          signUp.preFillInUserName();
                          }
                          break;
                     case $('#carousel-sign-up .item.username-sign-up').hasClass('active'):
                          //put your cases here
-
+                         // There will be a delay while the database is checking
                          signUp.databaseHasUser();
                          break;
                     case $('#carousel-sign-up .item.avatar-sign-up').hasClass('active'):
@@ -1036,7 +1079,9 @@ var signUp = {
                }
           });
 
-          $('body').on('touchstart', '.sign-up-back-btn', function (e) {
+          $('body').on('touchstart click', '.sign-up-back-btn', function (e) {
+             signUpCarouselDirection = 'left'; 
+            $('#carousel-sign-up').carousel('prev');
             // do something…
             switch(true){
                  case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):

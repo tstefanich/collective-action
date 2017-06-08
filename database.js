@@ -352,7 +352,7 @@ database.backup = function (searchTerm, newTitle){
 
 ************************************/
 var userNames = ['Ben', 'Tyler', 'Sara']
-var emails = ['Ben@benmoren.com', 'Tyler@tylerstefanich.com', 'sara@sara.com']
+var emails = ['ben@benmoren.com', 'tyler@tylerstefanich.com', 'sara@sara.com']
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);

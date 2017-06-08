@@ -464,7 +464,7 @@ function handleLocationError(err, locationWindow, pos) {
 if (navigator.geolocation) {
 
       $('.geolocation-warning').hide();
-      
+
       navigator.geolocation.watchPosition(function(position) {
         // Set as global variable for other functions to use
         currentPosition = {
@@ -924,7 +924,7 @@ var signUp = {
                     userName: $('input.username').val(),
                     email: $('input.email-address').val().toLowerCase(),
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
-                    team: $('.confirmation-sign-up .container image').attr('data-team-id'),
+                    team: $('.confirmation-sign-up .container .image').attr('data-team-id'),
                     //tasksPlayed: 'Array',
                     //maybe WaitTime:
 
@@ -950,7 +950,7 @@ var signUp = {
 
      },
      setAndWriteTeamInfo(teamID){
-        // Add image to 
+        // Add image to
 
         console.log(teamID);
         var teamContainer = $('.confirmation-sign-up .container .image');
@@ -986,10 +986,10 @@ var signUp = {
         dataType: 'json'
 
       }).done(function(data) {
-        //console.log('saved'); 
+        //console.log('saved');
         signUp.setAndWriteTeamInfo(data._id);
     });
-     
+
      },
      preFillInUserName:function(){
       $('.form-control.username').val(generateUsername());
@@ -1559,7 +1559,7 @@ function displayLocation( position ) {
       markerImage = avatarID+'-head.png'
       console.log('/assets/images/avatars/'+markerImage);
    } else {
-      //return; 
+      //return;
    }
    // then create the new marker
    myMarker = new google.maps.Marker({
@@ -1605,10 +1605,10 @@ function drawImageScaled(img, ctx) {
    var vRatio =  canvas.height*.7 / img.height  ;
    var ratio  = Math.min ( hRatio, vRatio );
    var centerShift_x = ( canvas.width - img.width*ratio ) / 2;
-   var centerShift_y = ( canvas.height - img.height*ratio ) / 2;  
+   var centerShift_y = ( canvas.height - img.height*ratio ) / 2;
    //ctx.clearRect(0,0,canvas.width, canvas.height);
    ctx.drawImage(img, 0,0, img.width, img.height,
-                      centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);  
+                      centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);
 }
 
 var shareMenu = {
@@ -1657,32 +1657,32 @@ var shareMenu = {
     if(getUser == undefined){
         // You are not logged in
     } else if(!getUser.hasOwnProperty('socialMediaImageSave')){
-      
+
       var img = this.canvas.toDataURL("image/png");
       $.ajax({
         type: "POST",
         url: "share-save",
-        data: { 
+        data: {
            image: img,
            userName: getUser.userName
         }
       }).done(function(o) {
-        //console.log('saved'); 
+        //console.log('saved');
         //console.log(o);
         getUser = store.get('user');
         getUser.socialMediaImageSave = 'true';
         store.set('user', getUser);
-        // If you want the file to be visible in the browser 
+        // If you want the file to be visible in the browser
         // - please modify the callback in javascript. All you
-        // need is to return the url to the file, you just saved 
+        // need is to return the url to the file, you just saved
         // and than put the image in your browser.
-      
+
     });
-      
+
     } // End if
   },
 writeSocialMediaLinks:function(){
-    
+
     var getUser = store.get('user')
     if(getUser){
 
@@ -1697,14 +1697,14 @@ writeSocialMediaLinks:function(){
 
     var permalink = encodeURIComponent('http://joincollectiveaction.com/share/'+getUser.userName);
     var permalinkSave = 'http://joincollectiveaction.com/assets/images/social-media/ns2017/'+getUser.userName+'.png';
-    
+
     var emailHref = 'mailto:?subject='+ title + '&body='+title + ' '+ permalink +' ' +description;
     var twitterHref = 'https://twitter.com/intent/tweet?text='+ titleFacebook + '&amp;url='+ permalink +'&amp;source=';
     var facebookHref = 'https://www.facebook.com/sharer/sharer.php?u='+ permalink +'&picture='+ image +'&title='+ titleFacebook + '&caption=&quote=&description='+ description;
     var textMessageHref = 'sms:?body='+encodeURIComponent(title + ' '+ permalink +' ' +description)+'' ;
 
-    
-    var ua = navigator.userAgent.toLowerCase();    
+
+    var ua = navigator.userAgent.toLowerCase();
     if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1){
         textMessageHref = 'sms:&body='+encodeURIComponent(title + ' ' +description)+'' ;
     }
@@ -1730,7 +1730,7 @@ writeSocialMediaLinks:function(){
 function updateStatsAndScores(){
   var getUser = store.get('user');
   if(getUser){
-    // Team ID 
+    // Team ID
     var teamID = getUser.team;
     signUp.setAndWriteTeamInfo(teamID);
 
@@ -1738,7 +1738,7 @@ function updateStatsAndScores(){
     var myScore = getUser.score;
     updateMyScore(myScore);
 
-    // Locations Visited 
+    // Locations Visited
     var locationsVisited = getUser.locationsVisited.length;
     updateLocationsVisited(locationsVisited);
 
@@ -1783,7 +1783,7 @@ function generateUsername(){
     } else {
       return first[r1]+second[r2]+third[r3];
     }
-    
+
   }else{
     return first[r1]+second[r2];
   }

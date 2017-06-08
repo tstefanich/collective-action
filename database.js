@@ -39,7 +39,9 @@ var database = {
 
       mongoose.connect('mongodb://localhost/test',function(){
         /* Drop the DB at start to clear for testing, was getting flooded with fake data and I couldnt find where it was getting logged out... */
-        //mongoose.connection.db.dropDatabase();
+        mongoose.connection.db.dropDatabase(function(){
+          database.fakeData();
+        });
       });
 
       console.log("connecting to database...");
@@ -184,15 +186,15 @@ database.getSortedUsers = function(limitNum, sortBy, callback){
 }
 
 Array.prototype.hasMin = function(attrib) {
-    return this.reduce(function(prev, curr){ 
-        return prev[attrib] < curr[attrib] ? prev : curr; 
+    return this.reduce(function(prev, curr){
+        return prev[attrib] < curr[attrib] ? prev : curr;
     });
  }
 
 database.checkTeamsAndSetTeam = function(callback){
   this.Users.aggregate(
-    { $group: 
-      { _id: '$team', total: { $sum: 1 } } 
+    { $group:
+      { _id: '$team', total: { $sum: 1 } }
     },
     function (err, results) {
       if (err) return handleError(err);
@@ -351,8 +353,8 @@ database.backup = function (searchTerm, newTitle){
  DATABASE FAKE DATA (mongodb)
 
 ************************************/
-var userNames = ['Ben', 'Tyler', 'Sara']
-var emails = ['Ben@benmoren.com', 'Tyler@tylerstefanich.com', 'sara@sara.com']
+// var userNames = ['dbinituser1', 'Tyler', 'Sara']
+// var emails = ['Ben@benmoren.com', 'Tyler@tylerstefanich.com', 'sara@sara.com']
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -368,19 +370,16 @@ function rand(max) {
 
 database.fakeData = function(){
 
-  for (var i = 3 - 1; i >= 0; i--) {
+  for (var i = 1; i <=4;i++) {
 
     var data = new this.Users({
-      userName: userNames[i],
-      email: emails[i],
-      avatar: Math.ceil(Math.random()*240) + '.png',
-      team: Math.ceil(Math.random()*4),
-      // tasksPlayed: [rand(30),rand(30),rand(30)],
-      // waitTime: rand(1000),
-
+      userName: 'dbinituser' + i,
+      email: 'dbinituser'+i + '@dbinituser.com',
+      avatar: i+'.png',
+      team: i,
       // METRICS
-      score: Math.ceil(Math.random()*200) ,
-      locationsVisited: ['River','Target'], // location + timespent
+      score: 0,
+      locationsVisited: [{location:'dbinit', time:Date.now()}], // location + timespent
     });
 
     // SAVE USER

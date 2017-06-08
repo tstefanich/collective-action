@@ -458,8 +458,8 @@ function redirectUserToProperPage(currentPos) {
             //alert( "reset menu" );
 
             //alert('You are at' + allMarkers[i].slug)
-            $('#'+allMarkers[i].slug+'-modal').modal();
-            allMarkers[i].timer = Date.now(); // Save the current time to restart the timer!
+            //$('#'+allMarkers[i].slug+'-modal').modal();
+            //allMarkers[i].timer = Date.now(); // Save the current time to restart the timer!
       }
 
     } else {
@@ -1276,7 +1276,9 @@ function updateMarkerDistances(currentPos) {
 
 
       allMarkers[i].setVisible(true);
-      allCircles[i].setOptions({fillOpacity:1, strokeOpacity:1});
+      //allCircles[i].setOptions({fillOpacity:1, strokeOpacity:1});
+      allCircles[i].setOptions({fillOpacity:0, strokeOpacity:0});
+
       console.log(allMarkers[i].slug);
 
       if(allMarkers[i].distance <= allMarkers[i].radius){

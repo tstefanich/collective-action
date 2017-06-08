@@ -908,8 +908,8 @@ function avatar(path,id,x,y){
     if(value > .99){ value = 0.99; } // This is required from keep the tween from increasing too far
     this.currentValue =value; // this is needed to reverse the tween.
 
-    this.avatarWidth = (this.image.width) * value/4.5;
-    this.avatarHeight = (this.image.height) * value/4.5;//
+    this.avatarWidth = (this.image.width) * value/5;
+    this.avatarHeight = (this.image.height) * value/5;//
   },
   this.avatarShrink = function(){
     if (this.time >= this.endTime)
@@ -923,8 +923,8 @@ function avatar(path,id,x,y){
 
     if(value < 0){ value = 0.000001; } // This is required from keep the tween from reversing too far
 
-    this.avatarWidth = (this.image.width) * (value/4.5);
-    this.avatarHeight = (this.image.height) * (value/4.5);//
+    this.avatarWidth = (this.image.width) * (value/5);
+    this.avatarHeight = (this.image.height) * (value/5);//
   },
   this.calculateSpeed = function(){
       this.speed = abs(this.x - this.previousX) + abs(this.y - this.previousY);
@@ -1014,7 +1014,7 @@ function lerp(t, minn, maxx)
 
 function mousePressed() {
     //var a = new avatar('avatars/'+ Math.ceil(Math.random()*294)+'.png', random(0,width),random(0,height) )
-    a//vatars.push(a)
+    //avatars.push(a)
 }
 
 function keyPressed() {

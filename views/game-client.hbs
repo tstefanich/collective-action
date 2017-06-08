@@ -14,6 +14,58 @@ body, html{
      background:white;
      color:black;
 }
+
+.page.queue.waiting-room {
+    animation: fadein 2s linear infinite;
+    -moz-animation: fadein 2s linear infinite; /* Firefox */
+    -webkit-animation: fadein 2s linear infinite; /* Safari and Chrome */
+    -o-animation: fadein 2s linear infinite; /* Opera */
+}
+
+@keyframes fadein {
+     0%{
+    opacity: .5;
+  }
+  50%{
+    opacity:1;
+  }
+  100%{
+    opacity: .5;
+  }
+}
+@-moz-keyframes fadein { /* Firefox */
+     0%{
+    opacity: .5;
+  }
+  50%{
+    opacity:1;
+  }
+  100%{
+    opacity: .5;
+  }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+     0%{
+    opacity: .5;
+  }
+  50%{
+    opacity:1;
+  }
+  100%{
+    opacity: .5;
+  }
+}
+@-o-keyframes fadein { /* Opera */
+     0%{
+    opacity: .5;
+  }
+  50%{
+    opacity:1;
+  }
+  100%{
+    opacity: .5;
+  }
+}
 .page {
     background:white;
     /*background: black;*/

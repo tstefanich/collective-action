@@ -69,6 +69,7 @@ var database = {
           // tasksPlayed: Array,
           score: Number,
           locationsVisited: Array, // location + timespent
+          tracking:Array //tracking
         });
 
         // Very Important! Make the title and text parameters "text" indices
@@ -301,6 +302,19 @@ database.updatePoints = function (searchEmail, newScore){
   this.Users.findOneAndUpdate(query, { score: newScore }, function(err){
       if (err) return handleError(err);
   })
+}
+
+database.updateTracking = function (searchEmail, appendTracking){
+  var query = { email: searchEmail };
+  this.Users.collection.findOneAndUpdate(
+    query,
+    {$push: {tracking: appendTracking}},
+    {safe: true, upsert: true},
+    function(err, model) {
+      if (err) return handleError(err);
+    });
+
+
 }
 
 database.updateLocations = function (searchEmail, newLocations){

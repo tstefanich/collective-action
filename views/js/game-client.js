@@ -135,6 +135,14 @@ socket.on('myTurn', function(taskToPlay) {
     var getUser = store.get('user');
         // console.log('getUser1', getUser);
         getUser.score++
+
+        //for tracking over the night
+        getUser.tracking = {
+          location: GAME_LOCATION,
+          time: Date.now(),
+          // lat:,
+          // lon:
+        }
         // console.log('getUser2', getUser);
         socket.emit('scorePoints', getUser)
       store.set('user', getUser)

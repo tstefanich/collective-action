@@ -472,6 +472,7 @@ io.on('connection', function(socket) {
       // console.log('scorePoints',user.email);
       // console.log('scorePoints',user.score);
       database.updatePoints(user.email, user.score)
+      database.updateTracking(user.email, user.tracking)
     });
 
     socket.on('updateLocationsVisited', function(user){

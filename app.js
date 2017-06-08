@@ -449,9 +449,18 @@ io.on('connection', function(socket) {
         // }
     });
 
+    socket.on('joinProjectinoRoom',function(gameLocation){
+      socket.join(gameLocation)
+      socket.connectedRoom = gameLocation;
+
+    })
+
     socket.on('addAvatarClient', function(user){ //forward the add onto the projection.
       user.id = socket.id;
-      io.emit('addAvatar', user)
+      socket.connectedRoom = user.room;
+      console.log('addAvatarClient',user);
+      io.to(user.room).emit('addAvatar', user);
+      // io.emit('addAvatar', user)
     })
 
     socket.on('getAllUsers', function(roomName, callback) {
@@ -546,12 +555,13 @@ io.on('connection', function(socket) {
 
 
     socket.on('disconnect', function() {
-        console.log('client disconnected: ' + socket.id);
+        console.log('client disconnected:', socket);
         var user = {
             id: socket.id,
             userObject: socket.userObject
         }
-        io.emit('removeAvatar', user)
+        io.to(socket.connectedRoom).emit('removeAvatar', user);
+
     });
 
 console.log('socket connected:', socket);

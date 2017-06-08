@@ -6,7 +6,7 @@
  * @param {string} [prop] - The property name to find it in
  */
 
- var DEBUG = false;
+ var DEBUG = true;
 if(!DEBUG){
     if(!window.console) window.console = {};
     var methods = ["log", "debug", "warn", "info"];
@@ -206,10 +206,12 @@ var gameProjection = {
           socket.on('connect', function(){
               console.log('connected to the server as: ' + socket.id);
 
+              socket.emit('joinProjectinoRoom', GAME_LOCATION) //join my own room!
+
               //reset state on page refresh / re-connect of game-projection
               socket.emit('resetRoomClients', GAME_LOCATION);
-                              
-              setTimeout(function(){ // This is here for a weird problem for when the projections crashes and you need to reload the page this is here to make sure it gets the already connected users. 
+
+              setTimeout(function(){ // This is here for a weird problem for when the projections crashes and you need to reload the page this is here to make sure it gets the already connected users.
                 socket.emit('getAllUsers',GAME_LOCATION, function(users){
                     users.forEach(function(user){
                       if(avatars.length >= gameProjection.avatarLimit){
@@ -219,7 +221,7 @@ var gameProjection = {
                         avatars.push(a)
                       }
                     })
-               
+
                 })
               },5000);
           });
@@ -343,7 +345,7 @@ var gameProjection = {
         var text = 'Players: Come on up!'
         if(self.currentTask.playersMax == 'all'){
           text = 'Everyone: Get Ready!'
-        } 
+        }
         textBox.html(text);
      },
       checkTimer:function(){
@@ -942,11 +944,11 @@ function avatar(path,id,x,y){
 
       if(!collidePointRect(this.x,this.y,(500-100),0,(680+100),860)) {
             /*
-            After it checks to see if the position is in the middle 
+            After it checks to see if the position is in the middle
             it then checks to see if the x and y are inside the screen
-            I offset the detection by 100 for x and 200 for y 
-            We could not use the avatar width or height because 
-            of the animation they start at 0 or 1 pixel so the offset is so small 
+            I offset the detection by 100 for x and 200 for y
+            We could not use the avatar width or height because
+            of the animation they start at 0 or 1 pixel so the offset is so small
             // that they would still appear offscreen
             */
             if(this.x > 100 && this.x < windowWidth - 100 &&
@@ -957,12 +959,12 @@ function avatar(path,id,x,y){
             break;
           }
        }
-    } 
+    }
 
     this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
     this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
 
-   
+
     if(this.image.width != 1){ // this necessary until the image is loaded
 
       switch(this.state) {
@@ -1018,7 +1020,7 @@ function mousePressed() {
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
      for (var i = 0; i < avatars.length; i++) {
-        
+
        // if(avatars[i].id == 'aaa'){
           avatars[i].state = 'avatarIsShrinking';
           avatars[i].startTime = performance.now();

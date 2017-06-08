@@ -38,10 +38,10 @@ var database = {
     return new Promise(function(resolve, reject){
 
       mongoose.connect('mongodb://localhost/test',function(){
-        /* Drop the DB at start to clear for testing, was getting flooded with fake data and I couldnt find where it was getting logged out... */
-        mongoose.connection.db.dropDatabase(function(){
-          database.fakeData();
-        });
+        // Drop the DB at start to clear for testing
+        // mongoose.connection.db.dropDatabase(function(){
+        //   database.fakeData();
+        // });
       });
 
       console.log("connecting to database...");

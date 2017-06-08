@@ -191,7 +191,7 @@ var gameProjection = {
      TimeWeNeedMorePlayers: 5000,
      TimePrepForTask: 15000,
      TimeStartTask: 30000,
-     TimeEndTask: 7000,
+     TimeEndTask: 8000,
      TimeEndScore: 7000,
      TimeReset: 250,
      avatarLimit:300,
@@ -387,7 +387,7 @@ var gameProjection = {
                       // self.newGame();
                       self.writeTaskToScreen();
                       self.writeInvitionToScreen();
-                      $('#sound-ding')[0].play();
+                      $('#sound-call-people')[0].play();
                       self.setStateAndTime('invite-to-performance-area', self.TimeInviteToPerformanceArea);
                       break;
                   case 'invite-to-performance-area':
@@ -396,7 +396,7 @@ var gameProjection = {
                         self.setStateAndTime('we-need-more-players', self.TimeWeNeedMorePlayers);
                       } else {
                         self.setStateAndTime('prep-for-task', self.TimePrepForTask);
-                        $('#sound-jingle')[0].play();
+                        $('#sound-get-ready')[0].play();
                       }
                       //var interval = 0;
                       //self.setStateAndTime('get-players', self.wait);
@@ -413,13 +413,14 @@ var gameProjection = {
                       console.log(gameProjection.currentPlayers)
                       self.setStateAndTime('start-task',  self.TimeStartTask);
                       self.removeBodyClassForAnimatedBackground();
-                      $('#sound-ding')[0].play();
+                      $('#sound-start')[0].play();
                       //self.setStateAndTime('start-task',  gameProjection.currentTask.time);
                       break;
                   case 'start-task':
                       self.setStateAndTime('end-task', self.TimeEndTask);
                       self.removeBodyClassForAnimatedBackground();
-                      $('#sound-cheers')[0].play();
+                      //$('#sound-cheers')[0].play();
+                      $('#movie-great-job').get(0).play()
                       break;
                   case 'end-task':
                       //self.setStateAndTime('end-score', self.TimeEndScore);
@@ -579,7 +580,7 @@ var gameProjection = {
         self.TimeWeNeedMorePlayers = 3000;
         self.TimePrepForTask = 3000;
         self.TimeStartTask = 5000;
-        self.TimeEndTask = 1000;
+        self.TimeEndTask = 8000;
         self.TimeEndScore = 1000;
         self.TimeReset = 250;
     },

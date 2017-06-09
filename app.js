@@ -1,3 +1,11 @@
+
+    const SETTINGS = {
+        server: 'localhost'
+        //server: 'server-http'
+        //server: 'server-https'
+    }
+
+
 /************************************
 
  EXPRESS APP
@@ -15,16 +23,29 @@ var app = express();
 var database;
 
 
-var ssl = {
-    // key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
-    // cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
-    // ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
-}
+var ssl;
+var server;
 
 console.log(ssl);
 
+if(SETTINGS.server == 'localhost'){
+    server = require('http').createServer(); //for local testing
+} else if(SETTINGS.server == 'server-http'){
+    console.log = function() {}
+    server = require('http').createServer(); 
+} else if(SETTINGS.server == 'server-https'){
+    console.log = function() {}
+    ssl = {
+         key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
+         cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
+         ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
+    }
+    server = require('https').createServer(ssl,app); //for server SSL
+}
+
+
+
 // var server = require('https').createServer(ssl,app); //for server SSL
-var server = require('http').createServer(); //for local testing
 var io = require('socket.io')(server);
 
 
@@ -293,7 +314,7 @@ app.post('/getTeamScores',function(req, res){
 })
 
 app.post('/getHighScores',function(req, res){
-  database.getSortedUsers(7,'-score',function(results){
+  database.getSortedUsers(40,'-score',function(results){
     // console.log('highscores',results);
     res.status(200).send(results);
   });

@@ -549,7 +549,7 @@ function handleLocationError(err, locationWindow, pos) {
 
 if (navigator.geolocation) {
 
-      $('.geolocation-warning').hide();
+   
 
       navigator.geolocation.watchPosition(function(position) {
         // Set as global variable for other functions to use
@@ -557,7 +557,7 @@ if (navigator.geolocation) {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-
+        $('.geolocation-warning').css('display','none');
         // Update arrays and webpages with current distance data
         updateMarkerDistances(currentPosition);
 
@@ -567,8 +567,18 @@ if (navigator.geolocation) {
         // Update arrays and webpages with current distance data
         redirectUserToProperPage(currentPosition);
 
+        $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
+        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
+          $(this).remove();
+        });
+      });
       }, function(err) {
         handleLocationError(err, locationWindow, currentPosition);
+              $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
+        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
+          $(this).remove();
+        });
+      });
       }, {
         enableHighAccuracy: true,
         timeout: 1000,
@@ -668,11 +678,7 @@ $(window).load(function(){
       //checkAndSetCookieForVisitedArtwork();
 
       // Fade out Loading Screen with a delay of 4 seconds
-      $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
-        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
-          $(this).remove();
-        });
-      });
+      
 
 
 

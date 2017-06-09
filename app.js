@@ -32,7 +32,7 @@ if(SETTINGS.server == 'localhost'){
     server = require('http').createServer(); //for local testing
 } else if(SETTINGS.server == 'server-http'){
     console.log = function() {}
-    server = require('http').createServer(); 
+    server = require('http').createServer();
 } else if(SETTINGS.server == 'server-https'){
     console.log = function() {}
     ssl = {
@@ -433,10 +433,10 @@ socket.io && Queue
 var connections;
 
 //liveReload views on nodemon auto server reboot
-setTimeout(function() {
-    io.emit('reload', 'reload');
-    console.log('Reload Views');
-}, 2000)
+// setTimeout(function() {
+//     io.emit('reload', 'reload');
+//     console.log('Reload Views');
+// }, 2000)
 
 io.on('connection', function(socket) {
     connections = io.sockets.sockets //all connections global, below functions are reliant on this.

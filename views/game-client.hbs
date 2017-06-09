@@ -162,7 +162,8 @@ body, html{
 
 .game, .waiting-room{}
 .page .container {display:none;}
-.page.my-turn .container {display:block; background:transparent !important;}
+.page.my-turn  {background-image:url() !important;}
+.page.my-turn .container {display:block; }
 .bottomHalf{
   /*height: 50vh;
   margin-top: 65vh;
@@ -186,9 +187,9 @@ Queue/waiting-room Page
 
      <!-- Content -->
 
-     <div class="container bottomHalf">
-       <img src="">
-
+     <div class="container">
+       <img src="test" style="width:100%;">
+       <div class="bottomHalf"></div>
      </div>
 
      <audio class="myTurnAudio" src="assets/audio/ding.mp3"></audio>

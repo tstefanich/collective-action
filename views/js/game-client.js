@@ -107,7 +107,7 @@ socket.on('connect', function() {
 
     //resetViews
     //$('.page').css('background-image','url(assets/images/client/everyone.png)') //********************************************************
-    $('.bottomHalf').append( 'Baby humpback whales whisper to their mothers to stay safe from listening predators, but human noise pollution makes it hard for the mothers to hear them. Choose to be a baby whale, a mother whale, or a predator swimming about. Can you hear eachother?')
+    $('.bottomHalf').html( 'Baby humpback whales whisper to their mothers to stay safe from listening predators, but human noise pollution makes it hard for the mothers to hear them. Choose to be a baby whale, a mother whale, or a predator swimming about. Can you hear eachother?')
 
 });
 
@@ -171,29 +171,30 @@ function tempMyTurn(){
   updateWaitTime('reset');
   $('.page').addClass('my-turn');
   //Add Points to the client side user object.
-  var getUser = store.get('user');
-      // console.log('getUser1', getUser);
-      getUser.score++
+ //r getUser = store.get('user');
+ //  // console.log('getUser1', getUser);
+ //  getUser.score++
 
-      //for tracking over the night
-      getUser.tracking = {
-        location: GAME_LOCATION,
-        time: Date.now(),
-        // lat:,
-        // lon:
-      }
-      // console.log('getUser2', getUser);
-      socket.emit('scorePoints', getUser)
-    store.set('user', getUser)
-
+ //  //for tracking over the night
+ //  getUser.tracking = {
+ //    location: GAME_LOCATION,
+ //    time: Date.now(),
+ //    // lat:,
+ //    // lon:
+ //  }
+ //  // console.log('getUser2', getUser);
+ //  socket.emit('scorePoints', getUser)
+ //store.set('user', getUser)
+ var taskToPlay = {};
+taskToPlay.players = 'all';
   // $('.waitingNext').html( taskToPlay )
   window.parent.document.title = GAME_LOCATION + '✅' + socket.id
   // $('.page').css('background-color','green')
 
   if(taskToPlay.players == 'all'){
-    $('.page .container img').attr('src','assets/images/client/everyone.png')
+    $('.page.queue .container img').attr('src','assets/images/client/everyone-small.png')
   }else{
-    $('.page .container img').attr('src','assets/images/client/myTurn.png')
+    $('.page.queue .container img').attr('src','assets/images/client/myTurn.png')
   }
 
   $('.bottomHalf').html( taskToPlay.task )

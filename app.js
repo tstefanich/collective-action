@@ -1,3 +1,11 @@
+
+    const SETTINGS = {
+        server: 'localhost'
+        //setting: 'server-http'
+        //setting: 'server-https'
+    }
+
+
 /************************************
 
  EXPRESS APP
@@ -15,16 +23,27 @@ var app = express();
 var database;
 
 
-var ssl = {
-    // key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
-    // cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
-    // ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
-}
+var ssl;
+var server;
 
 console.log(ssl);
 
+if(SETTINGS.server == 'localhost'){
+    server = require('http').createServer(); //for local testing
+} else if(SETTINGS.server == 'server-http'){
+    server = require('http').createServer(); 
+} else if(SETTINGS.server == 'server-https'){
+    ssl = {
+         key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
+         cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
+         ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
+    }
+    server = require('https').createServer(ssl,app); //for server SSL
+}
+
+
+
 // var server = require('https').createServer(ssl,app); //for server SSL
-var server = require('http').createServer(); //for local testing
 var io = require('socket.io')(server);
 
 

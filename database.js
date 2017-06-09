@@ -37,7 +37,9 @@ var database = {
     var self = this;
     return new Promise(function(resolve, reject){
 
-      mongoose.connect('mongodb://localhost/test',function(){
+
+      mongoose.connect('mongodb://localhost/test',function(err){
+        if (err) return handleError(err);
         // Drop the DB at start to clear for testing
         // mongoose.connection.db.dropDatabase(function(){
         //   database.fakeData();

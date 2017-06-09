@@ -43,6 +43,33 @@ a:active {
     text-decoration: none;
 }
 
+
+.play-buttons-container a.outside-fence{display:none;}
+.play-buttons-container a.inside-fence{display:block;}
+.artwork.nav.close .title span{background: white;padding-left: 16px; padding-right: 16px;}
+.artwork.nav.close .title {
+    margin-top: 14px;
+    font-weight: 800;
+    z-index: 999;
+    position: relative;
+    /* background: white; */
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #f05a28;
+    font-size: 16px;
+    text-transform: uppercase;
+    /* top: 0; */
+    left: 0;
+    /* right: 0; */
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 4px;
+}
+
+
+
 .btn:focus,
 .btn:active:focus,
 .btn.active:focus,
@@ -175,7 +202,7 @@ fieldset[disabled] .btn-default.focus {
     background-image: url('/assets/images/warning/warning.png');
     background-repeat: no-repeat;
     background-position: center bottom;
-    background-size: auto 90%;
+    background-size: auto 80%;
 
 }
 
@@ -1174,7 +1201,7 @@ h2.project-title {
 }
 .artwork.close {
     position: fixed;
-    right: 0;
+    right: 15px;
     top: 0;
     width: 50px;
     height: 55px;
@@ -1182,8 +1209,9 @@ h2.project-title {
     z-index: 9999999;
     opacity: 0;
     display: none;
-    padding-left: 14px;
-    padding-top: 14px;
+    /* padding-left: 14px; */
+    left: 15px;
+    /* padding-top: 14px; */
 }
 
 

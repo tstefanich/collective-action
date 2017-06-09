@@ -145,7 +145,8 @@ function slideDownPanel(link){
 Globals
 **********************/
 var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
-// var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO LOCALHOST FOR LOCAL DEV!
+//var socket = io('https://joincollectiveaction.com:3000', { secure : true}); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+
 
 //reload the view when the app boots up & this page connects
 socket.on('reload',function(){
@@ -197,6 +198,7 @@ var gameProjection = {
      TimeEndScore: 7000,
      TimeReset: 250,
      avatarLimit:175,
+     taskPlayedCounter: 1,
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           gameProjection.addLocationClassToBody();
@@ -342,6 +344,7 @@ var gameProjection = {
       self.taskFrameCounter = 0;
 
       self.numberOfTimesGetDataHasRun = 0;
+      self.taskPlayedCounter
      },
      writeInvitionToScreen:function(){
         var textBox = $('.invite-to-performance-area .container .inner-container p');
@@ -439,8 +442,13 @@ var gameProjection = {
                   case 'reset':
                       socket.emit('resetViews', self.currentPlayers)
                       self.reset();
-                      self.setStateAndTime('title', self.TimeTitle);
-                      self.playerIntroVideo();
+                      if(gameProjection.taskPlayedCounter >= 5){
+                        self.setStateAndTime('title', self.TimeTitle);
+                        self.playerIntroVideo();
+                      } else {
+                        self.setStateAndTime('get-number-of-connections-task-players', self.TimeGetNumberOfConnectionsTaskPlayers);
+                        gameProjection.taskPlayedCounter++
+                      }
 
 
                       break;

@@ -312,12 +312,23 @@ var allLocations = [
 */
 
 
-
+{
+    url:"studio",
+    name: "Studio",
+    lat:  45.0054778,
+    lon: -93.2486953, 
+    radius: .16,
+    timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
+    googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
+    description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
+    image:'ucla.jpg',
+    icon:'icon_commons.png',
+  },
   {
     url:"commons",
     name: "Commons",
-    lat:  44.975785,
-    lon: -93.261513,
+    lat:  44.975737,
+    lon: -93.261539,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
     googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
@@ -374,7 +385,7 @@ var allLocations = [
     icon:'icon_littlemekong.png',
   },
   {
-    url:"Lowertown",
+    url:"lowertown",
     name: "Lowertown",
     lat:  44.949736,
     lon: -93.084645,
@@ -436,7 +447,8 @@ function calcGeoDistance(lat1, lon1, lat2, lon2, units) {
 
 function redirectUserToProperPage(currentPos) {
      console.log('redirectUserToProperPage');
-  for (var i = allMarkers.length - 1; i >= 0; i--) {
+  var areYouNearAPlayArea = false;
+  for (var i = allLocations.length - 1; i >= 0; i--) {
     // Find slug
     //var $slug = $('.'+allLocation[i].url);
     var passedTime = Date.now() - allMarkers[i].timer;
@@ -452,21 +464,39 @@ function redirectUserToProperPage(currentPos) {
       //$slug.addClass('inside-fence');
       console.log(passedTime);
       console.log(totalTime);
+      areYouNearAPlayArea = true;
 
-      if (passedTime > totalTime) {
-            console.log($('#'+allMarkers[i].slug+'-modal'));
+
+      $('.play-buttons-container a').removeClass('inside-fence');
+      $('.play-button.warning').removeClass('inside-fence');
+      $('.play-button.warning').addClass('outside-fence');
+
+      $('.nav.artwork.close .title').html('<span>'+allLocations[i].url+'</span>');
+
+      $('.play-buttons-container a[href="#'+allLocations[i].url+'"]').addClass('inside-fence');
+
+      //if (passedTime > totalTime) {
+        //    console.log($('#'+allMarkers[i].slug+'-modal'));
             //alert( "reset menu" );
 
             //alert('You are at' + allMarkers[i].slug)
             //$('#'+allMarkers[i].slug+'-modal').modal();
             //allMarkers[i].timer = Date.now(); // Save the current time to restart the timer!
-      }
+      //}
 
     } else {
+            $('.play-buttons-container a[href='+allLocations[i].url+']').removeClass('inside-fence');
+            $('.play-buttons-container a[href='+allLocations[i].url+']').addClass('outside-fence');
+
       //$slug.addClass('outside-fence');
       //$slug.removeClass('inside-fence');
     } // End if
   } // End For
+
+  if(areYouNearAPlayArea == false){
+    $('.play-buttons-container a').removeClass('inside-fence');
+    $('.play-button.warning').addClass('inside-fence');
+  }
 }
 
 
@@ -557,10 +587,18 @@ function generateAvatar(){
 }
 
 
+function buildPlayButtonsForLocations(){
+  for (var i = allLocations.length - 1; i >= 0; i--) {
+    console.log('marker button')
+    $('.play-buttons-container').append('<a class="btn btn-default more-details project-launcher artwork outside-fence" style="width:100%;" href="#'+allLocations[i].url+'" data-project-url="game-client?location='+allLocations[i].url+'" >Play</a>')
+  }
+}
+
 
 $(document).ready(function(){
     shareMenu.writeSocialMediaImageToTempCanvas();
-
+          //Build Different Play buttons For locations
+      buildPlayButtonsForLocations()
 });
 
 $(window).resize(function(){
@@ -577,6 +615,7 @@ $(window).load(function(){
       // Message for Window Loaded
       resizeImages();
       resizeAvatar();
+
 
       shareMenu.writeSocialMediaLinks();
 
@@ -672,6 +711,14 @@ $(window).load(function(){
         e.stopPropagation();
         console.log('clicked close');
         slideDownPanel($(this));
+     });
+
+
+    // Close Warning When you click Find locations
+     $('body').on('touchstart', '.warning-find-locations', function(e){
+        e.stopPropagation();
+        //console.log('clicked close');
+        slideDownPanel($(this).parent().siblings('.nav').children('.close'));
      });
 
 
@@ -1581,7 +1628,7 @@ function createModalsForEachLocation(){
 
 
 function openInfoWindow(marker) {
-        title.innerHTML = '' + marker.locationImage + '<strong style="color:#f05a28;text-transform:uppercase;width:100%;display:inline-block;text-align:center;" >' + marker.locationName + '</strong><br><div class="more-details-container" ><a class="btn btn-default more-details" id="'+marker.slug+'-more-details-maps" style="display:none" href="#'+marker.slug+'" onclick="moreDetails(this);">More Details</a></div>';
+        title.innerHTML = '<strong style="color:#f05a28;text-transform:uppercase;width:100%;display:inline-block;text-align:center;" >' + marker.locationName + '</strong><br><div class="more-details-container" ><a class="btn btn-default more-details" id="'+marker.slug+'-more-details-maps" style="display:none" href="#'+marker.slug+'" onclick="moreDetails(this);">More Details</a></div>';
         infowindow.open(googleMap, marker);
 }
 
@@ -1778,6 +1825,10 @@ writeSocialMediaLinks:function(){
 function updateStatsAndScores(){
   var getUser = store.get('user');
   if(getUser){
+    // name ID
+    var name = getUser.userName;
+    updateMyName(name);
+
     // Team ID
     var teamID = getUser.team;
     signUp.setAndWriteTeamInfo(teamID);
@@ -1799,6 +1850,10 @@ function updateStatsAndScores(){
 
 
   }
+}
+function updateMyName(name){
+    $('.page.homescreen .nav .title').html(name);
+    //$('.stats .bottom .my-score').html(teamText);
 }
 function updateLocationsVisited(numberOfLocations){
     $('.stats .top .locations-visited').html(numberOfLocations+'/6');

@@ -218,7 +218,9 @@ Homescreen Page
           <div class="row sign-up-button-container disable">
                <div class="col-xs-6">
                     <!--<a class="btn btn-default more-details" style="width:100%;color:grey" href="#warning">Play</a>-->
-                    <a class="btn btn-default more-details" style="width:100%;color:grey" href="#playtest-menu">Play</a>
+                    <div class="play-buttons-container">
+                         <a class="btn btn-default more-details play-button warning" style="width:100%;color:grey" href="#warning">Play</a>
+                    </div>
                </div>
                <div class="nav-divider"></div>
                <div class="col-xs-6">
@@ -489,17 +491,7 @@ Scoreboard
 
 
 
-<!--////////////
-Map Page
-///////////--->
-<div class="page map">
-     <!-- Top Nav Bar -->
-     <div class="nav"><div class="close "></div><div class="title">Map</div></div>
 
-     <!-- Content -->
-     <div id="map" ></div>
-
-</div>
 
 
 <!--////////////
@@ -511,12 +503,24 @@ Warning Page
 
      <!-- Content -->
      <div class="container">
+          <a class="more-details warning-find-locations" href="#map" style="height: 60%;position:absolute;bottom:0;width:100vw;" ></a>
 
      </div>
 
 </div>
 
 
+<!--////////////
+Map Page
+///////////--->
+<div class="page map">
+     <!-- Top Nav Bar -->
+     <div class="nav"><div class="close "></div><div class="title">Map</div></div>
+
+     <!-- Content -->
+     <div id="map" ></div>
+
+</div>
 
 
 
@@ -536,14 +540,16 @@ Log out Page
 <!--////////////
 Iframe to Games
 ///////////--->
- <div class="nav artwork close" style="position:relative;width:100%;height:50px;z-index: 999999;"><div class=" artwork close" style="position: absolute;
+ <div class="nav artwork close" style="width:auto;height:50px;z-index: 999999; border-bottom: 2px solid #f05a28;"><div class=" artwork close" style="position: absolute;
     padding-left: 16px;
     padding-top: 14px;
-    left: 15px;
+    left: 0;
+
     padding-right: 68px;
     z-index: 9;
     padding-bottom: 10px;
     opacity: 1;
+
     background-image: url(/assets/images/backarrow/backarrow.png);
     background-repeat: no-repeat;
     background-position: left center;

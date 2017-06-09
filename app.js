@@ -14,6 +14,22 @@ var fs = require('fs');
 var app = express();
 var database;
 
+
+var ssl = {
+    key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
+    ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
+}
+
+console.log(ssl);
+
+var server = require('https').createServer(ssl,app);
+var io = require('socket.io')(server);
+var connections;
+
+
+
+
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, __dirname + '/data/uploads/');
@@ -378,7 +394,15 @@ app.post('/update-fields', function(req, res) {
 /*************************************
 socket.io && Queue
 **************************************/
-var server = require('http').createServer();
+var ssl = {
+    key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
+    ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
+}
+
+console.log(ssl);
+
+var server = require('https').createServer(ssl,app);
 var io = require('socket.io')(server);
 var connections;
 

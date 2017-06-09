@@ -45,7 +45,8 @@ function startVibrate(duration) {
 
 
 
-// var socket = io('http://162.243.214.28:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+// var socket = io('https://joincollectiveaction.com:3000', { secure : true}); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+
 var socket = io('http://localhost:3000');
 
 function currentUserInfo() {

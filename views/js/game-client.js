@@ -80,6 +80,8 @@ socket.on('reload', function() {
 
 socket.on('connect', function() {
   //  console.log(socket);
+    $('.page').removeClass('my-turn');
+
     console.log('connected to the server as: ' + socket.id);
     socket.emit('updateUser', currentUserInfo())
     socket.emit('addAvatarClient', currentUserInfo())
@@ -104,8 +106,8 @@ socket.on('connect', function() {
 
 
     //resetViews
-    $('.page').css('background-image','url(assets/images/client/newGame.png)')
-    $('.bottomHalf').html( '')
+    //$('.page').css('background-image','url(assets/images/client/everyone.png)') //********************************************************
+    $('.bottomHalf').append( 'Baby humpback whales whisper to their mothers to stay safe from listening predators, but human noise pollution makes it hard for the mothers to hear them. Choose to be a baby whale, a mother whale, or a predator swimming about. Can you hear eachother?')
 
 });
 
@@ -131,7 +133,7 @@ socket.on('newGame', function() {
 
 socket.on('myTurn', function(taskToPlay) {
     updateWaitTime('reset');
-
+    $('.page').addClass('my-turn');
     //Add Points to the client side user object.
     var getUser = store.get('user');
         // console.log('getUser1', getUser);
@@ -153,9 +155,9 @@ socket.on('myTurn', function(taskToPlay) {
     // $('.page').css('background-color','green')
 
     if(taskToPlay.players == 'all'){
-      $('.page').css('background-image','url(assets/images/client/everyone.png)')
+      $('.page .container img').attr('src','assets/images/client/everyone.png')
     }else{
-      $('.page').css('background-image','url(assets/images/client/myTurn.png)')
+      $('.page .container img').attr('src','assets/images/client/myTurn.png')
     }
 
     $('.bottomHalf').html( taskToPlay.task )
@@ -163,6 +165,42 @@ socket.on('myTurn', function(taskToPlay) {
     // trigger sound notification
     //  $('.myTurnAudio').get(0).play()
 });
+
+function tempMyTurn(){
+
+  updateWaitTime('reset');
+  $('.page').addClass('my-turn');
+  //Add Points to the client side user object.
+  var getUser = store.get('user');
+      // console.log('getUser1', getUser);
+      getUser.score++
+
+      //for tracking over the night
+      getUser.tracking = {
+        location: GAME_LOCATION,
+        time: Date.now(),
+        // lat:,
+        // lon:
+      }
+      // console.log('getUser2', getUser);
+      socket.emit('scorePoints', getUser)
+    store.set('user', getUser)
+
+  // $('.waitingNext').html( taskToPlay )
+  window.parent.document.title = GAME_LOCATION + '✅' + socket.id
+  // $('.page').css('background-color','green')
+
+  if(taskToPlay.players == 'all'){
+    $('.page .container img').attr('src','assets/images/client/everyone.png')
+  }else{
+    $('.page .container img').attr('src','assets/images/client/myTurn.png')
+  }
+
+  $('.bottomHalf').html( taskToPlay.task )
+
+  // trigger sound notification
+  //  $('.myTurnAudio').get(0).play()
+}
 
 socket.on('disconnect', function() {
     console.log('disconnected from the server as: ' + socket.id);

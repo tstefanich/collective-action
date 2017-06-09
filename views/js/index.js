@@ -259,8 +259,8 @@ var allCircles = [];
 
 // This could be a json that gets loaded in but I'm not sure if its needed anywhere else besides on the phone...
 var allLocations = [
- /* {
-    url:"location-1",
+  {
+    url:"benshouse",
     name: "Ben's House",
     lat: 44.957124,
     lon: -93.283987,
@@ -272,7 +272,7 @@ var allLocations = [
     icon:'white-pin.png',
 
   },
-  {
+  /*{
     url:"location-2",
     name: "Tyler's House",
     lat: 34.045206,
@@ -316,7 +316,7 @@ var allLocations = [
     url:"studio",
     name: "Studio",
     lat:  45.0054778,
-    lon: -93.2486953, 
+    lon: -93.2486953,
     radius: .16,
     timer:Date.now() - (totalTime * .95), // This is here to that if you open the app inside a location you don't need to wait 5 minutes for the popup to happen.
     googleMapsLink:"https://www.google.com/maps/place/240+Charles+E+Young+Dr+N,+Los+Angeles,+CA+90095/",
@@ -995,7 +995,7 @@ var signUp = {
      },
      saveToDatabase:function(button){
           //You clicked Save button
-          // If Team is null give random number // COuld delete after playing 
+          // If Team is null give random number // COuld delete after playing
           var team;
           if($('.confirmation-sign-up .container .image').attr('data-team-id') == null){
             team = Math.ceil(Math.random() * 4);
@@ -1099,7 +1099,7 @@ var signUp = {
                switch(true){
                     case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
                          signUp.databaseHasEmail();
-                         
+
                          signUp.checkTeamsAndSetTeam();
                          if(signUp.usernameTextFieldIsFilled){
 
@@ -1128,7 +1128,7 @@ var signUp = {
           });
 
           $('body').on('touchstart click', '.sign-up-back-btn', function (e) {
-             signUpCarouselDirection = 'left'; 
+             signUpCarouselDirection = 'left';
             $('#carousel-sign-up').carousel('prev');
             // do something…
             switch(true){

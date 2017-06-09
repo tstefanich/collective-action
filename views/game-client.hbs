@@ -161,17 +161,21 @@ body, html{
 }
 
 .game, .waiting-room{}
-
-.topHalf, .bottomHalf{
-  height: 50vh;
-  margin-left:10vw;
-  margin-right:10vw;
-  padding-top:10vw;
-  font-size: 6vw;
+.page .container {display:none;}
+.page.my-turn .container {display:block; background:transparent !important;}
+.bottomHalf{
+  /*height: 50vh;
+  margin-top: 65vh;
+  padding: 0px 15px 0 15px;
+  font-size: 2.5vh;
   color: #1c75ba;
+*/
+  /*font-size: 13px;*/
 }
 
 </style>
+
+
 
 <!--////////////
 Queue/waiting-room Page
@@ -181,10 +185,10 @@ Queue/waiting-room Page
      <!-- <div class="nav"><div class="close glyphicon glyphicon-menu-left " style="display:none;"></div></div> -->
 
      <!-- Content -->
-     <div class="topHalf">
-       <!-- invisible buffer -->
-     </div>
-     <div class="bottomHalf">
+
+     <div class="container bottomHalf">
+       <img src="">
+
      </div>
 
      <audio class="myTurnAudio" src="assets/audio/ding.mp3"></audio>

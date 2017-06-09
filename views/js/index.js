@@ -260,7 +260,7 @@ var allCircles = [];
 // This could be a json that gets loaded in but I'm not sure if its needed anywhere else besides on the phone...
 var allLocations = [
   {
-    url:"benshouse",
+    url:"westbank",
     name: "Ben's House",
     lat: 44.957124,
     lon: -93.283987,
@@ -549,7 +549,7 @@ function handleLocationError(err, locationWindow, pos) {
 
 if (navigator.geolocation) {
 
-   
+
 
       navigator.geolocation.watchPosition(function(position) {
         // Set as global variable for other functions to use
@@ -678,7 +678,7 @@ $(window).load(function(){
       //checkAndSetCookieForVisitedArtwork();
 
       // Fade out Loading Screen with a delay of 4 seconds
-      
+
 
 
 
@@ -747,7 +747,7 @@ $(window).load(function(){
           gaTrack(e);
      });
 
-        
+
 
      // Close Panels
      $('body').on('touchstart', '.close', function(e){

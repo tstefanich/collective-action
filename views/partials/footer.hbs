@@ -20,6 +20,7 @@
     {{#compare templateName 'game-client' operator="=="}}
     <script type="text/javascript">const GAME_LOCATION = '{{setLocation}}'</script>
      <script src="js/game-client.js" charset="utf-8"></script>
+     <script src="assets/javascript/jquery.textfill.min.js" charset="utf-8"></script>
     {{/compare}}
     {{#compare templateName 'game-projection' operator="=="}}
     <script type="text/javascript">const GAME_LOCATION = '{{setLocation}}'</script>
@@ -27,22 +28,22 @@
         <script src="assets/javascript/p5.sound.js" charset="utf-8"></script>
      <script src="js/game-projection.js" charset="utf-8"></script>
         {{#compare setLocation 'commons' operator="=="}}
-            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/1/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script> 
+            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/1/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
         {{/compare}}
         {{#compare setLocation 'westbank' operator="=="}}
-            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/2/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script> 
+            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/2/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
         {{/compare}}
         {{#compare setLocation 'littleafrica' operator="=="}}
-            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/3/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script> 
+            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/3/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
         {{/compare}}
         {{#compare setLocation 'rondo' operator="=="}}
-            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/4/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script> 
+            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/4/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
         {{/compare}}
         {{#compare setLocation 'littlemekong' operator="=="}}
-            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/5/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script> 
+            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/5/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
         {{/compare}}
         {{#compare setLocation 'lowertown' operator="=="}}
-            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/6/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script> 
+            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/6/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
         {{/compare}}
     {{/compare}}
 

@@ -32,6 +32,30 @@
 //////////////////////////
 // End Fake User Data
 /////////////////////////
+function resizeTextBox(){
+      console.log('window loaded');
+      var newHeight = $(window).height();
+      console.log(newHeight)
+      newHeight = newHeight - 50 ;
+      console.log(newHeight + 'nav');
+
+      newHeight = newHeight - $('.page .container .imageContainer img').height() ;
+    //  console.log(newHeight + 'image');
+      // Intro Slide show & Signup
+      newHeight = newHeight - 15 ;
+
+      $('.bottomHalf').css('height', newHeight+'px' );
+
+}
+
+$(window).load(function(){
+ resizeTextBox();
+});
+
+$(window).resize(function(event) {
+ resizeTextBox();
+});
+
 
 //prevent uses phone from sleeping.
 // var noSleep = new NoSleep();
@@ -80,7 +104,6 @@ socket.on('reload', function() {
 
 socket.on('connect', function() {
   //  console.log(socket);
-    $('.page').removeClass('my-turn');
 
     console.log('connected to the server as: ' + socket.id);
     socket.emit('updateUser', currentUserInfo())
@@ -106,16 +129,16 @@ socket.on('connect', function() {
 
 
     //resetViews
-    //$('.page').css('background-image','url(assets/images/client/everyone.png)') //********************************************************
-    $('.bottomHalf').html( 'Baby humpback whales whisper to their mothers to stay safe from listening predators, but human noise pollution makes it hard for the mothers to hear them. Choose to be a baby whale, a mother whale, or a predator swimming about. Can you hear eachother?')
+    $('.page').removeClass('my-turn');
+    $('.prompt').html('')
 
 });
 
 socket.on('reconnect', function() {
     socket.emit('updateUser', currentUserInfo())
-
+    $('.page').removeClass('my-turn');
     $('.page').css('background-image','url(assets/images/client/newGame.png)')
-    $('.bottomHalf').html( '')
+    $('.prompt').html('')
 
 })
 
@@ -125,10 +148,9 @@ socket.on('newGame', function() {
     // $('.waitingNext').html('')
     console.log('~~~~~~NEWGAME!');
     window.parent.document.title = GAME_LOCATION + '🚫' + socket.id
-    // $('.page').css('background-color','red')
+    $('.page').removeClass('my-turn');
     $('.page').css('background-image','url(assets/images/client/newGame.png)')
-    $('.bottomHalf').html( '')
-
+    $('.prompt').html('')
 })
 
 socket.on('myTurn', function(taskToPlay) {
@@ -155,53 +177,50 @@ socket.on('myTurn', function(taskToPlay) {
     // $('.page').css('background-color','green')
 
     if(taskToPlay.players == 'all'){
-      $('.page .container img').attr('src','assets/images/client/everyone.png')
+      $('.page.queue .container img').attr('src','assets/images/client/everyone-small.png')
     }else{
-      $('.page .container img').attr('src','assets/images/client/myTurn.png')
+      $('.page.queue .container img').attr('src','assets/images/client/myTurn-small.png')
     }
 
-    $('.bottomHalf').html( taskToPlay.task )
+    $('.prompt').html( taskToPlay.task )
+    $('.bottomHalf').textfill({maxFontPixels:24});
 
     // trigger sound notification
     //  $('.myTurnAudio').get(0).play()
 });
 
-function tempMyTurn(){
-
-  updateWaitTime('reset');
-  $('.page').addClass('my-turn');
-  //Add Points to the client side user object.
- //r getUser = store.get('user');
- //  // console.log('getUser1', getUser);
- //  getUser.score++
-
- //  //for tracking over the night
- //  getUser.tracking = {
- //    location: GAME_LOCATION,
- //    time: Date.now(),
- //    // lat:,
- //    // lon:
- //  }
- //  // console.log('getUser2', getUser);
- //  socket.emit('scorePoints', getUser)
- //store.set('user', getUser)
- var taskToPlay = {};
-taskToPlay.players = 'all';
-  // $('.waitingNext').html( taskToPlay )
-  window.parent.document.title = GAME_LOCATION + '✅' + socket.id
-  // $('.page').css('background-color','green')
-
-  if(taskToPlay.players == 'all'){
-    $('.page.queue .container img').attr('src','assets/images/client/everyone-small.png')
-  }else{
-    $('.page.queue .container img').attr('src','assets/images/client/myTurn.png')
-  }
-
-  $('.bottomHalf').html( taskToPlay.task )
-
-  // trigger sound notification
-  //  $('.myTurnAudio').get(0).play()
-}
+// function tempMyTurn(){
+//
+//   updateWaitTime('reset');
+//   $('.page').addClass('my-turn');
+//
+//  var taskToPlay = {};
+// taskToPlay.players = 'all';
+//   // $('.waitingNext').html( taskToPlay )
+//   window.parent.document.title = GAME_LOCATION + '✅' + socket.id
+//   // $('.page').css('background-color','green')
+//
+//   if(taskToPlay.players == 'all'){
+//     $('.page.queue .container img').attr('src','assets/images/client/everyone-small.png')
+//   }else{
+//     $('.page.queue .container img').attr('src','assets/images/client/myTurn.png')
+//   }
+//
+//   // $('.bottomHalf span').html( taskToPlay.task )
+//   // $('.prompt').html( 'Baby humpback whales whisper to their mothers to stay safe from listening predators, but human noise pollution makes it hard for the mothers to hear them. Choose to be a baby whale, a mother whale, or a predator swimming about. Can you hear eachother?')
+//   $('.prompt').html( 'You are tadpoles hatching from eggs. Swim fast to the shore, then grow legs and hop onto the land!')
+//
+//   $('.bottomHalf').textfill({maxFontPixels:24});
+//
+//   // trigger sound notification
+//   //  $('.myTurnAudio').get(0).play()
+//
+//
+// }
+//
+// setTimeout(function(){
+//   tempMyTurn();
+// },1000)
 
 socket.on('disconnect', function() {
     console.log('disconnected from the server as: ' + socket.id);

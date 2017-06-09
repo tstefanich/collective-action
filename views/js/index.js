@@ -707,6 +707,14 @@ $(window).load(function(){
      });
 
 
+      $('body').on('touchstart', '.update-score-board', function(e){
+       //e.stopPropagation(); e.preventDefault();
+       updateScoreBoard();
+     });
+
+
+
+
      // Regenerate Avatar Button
      $('body').on('tap', '.regenerate-avatar-btn', function(e){
       generateAvatar();
@@ -1357,6 +1365,8 @@ function disableGoogleMapsFontFromLoading(){
 
 function updateMarkerDistances(currentPos) {
 
+
+
     for (var i = allMarkers.length - 1; i >= 0; i--) {
       var $slug = $('.'+allMarkers[i].slug);
       var passedTime = Date.now() - allMarkers[i].timer;
@@ -1938,9 +1948,22 @@ function generateUsername(){
 
 }
 
-
-setTimeout(function(){
+function updateScoreBoard(){
 //////////////////////////scoreboard, integrate later!
+
+   getUser = store.get('user');
+
+   var currentTime = Date.now();
+   var wait = 60000;
+
+   if(getUser.timeUpdatedScore == null || currentTime - getUser.timeUpdatedScore  >  wait){
+        
+
+        getUser.timeUpdatedScore = Date.now();
+        store.set('user', getUser);
+console.log('made it')
+
+
 $.post("/getTeamScores",{}, function(results){
 
   results.sort(function(a, b) {
@@ -1950,13 +1973,13 @@ $.post("/getTeamScores",{}, function(results){
   results.forEach(function(result){
     var teamString =''
     if(result.team == 1){
-     teamString = '<div style="color:#97c355;"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/3.png"> Earth</p> '
+     teamString = '<div style="color:#97c355;margin-bottom: 8px;"><div style="float:left"><img style="height:30px;margin-top:0px;" src="assets/images/teamicons/3.png"></div><p class="align-left" style="margin-left: 10px;margin-top: 4px;" >Earth</p> '
     }else if(result.team == 2){
-      teamString = '<div style="color:#4baaf8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/1.png"> Water</p> '
+      teamString = '<div style="color:#4baaf8;margin-bottom: 8px;"><div style="float:left"><img style="height:30px;margin-top:0px;" src="assets/images/teamicons/1.png"> </div><p class="align-left" style="margin-left: 10px;margin-top: 4px;" >Water</p> '
     }else if(result.team == 3){
-      teamString = '<div style="color:#e88f3d"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/4.png"> Fire</p> '
+      teamString = '<div style="color:#e88f3d;margin-bottom: 8px;"><div style="float:left;"><img style="height:30px;margin-top:0px;" src="assets/images/teamicons/4.png"> </div><p class="align-left" style="margin-left: 10px;margin-top: 4px;" >Fire</p> '
     }else if(result.team == 4){
-      teamString = '<div style="color:#8e98f8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/2.png"> Air</p> '
+      teamString = '<div style="color:#8e98f8;margin-bottom: 8px;"><div style="float:left"><img style="height:30px;margin-top:0px;" src="assets/images/teamicons/2.png"> </div><p class="align-left" style="margin-left: 10px;margin-top: 4px;"  >Air</p> '
     }
 
     appendData += teamString+'<p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>'
@@ -1970,15 +1993,18 @@ $.post("/getHighScores",{},function(results){
     // console.log('highScores',results);
     var appendData = ''
     results.forEach(function(result){
-      appendData += '<div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatars/'+ result.avatar +');background-repeat:no-repeat;background-position:center center;background-size:contain;" ></div><p class="align-left" >' + result.userName + '</p><p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>';
+      var avatarHead = result.avatar.slice(0, -4);
+      avatarHead = avatarHead + '-head.png';
+      appendData += '<div style="margin-bottom: 8px;"><div style="float:left;width:30px;height:30px;background-image:url(assets/images/avatars/'+ avatarHead +');background-repeat:no-repeat;background-position:center center;background-size:contain;" ></div><p class="align-left" style=" margin-left: 10px;margin-top: 4px;">' + result.userName + '</p><p class="align-right" style=" margin-top: 4px;">' + result.score + '</p><div style="clear:both"></div></div>';
     })
     // console.log(appendData);
     $('.scoreBoard').html(appendData)
 })
 
 
+}//end if
 
-},1000)
+}
 
 
 

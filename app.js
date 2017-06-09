@@ -1,8 +1,8 @@
 
     const SETTINGS = {
         server: 'localhost'
-        //setting: 'server-http'
-        //setting: 'server-https'
+        //server: 'server-http'
+        //server: 'server-https'
     }
 
 
@@ -31,8 +31,10 @@ console.log(ssl);
 if(SETTINGS.server == 'localhost'){
     server = require('http').createServer(); //for local testing
 } else if(SETTINGS.server == 'server-http'){
+    console.log = function() {}
     server = require('http').createServer(); 
 } else if(SETTINGS.server == 'server-https'){
+    console.log = function() {}
     ssl = {
          key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
          cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
@@ -312,7 +314,7 @@ app.post('/getTeamScores',function(req, res){
 })
 
 app.post('/getHighScores',function(req, res){
-  database.getSortedUsers(7,'-score',function(results){
+  database.getSortedUsers(40,'-score',function(results){
     // console.log('highscores',results);
     res.status(200).send(results);
   });

@@ -473,8 +473,8 @@ var gameProjection = {
                 console.log('title');
                 console.log();
                 //if($('#movie-intro').get(0).currentTime > 15){
-                //  
-                //  
+                //
+                //
                 //}
                 self.checkTimer();
                 //slideDownPanel($('.page.sign-up .close'));
@@ -757,19 +757,29 @@ $(document).ready(function(){ //somethimes this fires twice for whatever reason.
 
 
 
+function backgroundDecoration(path){
+  this.image = loadImage(path)
+  this.x = random(width)
+  this.y = random(height)
+  this.sz = random(75,100)
+  this.speed = random(0.1,0.5)
 
+  this.display = function(){
+    image(this.image,this.x,this.y,this.sz,this.sz)
+    this.y += this.speed
+    if(this.y > height){
+      this.y = -this.sz
+    }
+  }
 
-
-
-
-
-
+}
 
 
 /*******************
   ANIMATED BACKGROUND
 ********************/
 var avatars = []
+var decorations = []
 // var count = 0
 // var cell = 200
 // var numAvatars = 30
@@ -789,10 +799,20 @@ function setup() {
     // var a = loadImage('avatars/'+ Math.ceil(Math.random()*294)+'.png')
   //}
 
+  for (var i = 1; i <= 8; i++) {
+    d = new backgroundDecoration('assets/images/projection-decoration/cedar-riverside/' + i + '.png')
+    decorations.push(d)
+  }
+
+
 }
 
 function draw() {
   background(255)
+
+  for (var i = 0; i < decorations.length; i++) {
+    decorations[i].display()
+  }
 
 
   avatars.sort(function(a, b) {

@@ -16,9 +16,9 @@ var database;
 
 
 var ssl = {
-    key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
-    ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
+   // key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
+   // cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
+   // ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
 }
 
 console.log(ssl);
@@ -394,17 +394,6 @@ app.post('/update-fields', function(req, res) {
 /*************************************
 socket.io && Queue
 **************************************/
-var ssl = {
-    key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
-    ca: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/chain.pem')
-}
-
-console.log(ssl);
-
-var server = require('https').createServer(ssl,app);
-var io = require('socket.io')(server);
-var connections;
 
 //liveReload views on nodemon auto server reboot
 setTimeout(function() {

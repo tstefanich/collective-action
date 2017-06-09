@@ -400,7 +400,6 @@ var allLocations = [
 
 
 
-
 //commons:
 //Westbank: 44.969050, -93.246891
 //Little Africa: 44.956528, -93.166645
@@ -408,6 +407,36 @@ var allLocations = [
 //Little Mekong: 44.955431, -93.116884
 //Lowertown: 44.949736, -93.084645
 ]
+
+
+
+
+
+function gaInit() {
+  $.getScript('//www.google-analytics.com/analytics.js'); // jQuery shortcut
+  window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+  ga('create', 'UA-100777467-1', 'auto');
+
+  console.log("Initalized");
+  ga('send', 'pageview');
+  return ga;
+};
+
+function gaTrack(e) {
+  var path = e.currentTarget.pathname + e.currentTarget.hash;
+  var title = e.currentTarget.hash.substr(1);
+  var track =  { page: path, title: title};
+
+  ga = window.ga || gaInit();
+
+  ga('set', track);
+  ga('send', 'pageview');
+
+  console.log("Tracked");
+};
+
+
+
 
 function showArtworkClose(){
    var closeButton = $('.close.artwork');
@@ -597,6 +626,7 @@ function buildPlayButtonsForLocations(){
 
 $(document).ready(function(){
     shareMenu.writeSocialMediaImageToTempCanvas();
+    gaInit()
           //Build Different Play buttons For locations
       buildPlayButtonsForLocations()
 });
@@ -691,20 +721,27 @@ $(window).load(function(){
      // Links to slide additional info
      $('body').on('touchstart', '.more-details', function(e){
           console.log($(this).hasClass('logout'))
+                 gaTrack(e);
                  if($(this).hasClass('logout')){
                    login.logout();
                  }
         moreDetails($(this));
      });
 
-      $('body').on('tap', '.more-details', function(e){
-        console.log('click')
-        if($(this).hasClass('logout')){
-          login.logout();
-        }
-        moreDetails($(this));
+     // $('body').on('tap', '.more-details', function(e){
+     //   console.log('click')
+     //   if($(this).hasClass('logout')){
+     //     login.logout();
+     //   }
+     //   moreDetails($(this));
+//
+     //});
 
+     $('body').on('touchstart', 'a.social-media', function(e){
+          gaTrack(e);
      });
+
+        
 
      // Close Panels
      $('body').on('touchstart', '.close', function(e){

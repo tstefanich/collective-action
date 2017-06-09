@@ -26,7 +26,7 @@ var database;
 var ssl;
 var server;
 
-console.log(ssl);
+//console.log(ssl);
 
 if(SETTINGS.server == 'localhost'){
     server = require('http').createServer(); //for local testing

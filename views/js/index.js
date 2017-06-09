@@ -480,7 +480,7 @@ function redirectUserToProperPage(currentPos) {
   for (var i = allLocations.length - 1; i >= 0; i--) {
     // Find slug
     //var $slug = $('.'+allLocation[i].url);
-    var passedTime = Date.now() - allMarkers[i].timer;
+    //var passedTime = Date.now() - allMarkers[i].timer;
 
     // Calc distance
     var distance = calcGeoDistance(currentPos.lat, currentPos.lng, allMarkers[i].position.lat(), allMarkers[i].position.lng());
@@ -491,7 +491,7 @@ function redirectUserToProperPage(currentPos) {
       //allMarkers[i].insideFence = true;
       //$slug.removeClass('outside-fence');
       //$slug.addClass('inside-fence');
-      console.log(passedTime);
+      //console.log(passedTime);
       console.log(totalTime);
       areYouNearAPlayArea = true;
 
@@ -1956,12 +1956,13 @@ function updateScoreBoard(){
    var currentTime = Date.now();
    var wait = 60000;
 
-   if(getUser.timeUpdatedScore == null || currentTime - getUser.timeUpdatedScore  >  wait){
+
+
+   if(getUser.timeUpdatedScore == null || $('.teamScores').is(':empty') || $('.teamScores').html() == "" || currentTime - getUser.timeUpdatedScore  >  wait){
         
 
         getUser.timeUpdatedScore = Date.now();
         store.set('user', getUser);
-console.log('made it')
 
 
 $.post("/getTeamScores",{}, function(results){

@@ -6,15 +6,7 @@
  * @param {string} [prop] - The property name to find it in
  */
 
- var DEBUG = true;
-if(!DEBUG){
-    if(!window.console) window.console = {};
-    var methods = ["log", "debug", "warn", "info"];
-    for(var i=0;i<methods.length;i++){
-        console[methods[i]] = function(){};
-    }
-}
-
+ 
 
 var searchResults;
 
@@ -144,7 +136,17 @@ function slideDownPanel(link){
 /**********************
 Globals
 **********************/
-var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
+if(SETTINGS.server == 'localhost'){
+    socket = io('http://localhost:3000');
+} else if(SETTINGS.server == 'server-http'){
+    //console.log = function() {}
+    socket = io('http://joincollectiveaction.com:3000');
+} else if(SETTINGS.server == 'server-https'){
+   //console.log = function() {}
+   socket = io('https://joincollectiveaction.com:3000', { secure : true});
+}
+
+//var socket = io('http://localhost:3000'); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 //var socket = io('https://joincollectiveaction.com:3000', { secure : true}); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
 

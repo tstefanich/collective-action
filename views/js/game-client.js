@@ -68,10 +68,20 @@ function startVibrate(duration) {
 }
 
 
+var socket;
 
+if(SETTINGS.server == 'localhost'){
+    socket = io('http://localhost:3000');
+} else if(SETTINGS.server == 'server-http'){
+    //console.log = function() {}
+    socket = io('http://joincollectiveaction.com:3000');
+} else if(SETTINGS.server == 'server-https'){
+   //console.log = function() {}
+   socket = io('https://joincollectiveaction.com:3000', { secure : true});
+}
 // var socket = io('https://joincollectiveaction.com:3000', { secure : true}); //MAKE SSURE TO CHANGE THIS TO THE SERVER'S IP LATER!
 
-var socket = io('http://localhost:3000');
+//var socket = io('http://localhost:3000');
 
 function currentUserInfo() {
     var ui = {

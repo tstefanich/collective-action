@@ -225,7 +225,7 @@ var gameProjection = {
                       if(avatars.length >= gameProjection.avatarLimit){
                         return;
                       } else {
-                        var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+                        var a = new avatar('assets/images/avatarsHalfSize/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
                         avatars.push(a)
                       }
                     })
@@ -244,7 +244,7 @@ var gameProjection = {
             if(avatars.length >= gameProjection.avatarLimit){
               return;
             } else {
-              var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+              var a = new avatar('assets/images/avatarsHalfSize/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
               avatars.push(a)
             }
           })
@@ -640,7 +640,7 @@ var gameProjection = {
         console.log('highScores',results);
         var appendData = ''
         results.forEach(function(result){
-          appendData += '<div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatars/'+ result.avatar +');background-repeat:no-repeat;background-position:center center;background-size:contain;" ></div><p class="align-left" >' + result.userName + '</p><p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>';
+          appendData += '<div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/'+ result.avatar +');background-repeat:no-repeat;background-position:center center;background-size:contain;" ></div><p class="align-left" >' + result.userName + '</p><p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>';
         })
         // console.log(appendData);
         $('.scoreBoard').html(appendData)

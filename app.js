@@ -285,6 +285,21 @@ app.get('*', function(req, res) {
  EXPRESS POST
 
 ************************************/
+app.post('/getTeamScores',function(req, res){
+  database.calculateTeamScores(function(results){
+    // console.log('get scores',results);
+    res.status(200).send(results);
+  });
+})
+
+app.post('/getHighScores',function(req, res){
+  database.getSortedUsers(7,'-score',function(results){
+    // console.log('highscores',results);
+    res.status(200).send(results);
+  });
+})
+
+
 app.post('/check-user', function(req, res) {
     //database.restoreFile(req);
     console.log(req.body.userName)

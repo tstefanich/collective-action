@@ -1937,3 +1937,53 @@ function generateUsername(){
   }
 
 }
+
+
+setTimeout(function(){
+//////////////////////////scoreboard, integrate later!
+$.post("/getTeamScores",{}, function(results){
+
+  results.sort(function(a, b) {
+      return b.score - a.score
+  })
+  var appendData = ''
+  results.forEach(function(result){
+    var teamString =''
+    if(result.team == 1){
+     teamString = '<div style="color:#97c355;"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/3.png"> Earth</p> '
+    }else if(result.team == 2){
+      teamString = '<div style="color:#4baaf8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/1.png"> Water</p> '
+    }else if(result.team == 3){
+      teamString = '<div style="color:#e88f3d"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/4.png"> Fire</p> '
+    }else if(result.team == 4){
+      teamString = '<div style="color:#8e98f8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/2.png"> Air</p> '
+    }
+
+    appendData += teamString+'<p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>'
+  })
+
+  $('.teamScores').html(appendData)
+
+});
+
+$.post("/getHighScores",{},function(results){
+    // console.log('highScores',results);
+    var appendData = ''
+    results.forEach(function(result){
+      appendData += '<div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatars/'+ result.avatar +');background-repeat:no-repeat;background-position:center center;background-size:contain;" ></div><p class="align-left" >' + result.userName + '</p><p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>';
+    })
+    // console.log(appendData);
+    $('.scoreBoard').html(appendData)
+})
+
+
+
+},1000)
+
+
+
+
+
+
+
+

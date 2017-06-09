@@ -4,7 +4,7 @@
     src:url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.woff") format("woff"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.ttf") format("truetype");
     font-weight:bold;
     font-style:normal;
-}   
+}
 
 @font-face
 {
@@ -26,7 +26,7 @@ body {
     font-family: 'GTWalsheim', monospace, helvetica, sans-serif;
     background: white;
     color:#0caaff;
-    counter-reset: sources; 
+    counter-reset: sources;
 }
 
 a {
@@ -109,7 +109,7 @@ input[type="url"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
-.uneditable-input:focus {   
+.uneditable-input:focus {
   border-color: #ccc;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 0px rgba(126, 239, 104, 0);
   outline: 0 none;
@@ -179,7 +179,7 @@ fieldset[disabled] .btn-default.focus {
 }
 .row {
     margin-right: -15px;
-    margin-left: -15px; 
+    margin-left: -15px;
 }
 .page.intro .container {
     width: 100%;
@@ -362,7 +362,7 @@ button:focus {
 
 
 .alert {
-  
+
     border-radius: 0px;
 }
 .alert-danger {
@@ -704,7 +704,7 @@ Global page styling
     position: fixed;
 }
 .carousel-indicators {
-    padding-bottom: 10px;   
+    padding-bottom: 10px;
     bottom: 0;
 }
 #carousel-sign-up .carousel-inner > .item {
@@ -811,7 +811,7 @@ Loading page
      pointer-events: none;
 }
 
-.nav .nav-divider {    
+.nav .nav-divider {
     border-right: 2px solid #f05a28;
     height: 35px;
     width: 0px;
@@ -856,7 +856,7 @@ Intro page
     padding-bottom: 6px;
     padding-top: 0;
 }
-.intro-footer .nav-divider {    
+.intro-footer .nav-divider {
     border-right: 2px solid #f05a28;
     height: 35px;
     width: 0px;
@@ -933,7 +933,7 @@ img[src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"] {
     background: black;
 }
 
-.source-container::before { 
+.source-container::before {
 
        font-weight: bold;
     width: 30px;
@@ -1238,4 +1238,14 @@ h2.project-title {
   .stats div div{
     width:33.33333%;
   }
+}
+
+
+
+
+/*For Styling Scoreboards*/
+.align-left{float:left;}
+.align-right{float:right;}
+.page.game-scores.scrollable.help.slideUp .container{
+  width:90%;
 }

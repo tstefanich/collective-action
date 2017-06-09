@@ -197,7 +197,7 @@ var gameProjection = {
      TimeEndTask: 8000,
      TimeEndScore: 7000,
      TimeReset: 250,
-     avatarLimit:175,
+     avatarLimit:100,
      taskPlayedCounter: 1,
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
@@ -383,9 +383,14 @@ var gameProjection = {
                       if(self.currentNumberOfConnections != null && self.currentTask != null && self.currentPlayers != null && allTasks.length > 0){
                         self.setStateAndTime('setup-game', self.TimeSetupGame);
                       } else if(self.currentNumberOfConnections <= 1 && self.currentTask != null && self.currentPlayers <= 1 && allTasks.length > 0){
+                        console.log('333!!!!!!!!!!!!!!!!!!!!!')
                         self.setStateAndTime('title', self.TimeTitle);
+                        self.playerIntroVideo();
                       } else if(self.numberOfTimesGetDataHasRun > 15) {
+                        //console.log('444!!!!!!!!!!!!!!!!!!!!!')
+
                         self.setStateAndTime('title', self.TimeTitle);
+                        self.playerIntroVideo();
                         self.reset();
                         self.numberOfTimesGetDataHasRun = 0; // Maybe this should be self.reset();
                       } else {
@@ -759,7 +764,7 @@ $(document).ready(function(){ //somethimes this fires twice for whatever reason.
 
 function backgroundDecoration(path){
   this.image = loadImage(path)
-  this.x = random(width)
+  this.x = getThird()
   this.y = random(height)
   this.sz = random(75,100)
   this.speed = random(0.1,0.5)
@@ -769,11 +774,21 @@ function backgroundDecoration(path){
     this.y += this.speed
     if(this.y > height){
       this.y = -this.sz
+      this.x = getThird()
     }
   }
 
 }
 
+function getThird(){
+  var location
+  if(random(1)> 0.5){
+    location = random(0, width/3-75)
+  }else{
+    location = random(width/3*2, width-75)
+  }
+  return location;
+}
 
 /*******************
   ANIMATED BACKGROUND
@@ -800,7 +815,7 @@ function setup() {
   //}
 
   for (var i = 1; i <= 8; i++) {
-    d = new backgroundDecoration('assets/images/projection-decoration/cedar-riverside/' + i + '.png')
+    d = new backgroundDecoration('assets/images/projection-decoration/'+ GAME_LOCATION +'/' + i + '.png')
     decorations.push(d)
   }
 

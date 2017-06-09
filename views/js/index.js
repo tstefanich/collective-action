@@ -400,7 +400,6 @@ var allLocations = [
 
 
 
-
 //commons:
 //Westbank: 44.969050, -93.246891
 //Little Africa: 44.956528, -93.166645
@@ -408,6 +407,36 @@ var allLocations = [
 //Little Mekong: 44.955431, -93.116884
 //Lowertown: 44.949736, -93.084645
 ]
+
+
+
+
+
+function gaInit() {
+  $.getScript('//www.google-analytics.com/analytics.js'); // jQuery shortcut
+  window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+  ga('create', 'UA-100777467-1', 'auto');
+
+  console.log("Initalized");
+  ga('send', 'pageview');
+  return ga;
+};
+
+function gaTrack(e) {
+  var path = e.currentTarget.pathname + e.currentTarget.hash;
+  var title = e.currentTarget.hash.substr(1);
+  var track =  { page: path, title: title};
+
+  ga = window.ga || gaInit();
+
+  ga('set', track);
+  ga('send', 'pageview');
+
+  console.log("Tracked");
+};
+
+
+
 
 function showArtworkClose(){
    var closeButton = $('.close.artwork');
@@ -520,7 +549,7 @@ function handleLocationError(err, locationWindow, pos) {
 
 if (navigator.geolocation) {
 
-      $('.geolocation-warning').hide();
+   
 
       navigator.geolocation.watchPosition(function(position) {
         // Set as global variable for other functions to use
@@ -528,7 +557,7 @@ if (navigator.geolocation) {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-
+        $('.geolocation-warning').css('display','none');
         // Update arrays and webpages with current distance data
         updateMarkerDistances(currentPosition);
 
@@ -538,8 +567,18 @@ if (navigator.geolocation) {
         // Update arrays and webpages with current distance data
         redirectUserToProperPage(currentPosition);
 
+        $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
+        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
+          $(this).remove();
+        });
+      });
       }, function(err) {
         handleLocationError(err, locationWindow, currentPosition);
+              $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
+        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
+          $(this).remove();
+        });
+      });
       }, {
         enableHighAccuracy: true,
         timeout: 1000,
@@ -597,6 +636,7 @@ function buildPlayButtonsForLocations(){
 
 $(document).ready(function(){
     shareMenu.writeSocialMediaImageToTempCanvas();
+    gaInit()
           //Build Different Play buttons For locations
       buildPlayButtonsForLocations()
 });
@@ -638,11 +678,7 @@ $(window).load(function(){
       //checkAndSetCookieForVisitedArtwork();
 
       // Fade out Loading Screen with a delay of 4 seconds
-      $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
-        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
-          $(this).remove();
-        });
-      });
+      
 
 
 
@@ -691,20 +727,27 @@ $(window).load(function(){
      // Links to slide additional info
      $('body').on('touchstart', '.more-details', function(e){
           console.log($(this).hasClass('logout'))
+                 gaTrack(e);
                  if($(this).hasClass('logout')){
                    login.logout();
                  }
         moreDetails($(this));
      });
 
-      $('body').on('tap', '.more-details', function(e){
-        console.log('click')
-        if($(this).hasClass('logout')){
-          login.logout();
-        }
-        moreDetails($(this));
+     // $('body').on('tap', '.more-details', function(e){
+     //   console.log('click')
+     //   if($(this).hasClass('logout')){
+     //     login.logout();
+     //   }
+     //   moreDetails($(this));
+//
+     //});
 
+     $('body').on('touchstart', 'a.social-media', function(e){
+          gaTrack(e);
      });
+
+        
 
      // Close Panels
      $('body').on('touchstart', '.close', function(e){

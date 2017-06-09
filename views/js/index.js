@@ -574,11 +574,13 @@ if (navigator.geolocation) {
       });
       }, function(err) {
         handleLocationError(err, locationWindow, currentPosition);
+        if(err.code != 3){
               $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
-        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
-          $(this).remove();
-        });
-      });
+                $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
+                  $(this).remove();
+                });
+              });
+        }
       }, {
         enableHighAccuracy: true,
         timeout: 1000,

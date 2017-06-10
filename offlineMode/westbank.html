@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065) -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link id="favicon" rel="icon" href="https://joincollectiveaction.com/favicon.ico">
+
+    <title>Collective Action!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./westbank_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./westbank_files/styles.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--<link href="/bootstrap/dist/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">-->
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--<script src="/bootstrap/dist/assets/js/ie-emulation-modes-warning.js"></script>-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <style id="stylerStyle"></style><script id="stylerScript"></script><link rel="stylesheet" type="text/css" href="chrome-extension://pkehgijcmpdhfbdbbnkijodmdjhbjlgp/skin/socialwidgets.css"><script type="text/javascript" charset="UTF-8" src="./westbank_files/common.js"></script><script type="text/javascript" charset="UTF-8" src="./westbank_files/util.js"></script><script type="text/javascript" charset="UTF-8" src="./westbank_files/stats.js"></script></head>
+
+  <body class="westbank">
+
+
+<style>
+
+
+
+
+
+
+/*.main
+.prompt{ color:#8c99ff }
+.number{ color:#c6b700 }*/
+	@font-face
+{
+	font-family:'GTWalsheim';
+	src:url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.woff") format("woff"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.ttf") format("truetype")
+	font-weight:bold;
+	font-style:normal;
+}
+
+@font-face
+{
+	font-family:'GTWalsheim';
+	src:url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.woff") format("woff"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.ttf") format("truetype")
+	font-weight:bold;
+	font-style:italic;
+}
+
+
+
+	body
+{
+	font-family:'GTWalsheim',"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+	color:white;
+    overflow: hidden;
+}
+	h1,h2,h3,h4,h5,h6
+{
+	font-family:'Basis-Grotesque',"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+	font-weight:bold;
+	line-height:1.2
+}
+
+
+.container {
+    font-size: 40px;
+    padding: 60px;
+    padding-bottom: 0px;
+}
+
+.page {
+    isolation: isolate;
+    position: fixed;
+    top: 1024px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 100%;
+    opacity: 1;
+    -webkit-transition: transform 1ms cubic-bezier(0.23, 1, 0.32, 1);
+    -moz-transition: transform 1ms cubic-bezier(0.23, 1, 0.32, 1);
+    -o-transition: transform 1ms cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform: 1ms cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    /* -webkit-backface-visibility: hidden; */
+    background-color: white;
+}
+
+
+ body.warning {
+     /* animation: colorchange 1s infinite;
+      background-color:rgba(255,0,0,1);
+      -webkit-animation: colorchange 1s infinite;  */
+    }
+
+    @keyframes colorchange
+    {
+      0%   {background-color: rgba(240,90,40,.7);}
+      25%  {background-color: rgba(240,90,40,0);}
+      50%  {background-color: rgba(240,90,40,.7);}
+      75%  {background-color: rgba(240,90,40,0);}
+      100% {background-color: rgba(240,90,40,.7);}
+    }
+
+    @-webkit-keyframes colorchange /* Safari and Chrome - necessary duplicate */
+    {
+      0%   {background-color: rgba(240,90,40,.7);}
+      25%  {background-color: rgba(240,90,40,0);}
+      50%  {background-color: rgba(240,90,40,.7);}
+      75%  {background-color: rgba(240,90,40,0);}
+      100% {background-color: rgba(240,90,40,.7);}
+    }
+
+
+
+
+body,html{font-size: 50px;background-repeat:no-repeat;background-size:contain;background-position:center center;height: 100%; width: 100%;}
+
+.page h1{display:none;color:white;font-size:12px;margin-left:20px; position:absolute;left:16px;top:16px;}
+.page{background-color:transparent;overflow:hidden;}
+.page .container {margin:0 auto;width:50%;color:black;text-align:center;  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border:3px solid #f15a29;
+  background:white;
+  height: 680px;
+    width: 680px;
+  }
+  .page .container  .inner-container {
+ position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.title-bar{    border-bottom: 3px solid #f15a29;
+    text-transform: uppercase;
+    color: #f15a29;
+    text-align: center;
+    height: 54px;
+    left: 0px;
+    background:white;
+    /* width: 100%; */
+    position: fixed;
+    right: 0px;
+    font-size: 33px;}
+
+.footer-bar{
+	border-top: 3px solid #f15a29;
+	color: #f15a29;
+	position:fixed;
+  background:white;
+	left:0px;
+	bottom:0px;
+	height:54px;
+	font-size: 33px;
+	width: 100%;
+}
+
+.ticker{
+	animation: moveAcross 25s linear infinite;
+	position:absolute;
+	/*text-align: center;*/
+	text-align: left;
+	width:100vw;
+
+	/* Trick to force GPU */
+	-webkit-transform: translate3d(0, 0, 0);
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+}
+
+@keyframes moveAcross {
+	0%{
+		left:6px;
+	}
+	50%{
+		left:61vw;
+	}
+	100%{
+		left:0px;
+	}
+}
+
+.title-bar div{margin-top: 3px;}
+
+.prep-time{color:pink;}
+.task-time{color:red;}
+
+.page.title {background-color:transparent;background-repeat:no-repeat;background-size:contain;background-position:center center;}
+
+
+	.page .people ul {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+}
+.page .people ul, .page .people ul.portrait {
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -o-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -o-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.page .people ol, .page .people ul, .page .people li {
+    list-style: none;
+}
+.page .people li {
+    opacity:0;
+
+}
+
+.page .people li img {
+    display:block;
+        width: 50%;
+    margin: 0 auto;
+}
+.page .people ul {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: box;
+    display: flex;
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -o-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+
+.prep-time-text, .currentTask{
+	line-height: 1.25em;
+}
+
+/*********
+Custom Location CSS
+*********/
+body.littleafrica{color:#f4891e;}
+body.littleafrica .title-bar {border-bottom: 3px solid  #f4891e; color: #f4891e;}
+body.littleafrica .footer-bar {border-top: 3px solid  #f4891e; color: #f4891e;}
+body.littleafrica .page .container { border: 3px solid  #f4891e; color:#8bc53f;}
+body.littleafrica .page .container .prep-time-text { color:#f4891e;}
+body.littleafrica .page .container .prep-time-text .prep-time {color: #ffaaaa;}
+body.littleafrica .page .container .prep-time-text .task-time {color: #ffaaaa;}
+body.littleafrica .page .container .prep-time-text .task-time-seconds {color: #ffaaaa;}
+
+body.littleafrica .page .container .currentTask{color:#8bc53f;}
+body.littleafrica .page .container .title{color:#f4891e;}
+
+body.westbank{color:#f05a28;}
+body.westbank .title-bar {border-bottom: 3px solid  #f05a28; color: #f05a28;}
+body.westbank .footer-bar {border-top: 3px solid  #f05a28; color: #f05a28;}
+body.westbank .page .container { border: 3px solid  #f05a28; color:#8c99ff;}
+body.westbank .page .container .prep-time-text { color:#f05a28;}
+body.westbank .page .container .prep-time-text .prep-time {color: #c6b700;}
+body.westbank .page .container .prep-time-text .task-time {color: #c6b700;}
+body.westbank .page .container .prep-time-text .task-time-seconds {color: #c6b700;}
+
+body.westbank .page .container .currentTask{color:#8c99ff;}
+body.westbank .page .container .title{color:#f05a28;}
+
+body.commons{color:#8c99ff;}
+body.commons .title-bar {border-bottom: 3px solid  #8c99ff; color: #8c99ff;}
+body.commons .footer-bar {border-top: 3px solid  #8c99ff; color: #8c99ff;}
+body.commons .page .container { border: 3px solid  #8c99ff; color:#8c99ff;}
+body.commons .page .container .prep-time-text { color:#8c99ff;}
+body.commons .page .container .prep-time-text .prep-time {color: #f4891e;}
+body.commons .page .container .prep-time-text .task-time {color: #f4891e;}
+body.commons .page .container .prep-time-text .task-time-seconds {color: #f4891e;}
+
+body.commons .page .container .currentTask{color:#28b572;}
+body.commons .page .container .title{color:#8c99ff;}
+
+body.littlemekong{color:#0caaff;}
+body.littlemekong .title-bar {border-bottom: 3px solid  #0caaff; color: #0caaff;}
+body.littlemekong .footer-bar {border-top: 3px solid  #0caaff; color: #0caaff;}
+body.littlemekong .page .container { border: 3px solid  #0caaff; color:#0caaff;}
+body.littlemekong .page .container .prep-time-text { color:#0caaff;}
+body.littlemekong .page .container .prep-time-text .prep-time {color: #ffaaaa;}
+body.littlemekong .page .container .prep-time-text .task-time {color: #ffaaaa;}
+body.littlemekong .page .container .prep-time-text .task-time-seconds {color: #ffaaaa;}
+body.littlemekong .page .container .currentTask{color:#c6b700;}
+body.littlemekong .page .container .title{color:#0caaff;}
+
+body.lowertown{color:#8bc53f;}
+body.lowertown .title-bar {border-bottom: 3px solid  #8bc53f; color: #8bc53f;}
+body.lowertown .footer-bar {border-top: 3px solid  #8bc53f; color: #8bc53f;}
+body.lowertown .page .container { border: 3px solid  #8bc53f; color:#8bc53f;}
+body.lowertown .page .container .prep-time-text { color:#8bc53f;}
+body.lowertown .page .container .prep-time-text .prep-time {color: #f4891e;}
+body.lowertown .page .container .prep-time-text .task-time {color: #f4891e;}
+body.lowertown .page .container .prep-time-text .task-time-seconds {color: #f4891e;}
+body.lowertown .page .container .currentTask{color:#0caaff;}
+body.lowertown .page .container .title{color:#8bc53f;}
+
+
+body.rondo{color:#28b572;}
+body.rondo .title-bar {border-bottom: 3px solid  #28b572; color: #28b572;}
+body.rondo .footer-bar {border-top: 3px solid  #28b572; color: #28b572;}
+body.rondo .page .container { border: 3px solid  #28b572; color:#28b572;}
+body.rondo .page .container .prep-time-text { color:#28b572;}
+body.rondo .page .container .prep-time-text .prep-time {color: #f9bc00;}
+body.rondo .page .container .prep-time-text .task-time {color: #f9bc00;}
+body.rondo .page .container .prep-time-text .task-time-seconds {color: #f9bc00;}
+
+body.rondo .page .container .currentTask{color:#8c99ff;}
+body.rondo .page .container .title{color:#28b572;}
+
+body.commons { color:#ef5928; }
+body.westbank {}
+
+
+
+body.rondo {}
+body.littlemekong {}
+body.lowertown {}
+
+.align-left{float:left;}
+.align-right{float:right;}
+.teamScoreBoard {font-size: 55px;padding-left: 80px;padding-right: 80px;line-height:1em;}
+
+
+</style>
+
+
+<video id="movie-intro" style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; z-index: 999999; width: 100%; display: block;" src="assets/movies/CA_INTRO04.mp4" preload="auto"></video>
+
+<div class="page title" style="display: none;">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+        <a href="#title" id="title"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container" style="border:0px;display:none;">
+        <div class="inner-container">
+	    	<!--<img style="width:100%" src="assets/images/projections/title.png">-->
+	    </div>
+     </div>
+	<h1>Title Screen</h1>
+</div>
+
+<div class="page highscores-players" style="display: none;">
+    <!-- Top Nav Bar -->
+    <div class="nav" style="display:none;">
+	    <a href="#highscores-players" id="highscores-players"></a>
+    	<div class="close glyphicon glyphicon-menu-left"></div>
+    </div>
+    <div class="container" style="padding-top:0;">
+    	<div class="inner-container">
+	    	<h2 style="margin-top:0;text-transform:uppercase;font-size:20px;margin-bottom:40px;">High Scores</h2>
+				<div class="scoreBoard"><div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/292.png);background-repeat:no-repeat;background-position:center center;background-size:contain;"></div><p class="align-left">SmallSun</p><p class="align-right">440</p><div style="clear:both"></div></div><div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/8357.png);background-repeat:no-repeat;background-position:center center;background-size:contain;"></div><p class="align-left">RainyIcebergMachine</p><p class="align-right">425</p><div style="clear:both"></div></div><div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/251.png);background-repeat:no-repeat;background-position:center center;background-size:contain;"></div><p class="align-left">GoodTent</p><p class="align-right">59</p><div style="clear:both"></div></div><div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/240.png);background-repeat:no-repeat;background-position:center center;background-size:contain;"></div><p class="align-left">JumpyDataFlow</p><p class="align-right">10</p><div style="clear:both"></div></div><div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/1.png);background-repeat:no-repeat;background-position:center center;background-size:contain;"></div><p class="align-left">dbinituser1</p><p class="align-right">0</p><div style="clear:both"></div></div><div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/2.png);background-repeat:no-repeat;background-position:center center;background-size:contain;"></div><p class="align-left">dbinituser2</p><p class="align-right">0</p><div style="clear:both"></div></div><div><div style="float:left;width:50px;height:50px;background-image:url(assets/images/avatarsHalfSize/3.png);background-repeat:no-repeat;background-position:center center;background-size:contain;"></div><p class="align-left">dbinituser3</p><p class="align-right">0</p><div style="clear:both"></div></div></div>
+	    </div>
+     </div>
+	<h1>Highscores</h1>
+</div>
+
+<div class="page highscores-teams " style="display: none;">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+        <a href="#highscores-teams" id="highscores-teams"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container" style="padding-top:0;">
+        <div class="inner-container">
+	    	<h2 style="margin-top:0;text-transform:uppercase;font-size:20px;margin-bottom:40px;" class="title">Team Scores</h2>
+				<div class="teamScoreBoard"><div style="color:#97c355"><p class="align-left"><img style="height:50px;margin-top:-8px;" src="./westbank_files/3.png"> Earth</p> <p class="align-right">440</p><div style="clear:both"></div></div><div style="color:#4baaf8"><p class="align-left"><img style="height:50px;margin-top:-8px;" src="./westbank_files/1.png"> Water</p> <p class="align-right">425</p><div style="clear:both"></div></div><div style="color:#e88f3d"><p class="align-left"><img style="height:50px;margin-top:-8px;" src="./westbank_files/4.png"> Fire</p> <p class="align-right">59</p><div style="clear:both"></div></div><div style="color:#8e98f8"><p class="align-left"><img style="height:50px;margin-top:-8px;" src="./westbank_files/2.png"> Air</p> <p class="align-right">10</p><div style="clear:both"></div></div></div>
+	    </div>
+     </div>
+	<h1>Team Scores</h1>
+</div>
+
+<div class="title-bar">
+  <div class="col-lg-4" style="font-size: 20px;margin-top: 13px;"><img class="location-icon" src="assets/images/projections/location-icons/icon_cedarriverside.png" style="    height: 24px;margin-right: 7px;top:-3px;"><span class="location-title">West Bank</span></div>
+	<div class="col-lg-4">Collective Action!</div>
+  <div class="col-lg-4" style="font-size: 20px;margin-top: 13px;">#collectiveaction</div>
+</div>
+
+<!-- <div class="footer-bar">
+	<div class="ticker">
+		Sign up to play: JoinCollectiveAction.com
+		</div>
+
+</div> -->
+
+<div class="page invite-to-performance-area">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+        <a href="#invite-to-performance-area" id="invite-to-performance-area"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container" style="padding-top:0;">
+        <div class="inner-container">
+        	<p>Players: Come on up!</p>
+        </div>
+     </div>
+	<h1>Teaser</h1>
+</div>
+
+<div class="page get-number-of-connections-task-players">
+    <!-- Top Nav Bar -->
+    <div class="nav" style="display:none;">
+        <a href="#get-number-of-connections-task-players" id="get-number-of-connections-task-players"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+    </div>
+    <div class="container" style="width:80%">
+        <div class="inner-container">
+	        <div class="people">
+	            <p>HEY!!!</p>
+	        	<!-- <ul>
+	        		<li>TEST 1<img src="assets/images/avatars/1.svg"></li>
+	        		<li>TEST 2<img src="assets/images/avatars/2.svg"></li>
+	        		<li>TEST 3<img src="assets/images/avatars/3.svg"></li>
+	        		<li>TEST 4<img src="assets/images/avatars/4.svg"></li>
+	        	</ul> -->
+	       	</div>
+	    </div>
+     </div>
+	<h1>get-number-of-connections-task-players</h1>
+</div>
+
+<div class="page setup-game">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+     	<a href="#get-task" id="get-task"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container" style="padding-top:0;">
+        <div class="inner-container">
+        	<p>Getting your task now...</p>
+        </div>
+     </div>
+	<h1>Get Task Animation</h1>
+</div>
+
+<div class="page prep-for-task">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+     	<a href="#prep-for-task" id="prep-for-task"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container" style="padding-top:0;">
+          <p class="prep-time-text" style="position: absolute;top: 25px;left: 0;width: 100%;"> Prepare for your action: <br><span class="prep-time ">30</span> <span class="task-time-seconds">Seconds</span></p>
+        <div class="inner-container">
+        	<p class="currentTask"></p>
+       	</div>
+     </div>
+	<h1>Prep For Task</h1>
+</div>
+
+<div class="page start-task">
+    <!-- Top Nav Bar -->
+    <div class="nav" style="display:none;">
+        <a href="#start-task" id="start-task"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+    </div>
+     <div class="container" style="padding-top:0;">
+     <p class="prep-time-text" style="position: absolute;top: 25px;left: 0;width: 100%;">   Act: <span class="task-time">60</span> <span class="task-time-seconds">Seconds</span></p>
+        <div class="inner-container">
+          <p class="currentTask"></p>
+        </div>
+
+     </div>
+	<h1>Start Task</h1>
+</div>
+
+<div class="page end-task">
+    <!-- Top Nav Bar -->
+
+    <div class="nav" style="display:none;">
+    	<a href="#end-task" id="end-task"></a>
+    	<div class="close glyphicon glyphicon-menu-left "></div>
+    </div>
+     <div class="container" style="padding-top:0;">
+            <video id="movie-great-job" style="    position: absolute;left: 0;top: 0;width: 100%;" src="assets/movies/CA_GREATJOB.mp4" preload="auto"></video>
+
+        	<!--<p>Great job, players!<br>Points for everyone!</p>-->
+     </div>
+	<h1>End Task</h1>
+</div>
+
+
+<div class="page end-score">
+    <!-- Top Nav Bar -->
+
+    <div class="nav" style="display:none;">
+    	<a href="#end-score" id="end-score"></a>
+    	<div class="close glyphicon glyphicon-menu-left "></div>
+    </div>
+     <div class="container" style="padding-top:0;">
+        <div class="inner-container">
+        	<p>Each performer scored a point!</p>
+        </div>
+     </div>
+	<h1>Score Task</h1>
+</div>
+
+<div class="page reset">
+    <!-- Top Nav Bar -->
+
+    <div class="nav" style="display:none;">
+    	<a href="#reset" id="reset"></a>
+    	<div class="close glyphicon glyphicon-menu-left "></div>
+    </div>
+	<h1>End Task</h1>
+</div>
+
+
+
+
+<div class="page we-need-more-players">
+     <!-- Top Nav Bar -->
+     <div class="nav" style="display:none;">
+     	<a href="#we-need-more-players" id="we-need-more-players"></a>
+     	<div class="close glyphicon glyphicon-menu-left"></div>
+     </div>
+     <div class="container">
+        <p>We Need More players!!!!!</p>
+     </div>
+	<h1>We need more players</h1>
+</div>
+
+<audio id="sound-call-people" src="assets/audio/01_CallPeople_01.mp3"></audio>
+<audio id="sound-get-ready" src="assets/audio/02_GetReady_01.mp3"></audio>
+<audio id="sound-start" src="assets/audio/03_Start_01.mp3"></audio>
+
+
+
+<audio id="sound-ding" src="assets/audio/ding.mp3"> </audio>
+<audio id="sound-jingle" src="assets/audio/jingle.mp3"> </audio>
+<audio id="sound-fanfare" src="assets/audio/fanfare.mp3"> </audio>
+<audio id="sound-cheers" src="assets/audio/cheers.mp3"> </audio>
+
+
+    <script type="text/javascript">
+
+    const SETTINGS = {
+        //server: 'localhost'
+        //server: 'server-http'
+        server: 'server-https'
+    }
+
+    if(SETTINGS.server == 'server-http' || SETTINGS.server == 'server-https')
+    {
+        var DEBUG = false;
+        if(!DEBUG){
+            if(!window.console) window.console = {};
+            var methods = ["log", "debug", "warn", "info"];
+            for(var i=0;i<methods.length;i++){
+                console[methods[i]] = function(){};
+            }
+        }
+
+    }
+
+
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./westbank_files/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/jquery/dist/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="./westbank_files/bootstrap.min.js"></script>
+    <!-- <script src="assets/javascript/socket.io.min.js"></script> -->
+    <script src="./westbank_files/socket.io.slim.js"></script>
+    <script type="text/javascript" src="./westbank_files/velocity.js"></script>
+    <script type="text/javascript" src="./westbank_files/googleMapStyles.js"></script>
+    <script src="./westbank_files/store.legacy.min.js"></script>
+
+
+    <script type="text/javascript">const GAME_LOCATION = 'westbank'</script>
+        <script src="./westbank_files/p5.js" charset="utf-8"></script>
+        <script src="./westbank_files/p5.sound.js" charset="utf-8"></script>
+     <script src="./westbank_files/game-projection.js" charset="utf-8"></script>
+            <!-- <script type="text/javascript" src="./westbank_files/full"></script> -->
+
+     <script>
+     //store.set('user', { name:'Marcus' })
+     //store.get('user').name == 'Marcus'
+    //  var user = store.get('user');
+    //  console.log(user);
+     </script>
+    <script async="" defer="" src="./westbank_files/js"></script>
+    <script type="text/javascript" src="./westbank_files/infobubble.js"></script>
+
+
+</body></html>

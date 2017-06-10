@@ -13,12 +13,29 @@ Loading Page
 	  </div>
 </div>
 
+<style media="screen">
+  .mobile-warning{
+    display:block;
+  }
+  @media (max-width: 1280px){ /*Change this to restric divice width (allow anything below this width)*/
+    .mobile-warning{
+      display:none;
+    }
+  }
+</style>
+
+<div class="page mobile-warning alert alert-danger alert-regular slideUp" style="z-index: 10000;border: 0;background: #f05a28;font-size: 24px;text-align: center;">
+     <div class="text-container" style="position: relative;top: 50%;transform: translateY(-50%);">
+            COLLECTIVE ACTION! can only be played on mobile devices, head to http://joincollectiveaction.com on your mobile device!
+       </div>
+</div>
 
 <div class="page geolocation-warning alert alert-danger alert-regular slideUp" style="z-index: 10000;border: 0;background: #f05a28;font-size: 24px;text-align: center;">
      <div class="text-container" style="position: relative;top: 50%;transform: translateY(-50%);">
             Enable your GPS to play!
        </div>
 </div>
+
 
 <!--////////////
 Intro Page

@@ -170,11 +170,12 @@ function getRandomInt(min, max) {
 
 var gameProjection = {
      bodyElement: $('body'),
-     currentNumberOfConnections:null,
+     currentNumberOfConnections:100,
      requestedNumberOfConnections: false,
      currentPlayers:null,
-     requestedCurrentPlayers: false,
+     requestedCurrentPlayers: 100,
      currentTask:null,
+
      requestedTask: false,
      prepFrameCounter:0,
      taskFrameCounter:0,
@@ -236,30 +237,30 @@ var gameProjection = {
           //     console.log('disconnected from the server as: ' + socket.id);
           //});
 
-          socket.on('addAvatar',function(user){
-            console.log('addAvatar',user);
-            if(avatars.length >= gameProjection.avatarLimit){
-              return;
-            } else {
-              var a = new avatar('assets/images/avatarsHalfSize/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
-              avatars.push(a)
-            }
-          })
-          socket.on('removeAvatar',function(user){
-            console.log('removeAvatar',user);
+         //socket.on('addAvatar',function(user){
+         //  console.log('addAvatar',user);
+         //  if(avatars.length >= gameProjection.avatarLimit){
+         //    return;
+         //  } else {
+         //    var a = new avatar('assets/images/avatarsHalfSize/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+         //    avatars.push(a)
+         //  }
+         //})
+         //socket.on('removeAvatar',function(user){
+         //  console.log('removeAvatar',user);
 
-            for (var i = 0; i < avatars.length; i++) {
+         //  for (var i = 0; i < avatars.length; i++) {
 
-               if(avatars[i].id == user.id){
-                 avatars[i].state = 'avatarIsShrinking';
-                 avatars[i].startTime = performance.now();
-                 avatars[i].endTime = avatars[i].startTime + duration2;
-                 soundReverse.playbackRate = random(.8,1.5);
-                 soundReverse.play();
-               }
-            }
+         //     if(avatars[i].id == user.id){
+         //       avatars[i].state = 'avatarIsShrinking';
+         //       avatars[i].startTime = performance.now();
+         //       avatars[i].endTime = avatars[i].startTime + duration2;
+         //       soundReverse.playbackRate = random(.8,1.5);
+         //       soundReverse.play();
+         //     }
+         //  }
 
-          })
+         //})
 
      },
      addLocationClassToBody:function(){
@@ -332,18 +333,18 @@ var gameProjection = {
      },
      reset:function(){
       var self = this;
-      self.currentNumberOfConnections = null;
-      self.requestedNumberOfConnections = false;
-      self.currentPlayers = null;
-      self.requestedCurrentPlayers = false;
-      self.currentTask = null;
-      self.requestedTask = false;
+      //self.currentNumberOfConnections = null;
+      //self.requestedNumberOfConnections = false;
+      //self.currentPlayers = null;
+      //self.requestedCurrentPlayers = false;
+      //self.currentTask = null;
+      //self.requestedTask = false;
 
       self.prepFrameCounter = 0;
       self.taskFrameCounter = 0;
-
-      self.numberOfTimesGetDataHasRun = 0;
-      self.taskPlayedCounter
+      console.log('reset');
+      //self.numberOfTimesGetDataHasRun = 0;
+      self.taskPlayedCounter;
      },
      writeInvitionToScreen:function(){
         var textBox = $('.invite-to-performance-area .container .inner-container p');
@@ -362,7 +363,8 @@ var gameProjection = {
                 switch (self.state) {
                   case 'title':
                       self.hideIntroVideo();
-                      self.setStateAndTime('get-number-of-connections-task-players', self.TimeGetNumberOfConnectionsTaskPlayers); // OFFLINE MODE
+                      self.getTask();
+                      self.setStateAndTime('setup-game', self.TimeSetupGame); // OFFLINE MODE
                       //self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
                       self.writeHighScoresToScreen();
 
@@ -445,13 +447,15 @@ var gameProjection = {
                       //self.setStateAndTime('reset', self.TimeReset);
                       break;
                   case 'reset':
-                      socket.emit('resetViews', self.currentPlayers)
+                      //socket.emit('resetViews', self.currentPlayers)
                       self.reset();
                       if(gameProjection.taskPlayedCounter >= 5){
                         self.setStateAndTime('title', self.TimeTitle);
                         self.playerIntroVideo();
+                        gameProjection.taskPlayedCounter = 1;
                       } else {
-                        self.setStateAndTime('get-number-of-connections-task-players', self.TimeGetNumberOfConnectionsTaskPlayers);
+                      	self.getTask();
+                        self.setStateAndTime('setup-game', self.TimeSetupGame);
                         gameProjection.taskPlayedCounter++
                       }
 

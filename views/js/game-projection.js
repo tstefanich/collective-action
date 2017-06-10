@@ -452,6 +452,7 @@ var gameProjection = {
                       if(gameProjection.taskPlayedCounter >= 5){
                         self.setStateAndTime('title', self.TimeTitle);
                         self.playerIntroVideo();
+                        gameProjection.taskPlayedCounter = 1;
                       } else {
                         self.setStateAndTime('get-number-of-connections-task-players', self.TimeGetNumberOfConnectionsTaskPlayers);
                         gameProjection.taskPlayedCounter++

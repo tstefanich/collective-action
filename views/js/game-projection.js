@@ -659,13 +659,13 @@ var gameProjection = {
         results.forEach(function(result){
           var teamString =''
           if(result.team == 1){
-           teamString = '<div style="color:#97c355"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/3.png"> Earth</p> '
+              teamString = '<div style="color:#4baaf8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/1.png"> Water</p> '
           }else if(result.team == 2){
-            teamString = '<div style="color:#4baaf8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/1.png"> Water</p> '
+              teamString = '<div style="color:#8e98f8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/2.png"> Air</p> '
           }else if(result.team == 3){
-            teamString = '<div style="color:#e88f3d"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/4.png"> Fire</p> '
+            teamString = '<div style="color:#97c355"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/3.png"> Earth</p> '
           }else if(result.team == 4){
-            teamString = '<div style="color:#8e98f8"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/2.png"> Air</p> '
+            teamString = '<div style="color:#e88f3d"><p class="align-left" ><img style="height:50px;margin-top:-8px;" src="assets/images/teamicons/4.png"> Fire</p> '
           }
 
           appendData += teamString+'<p class="align-right">' + result.score + '</p><div style="clear:both"></div></div>'
@@ -976,8 +976,8 @@ function avatar(path,id,x,y){
     if(value > .99){ value = 0.99; } // This is required from keep the tween from increasing too far
     this.currentValue =value; // this is needed to reverse the tween.
 
-    this.avatarWidth = (this.image.width) * value/5;
-    this.avatarHeight = (this.image.height) * value/5;//
+    this.avatarWidth = (this.image.width) * value/3;
+    this.avatarHeight = (this.image.height) * value/3;//
   },
   this.avatarShrink = function(){
     if (this.time >= this.endTime)
@@ -991,8 +991,8 @@ function avatar(path,id,x,y){
 
     if(value < 0){ value = 0.000001; } // This is required from keep the tween from reversing too far
 
-    this.avatarWidth = (this.image.width) * (value/5);
-    this.avatarHeight = (this.image.height) * (value/5);//
+    this.avatarWidth = (this.image.width) * (value/3);
+    this.avatarHeight = (this.image.height) * (value/3);//
   },
   this.calculateSpeed = function(){
       this.speed = abs(this.x - this.previousX) + abs(this.y - this.previousY);

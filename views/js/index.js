@@ -259,7 +259,7 @@ var allCircles = [];
 
 // This could be a json that gets loaded in but I'm not sure if its needed anywhere else besides on the phone...
 var allLocations = [
-  {
+ /* {
     url:"westbank",
     name: "Ben's House",
     lat: 44.957124,
@@ -271,7 +271,7 @@ var allLocations = [
     image:'bens-house.jpg',
     icon:'white-pin.png',
 
-  },
+  },*/
   /*{
     url:"location-2",
     name: "Tyler's House",
@@ -311,7 +311,7 @@ var allLocations = [
   },
 */
 
-
+/*
 {
     url:"studio",
     name: "Studio",
@@ -323,7 +323,7 @@ var allLocations = [
     description: "The University of California, Los Angeles (UCLA) is a public research university in the Westwood district of Los Angeles, California, United States. It became the Southern Branch of the University of California in 1919, making it the second-oldest undergraduate campus of the ten-campus system after the original University of California campus in Berkeley (1873).[10] It offers 337 undergraduate and graduate degree programs in a wide range of disciplines.[11] UCLA enrolls about 31,000 undergraduate and 13,000 graduate students,[6] and had 119,000 applicants for Fall 2016, including transfer applicants, the most applicants for any American university.",
     image:'ucla.jpg',
     icon:'icon_commons.png',
-  },
+  },*/
   {
     url:"commons",
     name: "Commons",

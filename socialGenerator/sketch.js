@@ -32,8 +32,8 @@ function draw() {
 if(frameCount % 30 == 0){
   background(255);
 
-  f = frame[floor(random(frame.length))]
-  image(f, width/2,height/2,800,800)
+  // f = frame[floor(random(frame.length))]
+  // image(f, width/2,height/2,800,800)
 
 
   s.rate(random(0.75,2));
@@ -43,8 +43,8 @@ if(frameCount % 30 == 0){
     // console.log(first);
     image(first,width/2-150,height/2, first.width/3, first.height/3);
 
-    second = ava[floor(random(ava.length))]
-    image(second,width/2+150,height/2, second.width/3, second.height/3);
+    // second = ava[floor(random(ava.length))]
+    // image(second,width/2+150,height/2, second.width/3, second.height/3);
 
 
 }

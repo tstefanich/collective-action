@@ -15,6 +15,9 @@ function setup() {
 
 
   createCanvas(windowWidth,windowHeight)
+  setTimeout(function(){
+      generateAvatarsOnInterval();
+  }, 3000);
   // for (var i = 0; i < 100; i++) {
   //   // var a = loadImage('avatars/'+ Math.ceil(Math.random()*294)+'.png')
   //   var a = new avatar('avatars/'+ Math.ceil(Math.random()*294)+'.png', random(0,width),random(0,height) )
@@ -280,16 +283,24 @@ function lerp(t, minn, maxx)
 }
 
 function mousePressed() {
-  var a = new avatar('avatars/'+ Math.ceil(Math.random()*294)+'.png', random(0,width),random(0,height) )
+  var a = new avatar('avatars/'+ Math.ceil(Math.random()*150)+'.png', random(0,width),random(0,height) )
     avatars.push(a)
 }
 
-setInterval(function(){
-  if(random() > 0.5 && avatars.length <=25){
-  var a = new avatar('avatars/'+ Math.ceil(Math.random()*10000)+'.png', random(0,width),random(0,height) )
+var overAllTime = 1000;
+
+function generateAvatarsOnInterval(){
+ if( avatars.length <=80){
+  var a = new avatar('avatars/'+ Math.ceil(Math.random()*150)+'.png', random(0,width),random(0,height) )
     avatars.push(a)
-  }
-},200)
+  //}
+    overAllTime = overAllTime * .95;
+
+  setTimeout(function(){
+    generateAvatarsOnInterval();
+  }, overAllTime);
+}
+};
 
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {

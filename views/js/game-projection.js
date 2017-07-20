@@ -225,7 +225,7 @@ var gameProjection = {
                       if(avatars.length >= gameProjection.avatarLimit){
                         return;
                       } else {
-                        var a = new avatar('assets/images/avatarsHalfSize/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+                        var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
                         avatars.push(a)
                       }
                     })
@@ -244,7 +244,7 @@ var gameProjection = {
             if(avatars.length >= gameProjection.avatarLimit){
               return;
             } else {
-              var a = new avatar('assets/images/avatarsHalfSize/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
+              var a = new avatar('assets/images/avatars/'+user.userObject.avatar+'', user.id, random(0,width),random(0,height))
               avatars.push(a)
             }
           })
@@ -1006,29 +1006,29 @@ function avatar(path,id,x,y){
     console.log()
 
     this.time = performance.now();
+     this.avatarSetup =false;
+  //while (this.avatarSetup){
+  //  this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
+  //  this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
 
-    while (this.avatarSetup){
-      this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
-      this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));
+  //  if(!collidePointRect(this.x,this.y,(500-100),0,(680+100),860)) {
+  //        /*
+  //        After it checks to see if the position is in the middle
+  //        it then checks to see if the x and y are inside the screen
+  //        I offset the detection by 100 for x and 200 for y
+  //        We could not use the avatar width or height because
+  //        of the animation they start at 0 or 1 pixel so the offset is so small
+  //        // that they would still appear offscreen
+  //        */
+  //        if(this.x > 100 && this.x < windowWidth - 100 &&
+  //          this.y > 200 && (this.y) < windowHeight - 200){
+  //        console.log('x:'+this.x + ' y:'+this.y )
 
-      if(!collidePointRect(this.x,this.y,(500-100),0,(680+100),860)) {
-            /*
-            After it checks to see if the position is in the middle
-            it then checks to see if the x and y are inside the screen
-            I offset the detection by 100 for x and 200 for y
-            We could not use the avatar width or height because
-            of the animation they start at 0 or 1 pixel so the offset is so small
-            // that they would still appear offscreen
-            */
-            if(this.x > 100 && this.x < windowWidth - 100 &&
-              this.y > 200 && (this.y) < windowHeight - 200){
-            console.log('x:'+this.x + ' y:'+this.y )
-
-            this.avatarSetup =false;
-            break;
-          }
-       }
-    }
+  //        this.avatarSetup =false;
+  //        break;
+  //      }
+  //   }
+  //}
 
     this.x = constrain( map(this.random(),0,1, -.5,1.5) * width, 0 - this.avatarWidth, width + this.avatarWidth ) ;//constrain(this.x + this.random()*4, 0, width - (this.image.width/2));
     this.y = constrain( map(this.yRandom(), 0, 1, -.5, 1.5) * height, 0 - this.avatarHeight , height + this.avatarHeight );//constrain(this.y + this.random()*4, 0, height - (this.image.height/2));

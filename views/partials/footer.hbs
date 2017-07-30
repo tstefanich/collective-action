@@ -49,6 +49,9 @@
         <script src="assets/javascript/p5.js" charset="utf-8"></script>
         <script src="assets/javascript/p5.sound.js" charset="utf-8"></script>
      <script src="js/game-projection.js" charset="utf-8"></script>
+        {{#compare setLocation 'demo' operator="=="}}
+            <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/1/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
+        {{/compare}}
         {{#compare setLocation 'commons' operator="=="}}
             <script type="text/javascript" src="https://spreadsheets.google.com/feeds/list/1SojNwKJj8V0vas9-3jM-ji9UjUa4gMi45ZtOmoofDUM/1/public/full?alt=json-in-script&amp;callback=gameProjection.convertSpreadsheetToTasksObject"></script>
         {{/compare}}

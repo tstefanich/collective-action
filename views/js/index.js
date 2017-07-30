@@ -543,11 +543,16 @@ function handleLocationError(err, locationWindow, pos) {
   //                      'Error: The Geolocation service failed.' :
   //                      'Error: Your browser doesn\'t support geolocation.');
 }
+var isNorthernSpark = false;
+if(isNorthernSpark == false){
+   $('.geolocation-warning').css('display','none');
+   $('.loading-container').delay(500).velocity({opacity: 0},500,function(){
+        $('.page.loading').delay(100).velocity({opacity: 0},500,function(){
+          $(this).remove();
+        });
+    });
 
-
-
-
-if (navigator.geolocation) {
+} else if (navigator.geolocation) {
 
 
 

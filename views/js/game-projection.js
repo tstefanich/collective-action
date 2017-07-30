@@ -274,6 +274,7 @@ var gameProjection = {
       var titleIcon = $('.location-icon')
       var urlForIcons = 'assets/images/projections/location-icons/'
       switch (title) {
+        
         case 'commons':
             titleIcon.attr('src',urlForIcons+'icon_commons.png');
             titleElement.html('Commons');
@@ -977,8 +978,8 @@ function avatar(path,id,x,y){
     if(value > .99){ value = 0.99; } // This is required from keep the tween from increasing too far
     this.currentValue =value; // this is needed to reverse the tween.
 
-    this.avatarWidth = (this.image.width) * value/3;
-    this.avatarHeight = (this.image.height) * value/3;//
+    this.avatarWidth = (this.image.width) * value/4;
+    this.avatarHeight = (this.image.height) * value/4;//
   },
   this.avatarShrink = function(){
     if (this.time >= this.endTime)
@@ -992,8 +993,8 @@ function avatar(path,id,x,y){
 
     if(value < 0){ value = 0.000001; } // This is required from keep the tween from reversing too far
 
-    this.avatarWidth = (this.image.width) * (value/3);
-    this.avatarHeight = (this.image.height) * (value/3);//
+    this.avatarWidth = (this.image.width) * (value/4);
+    this.avatarHeight = (this.image.height) * (value/4);//
   },
   this.calculateSpeed = function(){
       this.speed = abs(this.x - this.previousX) + abs(this.y - this.previousY);

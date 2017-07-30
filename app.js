@@ -183,6 +183,15 @@ app.get('/', function(req, res, next) {
 });
 
 
+app.get('/demo', function(req, res, next) {
+    database.dbInfo(function(results) {
+        return res.render('index', {
+            templateName: 'index'
+        });
+    });
+});
+
+
 
 app.get('/blank', function(req, res, next) {
     // database.dbInfo(function(results) {

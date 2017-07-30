@@ -1055,7 +1055,7 @@ var signUp = {
           //You clicked Save button
           // If Team is null give random number // COuld delete after playing
           var team;
-          if($('.confirmation-sign-up .container .image').attr('data-team-id') == null){
+          if($('.confirmation-sign-up .container .image').attr('data-team-id') == null || $('.confirmation-sign-up .container .image').attr('data-team-id') == undefined){
             team = Math.ceil(Math.random() * 4);
           } else {
             team = $('.confirmation-sign-up .container .image').attr('data-team-id');
@@ -1095,12 +1095,16 @@ var signUp = {
         // Add image to
 
         console.log(teamID);
+        if(teamID == null || teamID == undefined){
+          teamID = Math.ceil(Math.random() * 4);
+        }
         var teamContainer = $('.confirmation-sign-up .container .image');
         teamContainer.attr('data-team-id',teamID);
         teamContainer.css('background-image' , 'url(assets/images/team/'+teamID+'.png)');
         teamContainer.css('background-position' , 'center center');
         teamContainer.css('background-size' , 'contain');
         teamContainer.css('background-repeat' , 'no-repeat');
+
 
         // HomeScreen
         $('.stats .top .team-id').html('<img style="height:30px;margin-top:-8px;margin-bottom:4px;" src="assets/images/teamicons/'+teamID+'.png">')

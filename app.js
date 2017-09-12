@@ -1,8 +1,8 @@
 
     const SETTINGS = {
-        server: 'localhost'
+        //server: 'localhost'
         //server: 'server-http'
-        //server: 'server-https'
+        server: 'server-https'
     }
 
 
@@ -402,6 +402,26 @@ app.post('/get-user', function(req, res) {
 
 
     database.getUserByEmail(req, function(err, response) {
+        if (err) {
+            return res.status(422).json({
+                error: err.message
+            });
+        } else {
+            return res.status(200).send(response);
+        }
+    });
+    // This was need for successful callback for ajax
+    // This should probably be in a callback maybe inside the restoreFile request.... maybe....
+    //res.send(req.body);
+});
+
+
+app.post('/get-user-by-name', function(req, res) {
+    //database.restoreFile(req);
+    console.log(req.body.email)
+
+
+    database.getUserByUsername(req, function(err, response) {
         if (err) {
             return res.status(422).json({
                 error: err.message

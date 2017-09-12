@@ -41,7 +41,7 @@ var database = {
       mongoose.connect('mongodb://localhost/test',function(err){
         if (err) return handleError(err);
         // Drop the DB at start to clear for testing
-        // mongoose.connection.db.dropDatabase(function(){
+        //mongoose.connection.db.dropDatabase(function(){
         //   database.fakeData();
         // });
       });
@@ -130,6 +130,15 @@ database.getUserByEmail = function(req, callback){
   console.log(email)
   this.Users.findOne({ email : email }, function(error, docs) {
     console.error('getUserByEmail');
+    return callback(null, docs);
+  });
+}
+
+database.getUserByUsername = function(req, callback){
+  var username = req.body.email;
+  console.log(username)
+  this.Users.findOne({ username : username }, function(error, docs) {
+    console.error('getUserByUsername');
     return callback(null, docs);
   });
 }
@@ -370,7 +379,7 @@ database.backup = function (searchTerm, newTitle){
 
 ************************************/
 
-// var userNames = ['dbinituser1', 'Tyler', 'Sara']
+ var userNames = ['TallFlower', 'FastBeeFriend', 'WavyMooseTask', 'KookyBoatHug','TallFlower']
 // var emails = ['Ben@benmoren.com', 'Tyler@tylerstefanich.com', 'sara@sara.com']
 
 function getRandomInt(min, max) {
@@ -390,12 +399,12 @@ database.fakeData = function(){
   for (var i = 1; i <=4;i++) {
 
     var data = new this.Users({
-      userName: 'dbinituser' + i,
+      userName: userNames[i],
       email: 'dbinituser'+i + '@dbinituser.com',
       avatar: i+'.png',
       team: i,
       // METRICS
-      score: 0,
+      score: Math.ceil(Math.random() * 5),
       locationsVisited: [{location:'dbinit', time:Date.now()}], // location + timespent
     });
 

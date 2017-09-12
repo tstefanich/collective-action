@@ -7,6 +7,16 @@
  */
 
  
+ /**********
+
+ VIDEO Preload Code
+
+ **********/
+
+
+
+ /*********
+ *********/
 
 var searchResults;
 
@@ -183,8 +193,9 @@ var gameProjection = {
      taskFrameCounter:0,
      numberOfTimesGetDataHasRun: 0,
      wait:15000,
-     state:'title',
+     state:'waiting-for-video-to-load',//'title', // 'waiting-for-video-to-load'
      gameStateIndex:0,
+     videoWaitTime:0,
 
      // Time Variables
      TimeTitle: 15000,
@@ -200,12 +211,14 @@ var gameProjection = {
      TimeEndScore: 7000,
      TimeReset: 250,
      avatarLimit:100,
+     videoIntro: $('#movie-intro').get(0),
      taskPlayedCounter: 1,
      //gameStates:['highscore players','highscore team','teaser','get players','get task','start task'],
      init: function(){
           gameProjection.addLocationClassToBody();
 
-           $('#movie-intro').get(0).play()
+           //$('#movie-intro').get(0).play()
+           gameProjection.checkIfVideoIsLoaded();
 
           time = new Date().getTime();//store the current time
           // this.getNewTask();
@@ -274,7 +287,9 @@ var gameProjection = {
       var titleIcon = $('.location-icon')
       var urlForIcons = 'assets/images/projections/location-icons/'
       switch (title) {
-        
+        case 'demo':
+            titleElement.html('A MAZE');
+            break;
         case 'commons':
             titleIcon.attr('src',urlForIcons+'icon_commons.png');
             titleElement.html('Commons');
@@ -358,14 +373,71 @@ var gameProjection = {
         }
         textBox.html(text);
      },
+     stopBackgroundMusic:function(){
+        $('#audio-background-music').animate({volume: 0}, 1000, function(){
+            $('#audio-background-music')[0].pause();
+        }); //[0].pause();
+     },
+      playBackgroundMusic:function(){
+        $('#audio-background-music')[0].play();
+        $('#audio-background-music').animate({volume: 0.5}, 1000);//[0].play();
+
+     },
+     dipBackgroundMusic:function(time){ // This is not being used any more
+        $('#audio-background-music').animate({volume: 0}, time, function(){
+            $('#audio-background-music').animate({volume: 0.4}, 1000);//[0].play();
+        });//[0].play();
+
+     },
+     videoProgressHandler:function(e) {
+           var self = this;
+      var v = document.getElementById('movie-intro');
+    var r = v.buffered;
+    var total = v.duration;
+
+    var start = r.start(0);
+    var end = r.end(0);
+    var newValue = (end/total)*100;
+    console.log(newValue);
+    if(newValue >= 80){
+      $('#movie-intro').get(0).play();
+      self.state = 'title';
+    } else if( self.videoWaitTime >= 60 * 7){
+      $('#movie-intro').get(0).play();
+      self.state = 'title';
+    }
+
+    self.videoWaitTime++
+       // var self = this;
+       // if( self.videoIntro.duration ) {
+       //   var percent = (self.videoIntro.buffered.end(0)/self.videoIntro.duration) * 100;
+       //   console.log( percent );
+       //   if( percent >= 100 ) {
+       //     console.log("loaded!");
+       //     //alert('loaded');
+       //   }
+       //   self.videoIntro.currentTime++;
+       // }
+      },
+     checkIfVideoIsLoaded:function(){
+
+      var self = this;
+
+      //self.video = self.video.get(0);
+      self.videoIntro.addEventListener("progress", self.videoProgressHandler,false);
+     },
       checkTimer:function(){
            var self = this;
            if(new Date().getTime() - time >= self.wait) {
                 console.log("tick2");//if it is, do something
                 time = new Date().getTime();//also update the stored time
                 switch (self.state) {
+                  case 'waiting-for-video-to-load':
+                     
+                      break;
                   case 'title':
                       self.hideIntroVideo();
+                      self.playBackgroundMusic();
                       self.setStateAndTime('highscores-players', self.TimeHighscoresPlayers);
                       self.writeHighScoresToScreen();
 
@@ -388,11 +460,13 @@ var gameProjection = {
                       } else if(self.currentNumberOfConnections <= 1 && self.currentTask != null && self.currentPlayers <= 1 && allTasks.length > 0){
                         console.log('333!!!!!!!!!!!!!!!!!!!!!')
                         self.setStateAndTime('title', self.TimeTitle);
+                        self.stopBackgroundMusic();
                         self.playerIntroVideo();
                       } else if(self.numberOfTimesGetDataHasRun > 15) {
                         //console.log('444!!!!!!!!!!!!!!!!!!!!!')
 
                         self.setStateAndTime('title', self.TimeTitle);
+                        self.stopBackgroundMusic();
                         self.playerIntroVideo();
                         self.reset();
                         self.numberOfTimesGetDataHasRun = 0; // Maybe this should be self.reset();
@@ -452,6 +526,7 @@ var gameProjection = {
                       self.reset();
                       if(gameProjection.taskPlayedCounter >= 5){
                         self.setStateAndTime('title', self.TimeTitle);
+                        self.stopBackgroundMusic();
                         self.playerIntroVideo();
                         gameProjection.taskPlayedCounter = 1;
                       } else {
@@ -478,9 +553,13 @@ var gameProjection = {
           var self = gameProjection;
           requestAnimationFrame(self.draw);
           switch (self.state) {
+            case 'waiting-for-video-to-load':
+                //console.log('videoload');
+                self.videoProgressHandler();
+                break;
             case 'title':
-                console.log('title');
-                console.log();
+                //console.log('title');
+                //console.log();
                 //if($('#movie-intro').get(0).currentTime > 15){
                 //
                 //
@@ -819,7 +898,13 @@ function setup() {
   //}
 
   for (var i = 1; i <= 8; i++) {
-    d = new backgroundDecoration('assets/images/projection-decoration/'+ GAME_LOCATION +'/' + i + '.png')
+    var gameLocations = ['westbank','rondo','lowertown','littlemekong','littleafrica','commons']
+    var d;
+    if(GAME_LOCATION == 'demo'){
+        d = new backgroundDecoration('assets/images/projection-decoration/'+ gameLocations[floor(random(gameLocations.length))] +'/' + i + '.png')
+    } else {
+        d = new backgroundDecoration('assets/images/projection-decoration/'+ GAME_LOCATION +'/' + i + '.png')
+    }
     decorations.push(d)
   }
 
@@ -978,8 +1063,8 @@ function avatar(path,id,x,y){
     if(value > .99){ value = 0.99; } // This is required from keep the tween from increasing too far
     this.currentValue =value; // this is needed to reverse the tween.
 
-    this.avatarWidth = (this.image.width) * value/4;
-    this.avatarHeight = (this.image.height) * value/4;//
+    this.avatarWidth = (this.image.width) * value/4.25;
+    this.avatarHeight = (this.image.height) * value/4.25;//
   },
   this.avatarShrink = function(){
     if (this.time >= this.endTime)
@@ -993,8 +1078,8 @@ function avatar(path,id,x,y){
 
     if(value < 0){ value = 0.000001; } // This is required from keep the tween from reversing too far
 
-    this.avatarWidth = (this.image.width) * (value/4);
-    this.avatarHeight = (this.image.height) * (value/4);//
+    this.avatarWidth = (this.image.width) * (value/4.25);
+    this.avatarHeight = (this.image.height) * (value/4.25);//
   },
   this.calculateSpeed = function(){
       this.speed = abs(this.x - this.previousX) + abs(this.y - this.previousY);

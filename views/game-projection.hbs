@@ -9,35 +9,35 @@
 /*.main
 .prompt{ color:#8c99ff }
 .number{ color:#c6b700 }*/
-	@font-face
+  @font-face
 {
-	font-family:'GTWalsheim';
-	src:url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.woff") format("woff"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.ttf") format("truetype")
-	font-weight:bold;
-	font-style:normal;
+  font-family:'GTWalsheim';
+  src:url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.woff") format("woff"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold.ttf") format("truetype")
+  font-weight:bold;
+  font-style:normal;
 }
 
 @font-face
 {
-	font-family:'GTWalsheim';
-	src:url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.woff") format("woff"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.ttf") format("truetype")
-	font-weight:bold;
-	font-style:italic;
+  font-family:'GTWalsheim';
+  src:url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.woff") format("woff"),url("/assets/fonts/GTWalsheim/GT-Walsheim-Bold-Oblique.ttf") format("truetype")
+  font-weight:bold;
+  font-style:italic;
 }
 
 
 
-	body
+  body
 {
-	font-family:'GTWalsheim',"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
-	color:white;
+  font-family:'GTWalsheim',"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+  color:white;
     overflow: hidden;
 }
-	h1,h2,h3,h4,h5,h6
+  h1,h2,h3,h4,h5,h6
 {
-	font-family:'Basis-Grotesque',"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
-	font-weight:bold;
-	line-height:1.2
+  font-family:'Basis-Grotesque',"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+  font-weight:bold;
+  line-height:1.2
 }
 
 
@@ -101,7 +101,7 @@ body,html{font-size: 50px;background-repeat:no-repeat;background-size:contain;ba
   top: 50%;
   transform: translateY(-50%);
   border:3px solid #f15a29;
-  background:white;
+  background:rgba(255,255,255, 0.95);
   height: 680px;
     width: 680px;
   }
@@ -123,40 +123,40 @@ body,html{font-size: 50px;background-repeat:no-repeat;background-size:contain;ba
     font-size: 33px;}
 
 .footer-bar{
-	border-top: 3px solid #f15a29;
-	color: #f15a29;
-	position:fixed;
+  border-top: 3px solid #f15a29;
+  color: #f15a29;
+  position:fixed;
   background:white;
-	left:0px;
-	bottom:0px;
-	height:54px;
-	font-size: 33px;
-	width: 100%;
+  left:0px;
+  bottom:0px;
+  height:54px;
+  font-size: 33px;
+  width: 100%;
 }
 
 .ticker{
-	animation: moveAcross 25s linear infinite;
-	position:absolute;
-	/*text-align: center;*/
-	text-align: left;
-	width:100vw;
+  animation: moveAcross 25s linear infinite;
+  position:absolute;
+  /*text-align: center;*/
+  text-align: left;
+  width:100vw;
 
-	/* Trick to force GPU */
-	-webkit-transform: translate3d(0, 0, 0);
-	-webkit-backface-visibility: hidden;
-	-webkit-perspective: 1000;
+  /* Trick to force GPU */
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
 }
 
 @keyframes moveAcross {
-	0%{
-		left:6px;
-	}
-	50%{
-		left:61vw;
-	}
-	100%{
-		left:0px;
-	}
+  0%{
+    left:6px;
+  }
+  50%{
+    left:61vw;
+  }
+  100%{
+    left:0px;
+  }
 }
 
 .title-bar div{margin-top: 3px;}
@@ -167,7 +167,7 @@ body,html{font-size: 50px;background-repeat:no-repeat;background-size:contain;ba
 .page.title {background-color:transparent;background-repeat:no-repeat;background-size:contain;background-position:center center;}
 
 
-	.page .people ul {
+  .page .people ul {
     opacity: 1;
     -ms-filter: none;
     filter: none;
@@ -228,7 +228,7 @@ body,html{font-size: 50px;background-repeat:no-repeat;background-size:contain;ba
 }
 
 .prep-time-text, .currentTask{
-	line-height: 1.25em;
+  line-height: 1.25em;
 }
 
 /*********
@@ -333,63 +333,63 @@ body.lowertown {}
 
 </style>
 
-
+<audio id="audio-background-music"  volume="0" preload="auto" src="assets/audio/background-music.mp3" loop="true" ></audio>
 <video id="movie-intro" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;width:100%;" src="assets/movies/CA_INTRO04.mp4" preload="auto"></video>
 
 <div class="page title slideUp" style="">
      <!-- Top Nav Bar -->
      <div class="nav" style="display:none;">
         <a href="#title" id="title"></a>
-     	<div class="close glyphicon glyphicon-menu-left" ></div>
+      <div class="close glyphicon glyphicon-menu-left" ></div>
      </div>
      <div class="container" style="border:0px;display:none;">
         <div class="inner-container">
-	    	<!--<img style="width:100%" src="assets/images/projections/title.png">-->
-	    </div>
+        <!--<img style="width:100%" src="assets/images/projections/title.png">-->
+      </div>
      </div>
-	<h1>Title Screen</h1>
+  <h1>Title Screen</h1>
 </div>
 
 <div class="page highscores-players">
     <!-- Top Nav Bar -->
     <div class="nav" style="display:none;">
-	    <a href="#highscores-players" id="highscores-players"></a>
-    	<div class="close glyphicon glyphicon-menu-left"></div>
+      <a href="#highscores-players" id="highscores-players"></a>
+      <div class="close glyphicon glyphicon-menu-left"></div>
     </div>
     <div class="container" style="padding-top:0;">
-    	<div class="inner-container">
-	    	<h2 style="margin-top:0;text-transform:uppercase;font-size:20px;margin-bottom:40px;">High Scores</h2>
-				<div class="scoreBoard">calculating scores...</div>
-	    </div>
+      <div class="inner-container">
+        <h2 style="margin-top:0;text-transform:uppercase;font-size:20px;margin-bottom:40px;">High Scores</h2>
+        <div class="scoreBoard">calculating scores...</div>
+      </div>
      </div>
-	<h1>Highscores</h1>
+  <h1>Highscores</h1>
 </div>
 
 <div class="page highscores-teams">
      <!-- Top Nav Bar -->
      <div class="nav" style="display:none;">
         <a href="#highscores-teams" id="highscores-teams" ></a>
-     	<div class="close glyphicon glyphicon-menu-left"></div>
+      <div class="close glyphicon glyphicon-menu-left"></div>
      </div>
      <div class="container" style="padding-top:0;">
         <div class="inner-container">
-	    	<h2 style="margin-top:0;text-transform:uppercase;font-size:20px;margin-bottom:40px;" class="title">Team Scores</h2>
-				<div class="teamScoreBoard">calculating scores...</div>
-	    </div>
+        <h2 style="margin-top:0;text-transform:uppercase;font-size:20px;margin-bottom:40px;" class="title">Team Scores</h2>
+        <div class="teamScoreBoard">calculating scores...</div>
+      </div>
      </div>
-	<h1>Team Scores</h1>
+  <h1>Team Scores</h1>
 </div>
 
 <div class="title-bar">
   <div class="col-lg-4" style="font-size: 20px;margin-top: 13px;"><img class="location-icon" src="" style="    height: 24px;margin-right: 7px;top:-3px;"><span class="location-title">{{setLocation}}</span></div>
-	<div class="col-lg-4">Collective Action!</div>
+  <div class="col-lg-4">Collective Action!</div>
   <div class="col-lg-4" style="font-size: 20px;margin-top: 13px;">#collectiveaction</div>
 </div>
 
 <div class="footer-bar">
-	<div class="ticker">
-		Sign up to play: JoinCollectiveAction.com
-		</div>
+  <div class="ticker">
+    Sign up to play: JoinCollectiveAction.com
+    </div>
 
 </div>
 
@@ -397,72 +397,72 @@ body.lowertown {}
      <!-- Top Nav Bar -->
      <div class="nav" style="display:none;">
         <a href="#invite-to-performance-area" id="invite-to-performance-area"></a>
-     	<div class="close glyphicon glyphicon-menu-left" ></div>
+      <div class="close glyphicon glyphicon-menu-left" ></div>
      </div>
      <div class="container" style="padding-top:0;">
         <div class="inner-container">
-        	<p>Players: Come on up!</p>
+          <p>Players: Come on up!</p>
         </div>
      </div>
-	<h1>Teaser</h1>
+  <h1>Teaser</h1>
 </div>
 
 <div class="page get-number-of-connections-task-players">
     <!-- Top Nav Bar -->
     <div class="nav" style="display:none;">
         <a href="#get-number-of-connections-task-players" id="get-number-of-connections-task-players"></a>
-     	<div class="close glyphicon glyphicon-menu-left"></div>
+      <div class="close glyphicon glyphicon-menu-left"></div>
     </div>
     <div class="container" style="width:80%">
         <div class="inner-container">
-	        <div class="people">
-	            <p>HEY!!!</p>
-	        	<!-- <ul>
-	        		<li>TEST 1<img src="assets/images/avatars/1.svg"></li>
-	        		<li>TEST 2<img src="assets/images/avatars/2.svg"></li>
-	        		<li>TEST 3<img src="assets/images/avatars/3.svg"></li>
-	        		<li>TEST 4<img src="assets/images/avatars/4.svg"></li>
-	        	</ul> -->
-	       	</div>
-	    </div>
+          <div class="people">
+              <p>HEY!!!</p>
+            <!-- <ul>
+              <li>TEST 1<img src="assets/images/avatars/1.svg"></li>
+              <li>TEST 2<img src="assets/images/avatars/2.svg"></li>
+              <li>TEST 3<img src="assets/images/avatars/3.svg"></li>
+              <li>TEST 4<img src="assets/images/avatars/4.svg"></li>
+            </ul> -->
+          </div>
+      </div>
      </div>
-	<h1>get-number-of-connections-task-players</h1>
+  <h1>get-number-of-connections-task-players</h1>
 </div>
 
 <div class="page setup-game">
      <!-- Top Nav Bar -->
      <div class="nav"  style="display:none;">
-     	<a href="#get-task" id="get-task"></a>
-     	<div class="close glyphicon glyphicon-menu-left"></div>
+      <a href="#get-task" id="get-task"></a>
+      <div class="close glyphicon glyphicon-menu-left"></div>
      </div>
      <div class="container" style="padding-top:0;">
         <div class="inner-container">
-        	<p>Getting your task now...</p>
+          <p>Getting your task now...</p>
         </div>
      </div>
-	<h1>Get Task Animation</h1>
+  <h1>Get Task Animation</h1>
 </div>
 
 <div class="page prep-for-task">
      <!-- Top Nav Bar -->
      <div class="nav"  style="display:none;">
-     	<a href="#prep-for-task" id="prep-for-task"></a>
-     	<div class="close glyphicon glyphicon-menu-left"></div>
+      <a href="#prep-for-task" id="prep-for-task"></a>
+      <div class="close glyphicon glyphicon-menu-left"></div>
      </div>
      <div class="container" style="padding-top:0;">
           <p class="prep-time-text" style="position: absolute;top: 25px;left: 0;width: 100%;"> Prepare for your action: <br><span class="prep-time ">30</span> <span class="task-time-seconds">Seconds</span></p>
         <div class="inner-container">
-        	<p class="currentTask"></p>
-       	</div>
+          <p class="currentTask"></p>
+        </div>
      </div>
-	<h1>Prep For Task</h1>
+  <h1>Prep For Task</h1>
 </div>
 
 <div class="page start-task">
     <!-- Top Nav Bar -->
     <div class="nav" style="display:none;">
         <a href="#start-task" id="start-task" ></a>
-     	<div class="close glyphicon glyphicon-menu-left"></div>
+      <div class="close glyphicon glyphicon-menu-left"></div>
     </div>
      <div class="container" style="padding-top:0;">
      <p class="prep-time-text" style="position: absolute;top: 25px;left: 0;width: 100%;">   Act: <span class="task-time">60</span> <span class="task-time-seconds">Seconds</span></p>
@@ -471,22 +471,22 @@ body.lowertown {}
         </div>
 
      </div>
-	<h1>Start Task</h1>
+  <h1>Start Task</h1>
 </div>
 
 <div class="page end-task">
     <!-- Top Nav Bar -->
 
     <div class="nav" style="display:none;">
-    	<a href="#end-task" id="end-task"></a>
-    	<div class="close glyphicon glyphicon-menu-left " ></div>
+      <a href="#end-task" id="end-task"></a>
+      <div class="close glyphicon glyphicon-menu-left " ></div>
     </div>
      <div class="container" style="padding-top:0;">
             <video id="movie-great-job" style="    position: absolute;left: 0;top: 0;width: 100%;" src="assets/movies/CA_GREATJOB.mp4" preload="auto" ></video>
 
-        	<!--<p>Great job, players!<br>Points for everyone!</p>-->
+          <!--<p>Great job, players!<br>Points for everyone!</p>-->
      </div>
-	<h1>End Task</h1>
+  <h1>End Task</h1>
 </div>
 
 
@@ -494,25 +494,25 @@ body.lowertown {}
     <!-- Top Nav Bar -->
 
     <div class="nav" style="display:none;">
-    	<a href="#end-score" id="end-score"></a>
-    	<div class="close glyphicon glyphicon-menu-left " ></div>
+      <a href="#end-score" id="end-score"></a>
+      <div class="close glyphicon glyphicon-menu-left " ></div>
     </div>
      <div class="container" style="padding-top:0;">
         <div class="inner-container">
-        	<p>Each performer scored a point!</p>
+          <p>Each performer scored a point!</p>
         </div>
      </div>
-	<h1>Score Task</h1>
+  <h1>Score Task</h1>
 </div>
 
 <div class="page reset">
     <!-- Top Nav Bar -->
 
     <div class="nav" style="display:none;">
-    	<a href="#reset" id="reset"></a>
-    	<div class="close glyphicon glyphicon-menu-left " ></div>
+      <a href="#reset" id="reset"></a>
+      <div class="close glyphicon glyphicon-menu-left " ></div>
     </div>
-	<h1>End Task</h1>
+  <h1>End Task</h1>
 </div>
 
 
@@ -521,13 +521,13 @@ body.lowertown {}
 <div class="page we-need-more-players">
      <!-- Top Nav Bar -->
      <div class="nav"  style="display:none;">
-     	<a href="#we-need-more-players" id="we-need-more-players"></a>
-     	<div class="close glyphicon glyphicon-menu-left"></div>
+      <a href="#we-need-more-players" id="we-need-more-players"></a>
+      <div class="close glyphicon glyphicon-menu-left"></div>
      </div>
      <div class="container">
         <p>We Need More players!!!!!</p>
      </div>
-	<h1>We need more players</h1>
+  <h1>We need more players</h1>
 </div>
 
 <audio id="sound-call-people" src="assets/audio/01_CallPeople_01.mp3"></audio>

@@ -605,6 +605,8 @@ function resizeImages(){
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
       $('.page.intro .carousel-inner .item img').css('height', newHeight+'px');
       $('.regenerate-avatar-image').css('height', newHeight-100+'px');
+      $('.loading-container-avatar').css('height', newHeight-100+'px');
+
       //$('.regenerate-avatar-image').css('background-size', 'auto '+newHeight+'px' );
 
       // Homescreen
@@ -614,6 +616,16 @@ function resizeImages(){
       var newHeight = $(window).height();
       newHeight = newHeight - ($('.intro-footer').outerHeight() * 2) - 21 ;
       $('.confirmation-sign-up .container .image').css('height', newHeight+'px');
+
+      //if(!preloadTeamPagesBool){
+      // preloadTeamPagesBool = true;
+      // preloadTeamPages(
+      //        "assets/images/team/1.png",
+      //        "assets/images/team/2.png",
+      //        "assets/images/team/3.png",
+      //        "assets/images/team/4.png"
+      //      )
+      //}
 }
 
 function resizeAvatar(){
@@ -628,9 +640,31 @@ function resizeAvatar(){
 function generateAvatar(){
     var totalNumberOfAvatars = 294;
     var r = Math.ceil(Math.random()*totalNumberOfAvatars)
-    $('.regenerate-avatar-image').css('background-image', 'url(assets/images/avatars/'+ r +'.png)')
-    $('.regenerate-avatar-image').attr('data-avatar-id', r );
+    $('.regenerate-avatar-image').css('opacity','0');
+    $('.loading-container-avatar').css('opacity','1');
+    $('<img/>').attr('src', 'assets/images/avatars/'+ r +'.png').on('load', function() {
+      $(this).remove(); // prevent memory leaks as @benweet suggested
+      $('.regenerate-avatar-image').css('background-image', 'url(assets/images/avatars/'+ r +'.png)')
+      $('.regenerate-avatar-image').attr('data-avatar-id', r );
+      $('.loading-container-avatar').css('opacity','0');
+      $('.regenerate-avatar-image').velocity({opacity: 1},200);
+    });
+
 }
+
+
+//function generateAvatar(){
+//    var totalNumberOfAvatars = 294;
+//    var r = Math.ceil(Math.random()*totalNumberOfAvatars)
+//    $('.regenerate-avatar-image').css('background-image', 'url(assets/images/avatars/'+ r +'.png)')
+//    $('.regenerate-avatar-image').attr('data-avatar-id', r );
+//
+//
+//
+//}
+
+
+
 
 
 function buildPlayButtonsForLocations(){
@@ -745,6 +779,16 @@ $(window).load(function(){
                  gaTrack(e);
                  if($(this).hasClass('logout')){
                    login.logout();
+                 } else if($(this).hasClass('sign-up')) { 
+                    if(!preloadTeamPagesBool){
+                     preloadTeamPagesBool = true;
+                     preloadTeamPages(
+                            "assets/images/team/1.png",
+                            "assets/images/team/2.png",
+                            "assets/images/team/3.png",
+                            "assets/images/team/4.png"
+                          )
+                    }
                  }
         moreDetails($(this));
      });
@@ -769,6 +813,12 @@ $(window).load(function(){
         e.stopPropagation();
         console.log('clicked close');
         slideDownPanel($(this));
+        signUp.reset();
+
+        if($(this).hasClass('artwork')){
+          console.log('MADE IT');
+          updateStatsAndScores();
+        }
      });
 
 
@@ -784,6 +834,11 @@ $(window).load(function(){
         e.stopPropagation();
         console.log('tapped close');
         slideDownPanel($(this));
+        signUp.reset();
+        if($(this).hasClass('artwork')){
+          updateStatsAndScores();
+        }
+        
      });
 
 
@@ -817,6 +872,16 @@ $(window).load(function(){
 Login Functions
 
 **************************/
+var images = new Array()
+var preloadTeamPagesBool = false;
+      function preloadTeamPages() {
+        for (i = 0; i < preloadTeamPages.arguments.length; i++) {
+          images[i] = new Image()
+          images[i].src = preloadTeamPages.arguments[i]
+        }
+      }
+      
+           
 
 var login = {
      emailTextFieldIsFilled:false,
@@ -839,6 +904,7 @@ var login = {
                console.log('logged in');
           } else {
 
+            
           }
      },
      checkIfFieldsAreFilled:function(){
@@ -848,6 +914,8 @@ var login = {
                     login.emailTextFieldIsFilled = true;
                     console.log('Input Email Filled');
                     login.enableContinueButton();
+                   
+                    //
                     //
                } else {
                     login.emailTextFieldIsFilled = false;
@@ -866,12 +934,15 @@ var login = {
                         // Break
                         var email = $('input.email-address.login').val();
                         $.post("/get-user",{email: email}, function(data){
+                        //var username = $('input.email-address.login').val();
+                        //$.post("/get-user-by-name",{username: username}, function(data){
                              console.log(data);
                              if(data){ // Email is in the database already
 
                                   console.log('you have a login');
                                   login.retrieveFromDatabase(data);
-                                  login.setAvatarPageInfo();
+                                  login.setAvatarPageInfo(); // This may be old/wrong
+                                  updateStatsAndScores();
                                   shareMenu.writeSocialMediaImageToTempCanvas();
                                   setTimeout(function(){
                                         shareMenu.writeSocialMediaLinks();
@@ -942,6 +1013,9 @@ var signUp = {
           signUp.eventListeners();
           signUp.checkIfFieldsAreFilled();
           // $('.form-control.username').attr('placeholder', generateUsername())
+     },
+     reset:function(){
+      signUp.styleButtonToContinue();
      },
      goToNextSlide:function(){
           signUp.hideErrorMessages();
@@ -1048,7 +1122,7 @@ var signUp = {
      styleButtonToContinue:function(){
           // Going back from the last slide
           this.button.text('Continue');
-          this.button.attr('href', 'continue');
+          this.button.attr('href', '#continue');
           this.button.removeClass('btn-primary');
      },
      saveToDatabase:function(button){
@@ -1087,6 +1161,8 @@ var signUp = {
                      slideDownPanel($('.page.sign-up .close'));
                      slideDownPanel($('.page.intro .close'));
                 },500);
+
+
              });
           // Slide up Main menu / Home
 

@@ -1,8 +1,8 @@
 
     const SETTINGS = {
-        //server: 'localhost'
+        server: 'localhost'
         //server: 'server-http'
-        server: 'server-https'
+        //server: 'server-https'
     }
 
 

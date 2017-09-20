@@ -50,7 +50,7 @@ function resizeTextBox(){
 
 $(window).load(function(){
  resizeTextBox();
-});
+ $('.waiting-room').velocity({opacity: 1},600);});
 
 $(window).resize(function(event) {
  resizeTextBox();

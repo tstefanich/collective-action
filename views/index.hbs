@@ -22,11 +22,69 @@ Loading Page
       display:none;
     }
   }
+
+  .avatar-image.status-page {
+      -webkit-transition: all 0.2s linear;
+      transition: all 0.2s linear;
+    }
+
+.avatar-image.status-page.active {
+      -webkit-animation-name: spaceboots;
+      -webkit-animation-duration: 1.3s;
+      -webkit-transform-origin:50% 50%;
+      -webkit-animation-iteration-count: 1;
+      -webkit-animation-timing-function: linear;
+    }
+
+
+
+   @-webkit-keyframes spaceboots {
+  0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+  10% { -webkit-transform: translate(-1px, -2px) rotate(-8deg); }
+  20% { -webkit-transform: translate(-3px, 0px) rotate(8deg); }
+  30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+  40% { -webkit-transform: translate(1px, -1px) rotate(8deg); }
+  50% { -webkit-transform: translate(-1px, 2px) rotate(-8deg); }
+  60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+  70% { -webkit-transform: translate(2px, 1px) rotate(-8deg); }
+  80% { -webkit-transform: translate(-1px, -1px) rotate(8deg); }
+  90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+  100% { -webkit-transform: translate(1px, -2px) rotate(-8deg); }
+}
+
+@-moz-keyframes spaceboots {
+  0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+  10% { -webkit-transform: translate(-1px, -2px) rotate(-8deg); }
+  20% { -webkit-transform: translate(-3px, 0px) rotate(8deg); }
+  30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+  40% { -webkit-transform: translate(1px, -1px) rotate(8deg); }
+  50% { -webkit-transform: translate(-1px, 2px) rotate(-8deg); }
+  60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+  70% { -webkit-transform: translate(2px, 1px) rotate(-8deg); }
+  80% { -webkit-transform: translate(-1px, -1px) rotate(8deg); }
+  90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+  100% { -webkit-transform: translate(1px, -2px) rotate(-8deg); }
+}
+
+@keyframes spaceboots {
+  0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+  10% { -webkit-transform: translate(-1px, -2px) rotate(-8deg); }
+  20% { -webkit-transform: translate(-3px, 0px) rotate(8deg); }
+  30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+  40% { -webkit-transform: translate(1px, -1px) rotate(8deg); }
+  50% { -webkit-transform: translate(-1px, 2px) rotate(-8deg); }
+  60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+  70% { -webkit-transform: translate(2px, 1px) rotate(-8deg); }
+  80% { -webkit-transform: translate(-1px, -1px) rotate(8deg); }
+  90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+  100% { -webkit-transform: translate(1px, -2px) rotate(-8deg); }
+}
+
 </style>
 
 <div class="page mobile-warning alert alert-danger alert-regular slideUp" style="z-index: 10000;border: 0;background: #f05a28;font-size: 24px;text-align: center;">
      <div class="text-container" style="position: relative;top: 50%;transform: translateY(-50%);">
-            COLLECTIVE ACTION! can only be played on mobile devices, head to http://joincollectiveaction.com on your mobile device!
+            COLLECTIVE ACTION! can only be played on mobile devices, head to https://joincollectiveaction.com on your mobile device!
        </div>
 </div>
 
@@ -56,7 +114,7 @@ Intro Page
      <!-- Top Nav Bar  // Hidden because the close button is required for my code to close panel-->
      <div class="nav" style="display:none;"><div class="close "></div><div class="title">Intro</div></div>
      <!-- Content -->
-     <div id="carousel-intro" class="carousel slide" data-ride="carousel" data-interval="false">
+     <div id="carousel-intro" class="carousel slide" data-ride="carousel" data-interval="false" style="opacity:0;">
 
           <!-- Indicators -->
           <ol class="carousel-indicators">
@@ -71,12 +129,12 @@ Intro Page
           <div class="carousel-inner" role="listbox">
                <div class="item active">
                     <div class="container">
-                         <img src="assets/images/intro/intro1.png" alt="...">
+                         <img class="intro-images" src="bg.png" data-src="assets/images/intro/intro1.png" alt="...">
                     </div>
                </div>
                <div class="item">
                     <div class="container">
-                         <img src="assets/images/intro/intro2.png" alt="...">
+                         <img sclass="intro-images" src="assets/images/intro/intro2.png" alt="...">
                     </div>
                </div>
                <!--<div class="item">
@@ -86,13 +144,13 @@ Intro Page
                </div>-->
                <div class="item">
                     <div class="container">
-                         <img src="assets/images/intro/intro4.png" alt="...">
+                         <img class="intro-images" src="assets/images/intro/intro4.png" alt="...">
                     </div>
                </div>
                <div class="item">
                     <div class="container">
                         <!-- <a class="more-details" href="#sign-up">-->
-                              <img src="assets/images/intro/intro5.png" alt="...">
+                              <img class="intro-images" src="assets/images/intro/intro5.png" alt="...">
                          <!--</a>-->
                     </div>
                </div>
@@ -118,11 +176,12 @@ Signup Page
      <!-- Content -->
 
      <!-- Content -->
+    
      <div id="carousel-sign-up" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
-               <div class="item email-sign-up active">
+              <!-- <div class="item email-sign-up active">
                     <div class="container">
                          <div>
                          <p>What's your email address?</p>
@@ -135,27 +194,21 @@ Signup Page
 
                          </div>
                     </div> 
-               </div>
-               <div class="item username-sign-up">
+               </div>-->
+              <!-- <div class="item username-sign-up active">
                     <div class="container">
                          <p>What would you like your username to be?</p>
                          <div class="form-group">
-                              <input type="text" class="form-control username" placeholder="Username" maxlength="20">
+                              <input type="text" class="form-control username" placeholder="Username" maxlength="20" >
                                 <a class="btn btn-default generate-username-btn"> <div class="glyphicon glyphicon-repeat"></div> Generate Username</a>
-                              <div class="alert alert-danger alert-profane" style="text-align:center">This username looks to contain profanity. Please try a new one.</div>
-
-                              <div class="alert alert-danger alert-regular" style="text-align:center">Username is unavailable.</div>
-
-
-                              <div class="alert alert-danger alert-special-characters" style="text-align:center">Username is invalid. Only letters and numbers are allowed.</div>
-
-                               <div class="alert alert-danger alert-spaces" style="text-align:center">Username is invalid. No Spaces. Only letters and numbers are allowed.</div>
+                             
                          </div>
                     </div>
-               </div>
-               <div class="item avatar-sign-up">
+               </div>-->
+               <div class="item avatar-sign-up active">
                     <div class="container">
-                         <p>Generate your character.</p>
+                         
+                         <input type="text" class="form-control username" placeholder="Username" maxlength="20" style="margin-bottom: 16px;">
                          <div class="regenerate-avatar-image" style="z-index: 3;position: relative;background-color:#fff;"></div>
                          <div class="loading-container-avatar" style="opacity: 1;position: absolute;top: 94px;right: 15px;left: 15px;height: 360px;z-index: 2;"><img class="glyphicon-refresh-animate" src="assets/images/loading-screen/loading_sun.png" style="height:50px;position: relative;top: 45%;transform: translateY(-50%);"> </div>
                          <div class="row">
@@ -182,7 +235,7 @@ Signup Page
      <div class="intro-footer">
           <div class="row sign-up-button-container disable">
                <div class="col-xs-6">
-                    <a class="btn btn-default sign-up-back-btn carousel-sign-up-btn" style="width:100%;" href="#back" >Back</a>
+                    <a class="btn btn-default sign-up-back-btn-backup-class sign-up-back-btn carousel-sign-up-btn" style="width:100%;" href="#back" >Back</a>
                </div>
                <div class="nav-divider"></div>
                <div class="col-xs-6">
@@ -208,7 +261,7 @@ Homescreen Page
      </div>
 
      <!-- Content -->
-     <div class="container avatar-image" >
+     <div class="container avatar-image status-page" >
 
           <!--<a id="playGame" class="project-launcher btn btn-default more-details artwork" data-project-url="game-client" href="#ucla-game" role="button">Play Now!</a>-->
 
@@ -335,13 +388,20 @@ Login Page
      <!-- Top Nav Bar -->
      <div class="nav"><div class="close "></div><div class="title">Login in to your account</div></div>
      <!-- Content -->
-     <div class="container">
+         <div class="container">
+          <p>Use your username to login and retrieve your avatar!</p>
+          <div class="form-group">
+               <input class="form-control email-address login" placeholder="Username" type="Email">
+               <div class="alert alert-danger alert-regular" style="text-align:center">Sorry there is no user associated with that email.</div>
+          </div>
+     </div>
+    <!-- <div class="container">
           <p>Use your email to login and retrieve your avatar!</p>
           <div class="form-group">
                <input class="form-control email-address login" placeholder="Email" type="Email">
                <div class="alert alert-danger alert-regular" style="text-align:center">Sorry there is no user associated with that email.</div>
           </div>
-     </div>
+     </div>-->
 
      <!-- Footer -->
      <div class="intro-footer">
@@ -361,13 +421,13 @@ About Page
 
      <!-- Content -->
      <div class="container">
-          <img style="width: 100%;" src="assets/images/about/collectiveaction_avatars-2.jpg">
+          <img style="width: 100%;" class="about-images" src="bg.png" data-src="assets/images/about/collectiveaction_avatars-2.jpg">
           <p><i>Collective Action!</i> invites you to work together with other participants to perform creative, collective actions responding to climate change issues. Start by using your phone to explore the Collective Action! mobile website, create a unique avatar, join a team, navigate to our physical game sites (located at multiple Northern Spark hubs), and prepare to perform! For every action you perform over the course of the night, you’ll earn a point for yourself and your team, which you can track on the website’s game leaderboard.</p>
           <p>&nbsp;</p>
-          <p><img style="width: 100%;" src="assets/images/about/spark_playtest_red.jpg"></p>
+          <p><img style="width: 100%;" class="about-images" src="bg.png" data-src="assets/images/about/spark_playtest_red.jpg"></p>
           <p>Each <i>Collective Action!</i> game site will activate the climate change theme for its given Northern Spark location, making each instance of Collective Action! a completely unique experience in performance and play. At the <i>Collective Action!</i> site in the water-themed location Little Mekong, you might work together with the entire audience to perform a rainstorm, or with two or three other players to envision a futuristic water-filtration system! </p>
           <p>&nbsp;</p>
-          <p><img style="width: 100%;" src="assets/images/about/spark_playtest_red2.jpg"></p>
+          <p><img style="width: 100%;" class="about-images" src="bg.png" data-src="assets/images/about/spark_playtest_red2.jpg"></p>
           <p></i>Collective Action!</i> draws inspiration from the expansive history of non-competitive group games ranging from the New Games Foundation, to fluxus experiments and performances, and earth day activities. Explore: how can your actions as an individual have a larger impact when they are performed in collaboration with others?</p>
           <p>&nbsp;</p>
           <h2 style="color:#f05a28">The Team</h2>
@@ -520,14 +580,32 @@ Scoreboard
 Warning Page
 ///////////--->
 <div class="page warning">
-     <!-- Top Nav Bar -->
-     <div class="nav"><div class="close "></div><div class="title">Warning!!!</div></div>
 
-     <!-- Content -->
-     <div class="container">
-          <a class="more-details warning-find-locations" href="#map" style="height: 60%;position:absolute;bottom:0;width:100vw;" ></a>
+     <div class="nav" style="background:transparent;border-color: #fff;"><div class="close " style="display:none;"></div><div class="title" style="background:transparent;color:#fff;">Warning</div></div>
 
+     <div class="container" style="text-align: center;
+    /* height: 100%; */
+    position: absolute;
+    bottom: 50px;
+    top: 50px;
+    right: 16px;
+    left: 16px;">
+          <div class="alert alert-danger alert-profane" style="text-align:center">This username looks to contain profanity. Please try a new one.</div>
+          <div class="alert alert-danger alert-regular" style="text-align:center">Username is unavailable.</div>
+          <div class="alert alert-danger alert-special-characters" style="text-align:center">Username is invalid. Only letters and numbers are allowed.</div>
+          <div class="alert alert-danger alert-spaces" style="text-align:center">Username is invalid. No Spaces. Only letters and numbers are allowed.</div>
      </div>
+
+      <div class="intro-footer" style="border-color:white;color:#fff">
+          <div class="row sign-up-button-container disable">
+               <div class="col-xs-12">
+                    <a class="btn btn-default warning-sign-up" style="width:100%;color:#fff;" href="#back" >Ok</a>
+               </div>
+               
+          </div>
+     </div>
+
+
 
 </div>
 
@@ -562,22 +640,7 @@ Log out Page
 <!--////////////
 Iframe to Games
 ///////////--->
- <div class="nav artwork close" style="width:auto;height:50px;z-index: 999999; border-bottom: 2px solid #f05a28;"><div class=" artwork close" style="position: absolute;
-    padding-left: 16px;
-    padding-top: 14px;
-    left: 0;
-
-    padding-right: 68px;
-    z-index: 9;
-    padding-bottom: 10px;
-    opacity: 1;
-
-    background-image: url(/assets/images/backarrow/backarrow.png);
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 100% auto;
-    overflow: hidden;
-    height: 50px;"></div><div class="title"></div></div>
+ <div class="nav artwork close" style="width:auto;height:50px;z-index: 999999; border-bottom: 2px solid #f05a28;"><div class=" artwork close" style="position: absolute;padding-left: 16px;padding-top: 14px;left: 0;padding-right: 68px;z-index: 9;padding-bottom: 10px;opacity: 1;background-image: url(/assets/images/backarrow/backarrow.png);background-repeat: no-repeat;background-position: left center;background-size: 100% auto;overflow: hidden;height: 50px;"></div><div class="title"></div></div>
 <!--<div class="artwork close glyphicon glyphicon glyphicon-remove"></div>-->
 
 <iframe class="iframe project-slide-panel" data-fake-src="blank" src="blank" >

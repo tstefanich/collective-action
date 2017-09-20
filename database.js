@@ -135,9 +135,10 @@ database.getUserByEmail = function(req, callback){
 }
 
 database.getUserByUsername = function(req, callback){
-  var username = req.body.email;
+  var username = req.body.username;
+  username = '^'+username+'$';
   console.log(username)
-  this.Users.findOne({ username : username }, function(error, docs) {
+  this.Users.findOne({ userName : {'$regex': username, $options:'i'}}, function(error, docs) {
     console.error('getUserByUsername');
     return callback(null, docs);
   });
@@ -163,9 +164,10 @@ database.checkIfEmailExists = function (req,callback)
 database.checkIfUserExists = function (req,callback)
 {
   var userName = req.body.userName;
+  userName2 = '^'+userName+'$';
   var pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/); //unacceptable chars
 
-  this.Users.find({userName : userName}, function (err, docs) {
+  this.Users.find({userName : {'$regex': userName2,$options:'i'}}, function (err, docs) {
     if(userName == ''){
          console.error('blank');
          return callback(null, 'blank');

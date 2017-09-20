@@ -1,9 +1,10 @@
 {
   "name": "Collective Action!",
   "short_name": "C.A.!",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
+  "theme_color": "#fff",
   "background_color": "#fff",
   "description": "",
   "icons": [{

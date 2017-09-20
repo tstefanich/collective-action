@@ -15,6 +15,7 @@
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../assets/styles.css" rel="stylesheet">
+    <!--<link href="../../assets/styles.min.css" rel="stylesheet">-->
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--<link href="/bootstrap/dist/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">-->
@@ -30,6 +31,7 @@
     <![endif]-->
 
     <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#fff">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -47,6 +49,23 @@
   ga('create', 'UA-100777467-1', 'auto');
   ga('send', 'pageview');
 
+  
+
+
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+
+    </script>
 </script>
   </head>
 

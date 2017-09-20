@@ -18,9 +18,14 @@ var multer = require('multer');
 var bodyParser = require('body-parser');
 var util = require('util');
 var fs = require('fs');
+var minify = require('express-minify');
+var compression = require('compression')
+var webp = require('webp-middleware');
+var minifyHTML = require('express-minify-html');
 
 var app = express();
 var database;
+
 
 
 var ssl;
@@ -34,7 +39,7 @@ if(SETTINGS.server == 'localhost'){
     console.log = function() {}
     server = require('http').createServer();
 } else if(SETTINGS.server == 'server-https'){
-    console.log = function() {}
+    //console.log = function() {}
     ssl = {
          key: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/privkey.pem'),
          cert: fs.readFileSync('/etc/letsencrypt/live/joincollectiveaction.com/fullchain.pem'),
@@ -86,10 +91,25 @@ app.get('/admin', auth.connect(basic), function(req, res, next) {
  EXPRESS CONFIG
 
 ************************************/
+app.use(compression());
+app.use(minify({
+  cache: false,
+  uglifyJsModule: null,
+  errorHandler: null,
+  jsMatch: /javascript/,
+  cssMatch: /css/,
+  jsonMatch: /json/,
+  sassMatch: /scss/,
+  lessMatch: /less/,
+  stylusMatch: /stylus/,
+  coffeeScriptMatch: /coffeescript/,
+}));
+app.use(webp(__dirname + '/views'));//, { ... }));
 
 app.use(express.static(__dirname + '/bower_components'));
 app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/views/assets'));
+
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({
@@ -98,6 +118,18 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
+app.use(minifyHTML({
+    override:      true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  false
+    }
+}));
 //app.engine('html', require('ejs').renderFile);
 
 
@@ -418,7 +450,7 @@ app.post('/get-user', function(req, res) {
 
 app.post('/get-user-by-name', function(req, res) {
     //database.restoreFile(req);
-    console.log(req.body.email)
+    console.log(req.body.username)
 
 
     database.getUserByUsername(req, function(err, response) {

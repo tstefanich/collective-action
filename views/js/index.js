@@ -9,6 +9,70 @@ if(!DEBUG){
 
 
 
+/**
+ * jQuery Unveil
+ * A very lightweight jQuery plugin to lazy load images
+ * http://luis-almeida.github.com/unveil
+ *
+ * Licensed under the MIT license.
+ * Copyright 2013 Luís Almeida
+ * https://github.com/luis-almeida
+ */
+
+;(function($) {
+
+  $.fn.unveil = function(threshold, callback) {
+
+    var $w = $(window),
+        th = threshold || 0,
+        retina = window.devicePixelRatio > 1,
+        attrib = retina? "data-src-retina" : "data-src",
+        images = this,
+        loaded;
+
+    this.one("unveil", function() {
+      var source = this.getAttribute(attrib);
+      source = source || this.getAttribute("data-src");
+      if (source) {
+        this.setAttribute("src", source);
+        if (typeof callback === "function") callback.call(this);
+      }
+    });
+
+    function unveil() {
+      var inview = images.filter(function() {
+        var $e = $(this);
+        if ($e.is(":hidden")) return;
+
+        var wt = $w.scrollTop(),
+            wb = wt + $w.height(),
+            et = $e.offset().top,
+            eb = et + $e.height();
+
+        return eb >= wt - th && et <= wb + th;
+      });
+
+      loaded = inview.trigger("unveil");
+      images = images.not(loaded);
+    }
+
+    $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
+
+    unveil();
+
+    return this;
+
+  };
+
+})(window.jQuery || window.Zepto);
+
+
+/*********************
+
+carousel
+
+***********************/
+
 
 +function ($) {
   'use strict';
@@ -604,7 +668,7 @@ function resizeImages(){
       // Intro Slide show & Signup
       $('.page.intro .carousel-inner').css('margin-top', ($('.intro-footer').outerHeight() * 1.2)+'px' );
       $('.page.intro .carousel-inner .item img').css('height', newHeight+'px');
-      $('.regenerate-avatar-image').css('height', newHeight-100+'px');
+      $('.regenerate-avatar-image').css('height', newHeight-100-16+'px');
       $('.loading-container-avatar').css('height', newHeight-100+'px');
 
       //$('.regenerate-avatar-image').css('background-size', 'auto '+newHeight+'px' );
@@ -638,7 +702,8 @@ function resizeAvatar(){
 }
 
 function generateAvatar(){
-    var totalNumberOfAvatars = 294;
+    $('.form-control.username').val(generateUsername());
+    var totalNumberOfAvatars = 10000; //294 Probably More
     var r = Math.ceil(Math.random()*totalNumberOfAvatars)
     $('.regenerate-avatar-image').css('opacity','0');
     $('.loading-container-avatar').css('opacity','1');
@@ -690,7 +755,7 @@ $(window).resize(function(){
 $(window).load(function(){
       //shareMenu.onLoadCreateFileIfItDoesNotExsist();
 
-      generateAvatar();
+     // generateAvatar();
       updateStatsAndScores();
 
       // Message for Window Loaded
@@ -708,7 +773,7 @@ $(window).load(function(){
       parseLocations(allLocations);
 
       // Initialize Google Maps
-      initMap();
+//      initMap();
 
       // Check if you are logged in and set avatar info page
       // Check cookie is set for first visit and change
@@ -742,7 +807,29 @@ $(window).load(function(){
      $('body').on('touchstart', '.btn', function(e){
        e.stopPropagation(); e.preventDefault();
        $(this).blur();
+       if($(this).hasClass('warning-sign-up')){
+          $('.sign-up-back-btn-backup-class').removeClass('sign-up-back-btn');
+          slideDownPanel($('.page.warning').children('.nav').children('.close'));
+          setTimeout(function(){
+            // This is to prevent double tap from happening if you click the left hand side of the back button for the warning page. Often it would trigger a click on the back signup page 
+            $('.sign-up-back-btn-backup-class').addClass('sign-up-back-btn');
+          },800);
+       }
        console.log('test');
+     });
+
+     var avatarTimeout;
+      $('body').on('touchstart', '.avatar-image.status-page', function(e){
+       e.stopPropagation(); e.preventDefault();
+       var self = $(this);
+       if(avatarTimeout){
+          clearTimeout(avatarTimeout);
+          avatarTimeout = null;
+      }
+       self.addClass('active');
+       avatarTimeout = setTimeout(function(){
+          self.removeClass('active');
+       },600);
      });
 
 
@@ -780,6 +867,8 @@ $(window).load(function(){
                  if($(this).hasClass('logout')){
                    login.logout();
                  } else if($(this).hasClass('sign-up')) { 
+                    signUp.preFillInUserName();
+                    generateAvatar();
                     if(!preloadTeamPagesBool){
                      preloadTeamPagesBool = true;
                      preloadTeamPages(
@@ -789,6 +878,9 @@ $(window).load(function(){
                             "assets/images/team/4.png"
                           )
                     }
+                 } else if($(this).hasClass('main-menu')) { 
+                    //alert('made it');
+                    $(".about-images").unveil(5000)
                  }
         moreDetails($(this));
      });
@@ -806,6 +898,7 @@ $(window).load(function(){
           gaTrack(e);
      });
 
+    
 
 
      // Close Panels
@@ -863,6 +956,10 @@ $(window).load(function(){
           $(this).blur();
      });
 
+
+     //Fade In Carousel once loaded
+     $('#carousel-intro').velocity({opacity:1},250)
+
 });
 
 
@@ -902,15 +999,18 @@ var login = {
                slideDownPanel($('.page.intro .close'));
                login.setAvatarPageInfo();
                console.log('logged in');
+              $('.page.sign-up').remove();
           } else {
+            $('.intro-images').unveil(5000);
 
-            
           }
      },
      checkIfFieldsAreFilled:function(){
           $('.form-control.email-address.login').on('keyup blur', function(event) {
-                var emailSlideActive = $('#carousel-sign-up .item.email-sign-up').hasClass('active');
+                var emailSlideActive = $('.page.login').hasClass('slideUp');
                if($.trim($(this).val()) != '' && emailSlideActive == true){
+
+               //if($.trim($(this).val()) != '' && emailSlideActive == true){
                     login.emailTextFieldIsFilled = true;
                     console.log('Input Email Filled');
                     login.enableContinueButton();
@@ -930,12 +1030,12 @@ var login = {
      eventListeners:function(){
           $('body').on('touchstart', '.login-continue-btn', function(e){
                switch(true){
-                    case $('#carousel-sign-up .item.email-sign-up').hasClass('active'):
+                    case $('.page.login').hasClass('slideUp'):
                         // Break
-                        var email = $('input.email-address.login').val();
-                        $.post("/get-user",{email: email}, function(data){
-                        //var username = $('input.email-address.login').val();
-                        //$.post("/get-user-by-name",{username: username}, function(data){
+                        //var email = $('input.email-address.login').val();
+                        //$.post("/get-user",{email: email}, function(data){
+                        var username = $('input.email-address.login').val();
+                        $.post("/get-user-by-name",{username: username}, function(data){
                              console.log(data);
                              if(data){ // Email is in the database already
 
@@ -1087,29 +1187,46 @@ var signUp = {
           $('#carousel-sign-up .item.username-sign-up').removeClass('show-error-profane');
           $('#carousel-sign-up .item.username-sign-up').removeClass('show-error');
      },
-     databaseHasUser:function(){
+     databaseHasUser:function(link){
           //put your cases here
+          var link = link;
           var user_name = $('input.username').val();
           $.post("/check-user",{userName: user_name}, function(data){
                console.log(data);
-
-              $('#carousel-sign-up .item.username-sign-up').removeClass('show-error-profane');
-              $('#carousel-sign-up .item.username-sign-up').removeClass('show-error-special-characters');
-              $('#carousel-sign-up .item.username-sign-up').removeClass('show-error');
+              link.attr('href','#continue');
+              $('.warning.sign-up').addClass('hidden');
+              $('.page.warning').removeClass('show-error-profane');
+              $('.page.warning').removeClass('show-error-special-characters');
+              $('.page.warning').removeClass('show-error-spaces');
+              $('.page.warning').removeClass('show-error');
 
 
                if(data === 'blank'){ // Email is in the database already
                     //$('#carousel-sign-up .item.username-sign-up').addClass('show-error-profane');
                } else if(data === 'profane'){ // Email is in the database already
-                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error-profane');
+                    link.attr('href','#warning');
+                    moreDetails(link);
+                    $('.warning.sign-up').removeClass('hidden');
+                    $('.page.warning').addClass('show-error-profane');
                } else if(data === 'specialCharacters') {
-                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error-special-characters');
+                    link.attr('href','#warning');
+                    moreDetails(link);
+                    $('.warning.sign-up').removeClass('hidden');
+                    $('.page.warning').addClass('show-error-special-characters');
                } else if(data === 'spaces') {
-                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error-spaces');
+                    link.attr('href','#warning');
+                    moreDetails(link);
+                    $('.warning.sign-up').removeClass('hidden');
+                    $('.page.warning').addClass('show-error-spaces');
                } else if(data == true){ // Email is in the database already
-                    $('#carousel-sign-up .item.username-sign-up').addClass('show-error');
+                    link.attr('href','#warning');
+                    moreDetails(link);
+                    $('.warning.sign-up').removeClass('hidden');
+                    $('.page.warning').addClass('show-error');
                } else if(data == false){
                     signUp.goToNextSlide();
+                    signUp.styleButtonToSave();
+                    signUp.checkTeamsAndSetTeam();
                }
           });
      },
@@ -1137,7 +1254,7 @@ var signUp = {
 
                var userObject = {
                     userName: $('input.username').val(),
-                    email: $('input.email-address').val().toLowerCase(),
+                    email: $('input.username').val().toLowerCase() +'@test.com',
                     avatar: $('.regenerate-avatar-image').attr('data-avatar-id')+'.png', // This could be an object... with key values that are descriptive.. head, body ect... might be overkill
                     team: team,
 
@@ -1232,6 +1349,8 @@ var signUp = {
        });
 
           $('body').on('touchstart', '.sign-up-continue-btn', function(e){
+
+                var self = $(this);
                         console.log('pushed forward!!');
 
                switch(true){
@@ -1250,13 +1369,13 @@ var signUp = {
                     case $('#carousel-sign-up .item.username-sign-up').hasClass('active'):
                          //put your cases here
                          // There will be a delay while the database is checking
-                         signUp.databaseHasUser();
+                         signUp.databaseHasUser(self);
                          break;
                     case $('#carousel-sign-up .item.avatar-sign-up').hasClass('active'):
                          //put your cases here
-                         signUp.goToNextSlide();
-                         signUp.styleButtonToSave();
-                         signUp.checkTeamsAndSetTeam();
+
+                         signUp.databaseHasUser(self);
+                         
                          break;
                     case $('#carousel-sign-up .item.confirmation-sign-up').hasClass('active'):
                          //put your cases here
@@ -1275,13 +1394,16 @@ var signUp = {
                       break;
                  case $('#carousel-sign-up .item.username-sign-up').hasClass('active'):
                       //put your cases here
-                      setTimeout(function(){
-                              signUp.enableContinueButton();
-                              console.log('enable')
-                      },100)
+                      //slideDownPanel($('.page.sign-up .close'));
+                      //setTimeout(function(){
+                      //        signUp.enableContinueButton();
+                      //        console.log('enable')
+                      //},100)
                       break;
                  case $('#carousel-sign-up .item.avatar-sign-up.active').hasClass('active'):
                       //put your cases here
+                      slideDownPanel($('.page.sign-up .close'));
+
                       break;
                  case $('#carousel-sign-up .item.confirmation-sign-up').hasClass('active'):
                       //put your cases here
@@ -1339,7 +1461,7 @@ function moreDetails(click){
           },100);
 
         }  else {
-
+                    console.log(hash);
                     //Set Panel from display none to display block
                     $('.page.'+hash).css('display','block');
 

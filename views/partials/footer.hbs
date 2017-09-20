@@ -20,6 +20,19 @@
     }
 
 
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+
     </script>
 
     <!-- Bootstrap core JavaScript
@@ -31,7 +44,7 @@
     <!-- <script src="assets/javascript/socket.io.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.slim.js"></script>
     <script type="text/javascript" src="js/velocity.js"></script>
-    <script type="text/javascript" src="assets/javascript/googleMapStyles.js"></script>
+    <!--<script type="text/javascript" src="assets/javascript/googleMapStyles.js"></script>-->
     <script src="assets/javascript/store.legacy.min.js"></script>
 
 
@@ -78,9 +91,9 @@
     //  var user = store.get('user');
     //  console.log(user);
      </script>
-    <script async defer
+    <!--<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlxpx6stMHjq8ZNPpa5M_py5zd7jJ_ao&callback="></script>
-    <script type="text/javascript" src="assets/javascript/infobubble.js"></script>
+    <script type="text/javascript" src="assets/javascript/infobubble.js"></script>-->
 
   </body>
 </html>

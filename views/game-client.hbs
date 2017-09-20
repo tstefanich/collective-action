@@ -160,9 +160,9 @@ body, html{
      background:white;
 }
 
-.game, .waiting-room{}
+.game, .waiting-room{ opacity: 0; }
 .page .container {opacity:0;}
-.page.my-turn  {background-image:url() !important;}
+.page.my-turn  {background-image:url() !important; background-color: white;}
 .page.my-turn .container {opacity:1;}
 .bottomHalf{
   /*height: 50vh;
@@ -193,13 +193,16 @@ body, html{
 <!--////////////
 Queue/waiting-room Page
 ///////////--->
+   <div class="loading-container-avatar" style="opacity: 1;position: absolute;top: 94px;right: 15px;left: 15px;height: 360px;z-index: 2;text-align: center;"><img class="glyphicon-refresh-animate" src="assets/images/loading-screen/loading_sun.png" style="height:50px;position: relative;top: 45%;transform: translateY(-50%);"> </div>
+
 <div class="page queue waiting-room slideUp">
      <!-- Top Nav Bar -->
      <!-- <div class="nav"><div class="close glyphicon glyphicon-menu-left " style="display:none;"></div></div> -->
 
      <!-- Content -->
+   
 
-     <div class="container">
+     <div class="container" style="position:relative;z-index:9;">
        <div class="imageContainer">
          <img src="assets/images/client/everyone-small.png">
        </div>

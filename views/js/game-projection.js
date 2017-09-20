@@ -1063,8 +1063,8 @@ function avatar(path,id,x,y){
     if(value > .99){ value = 0.99; } // This is required from keep the tween from increasing too far
     this.currentValue =value; // this is needed to reverse the tween.
 
-    this.avatarWidth = (this.image.width) * value/4.25;
-    this.avatarHeight = (this.image.height) * value/4.25;//
+    this.avatarWidth = (this.image.width) * value/4.75;
+    this.avatarHeight = (this.image.height) * value/4.75;//
   },
   this.avatarShrink = function(){
     if (this.time >= this.endTime)
